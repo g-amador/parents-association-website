@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head class="header">
+    <title>Home</title>	    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Font Awesome for icons -->
+</head>
+<body>
+<div id="sidebar" class="sidebar">
+    <a href="#" onclick="toggleSidebar()" class="toggle-btn"><i class="fa fa-bars"></i></a>
+    <a href="index.html" onclick="changeColor(event, 'home')"><i class="fa fa-home"></i><span class="sidebar-text"> Home</span></a>
+    <a href="organization.html" onclick="changeColor(event, 'organization')"><i class="fa fa-building"></i><span class="sidebar-text"> Organization</span></a>
+    <a href="news.html" onclick="changeColor(event, 'news')"><i class="fa fa-book"></i><span class="sidebar-text"> News</span></a>
+    <a href="calendar.html" onclick="changeColor(event, 'calendar')"><i class="fa fa-calendar"></i><span class="sidebar-text"> Calendar</span></a>    
+</div>
+
+<div class="content">
+    <!-- Your main content here -->
+    <h1>Welcome to the Home Page!</h1>	
+</div>
+
+<!-- Add this div for the archive sidebar -->
+<div class="archive-sidebar">
+    <h2>Latest news</h2>
+    <!-- Articles container for the last 3 articles -->
+    <div id="articles" class="last-3-articles">
+        <!-- Last 3 articles will be displayed here -->
+    </div>
+</div>
+
+<script src="js/sidebar.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
