@@ -1,0 +1,11 @@
+.home-container {
+  display: flex;
+  height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  padding: 20px; /* Adjust padding as needed */
+  transition: margin-left 0.3s; /* Smooth transition when sidebar width changes */
+  margin-left: 160px
+}

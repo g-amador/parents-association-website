@@ -1,0 +1,83 @@
+/* Calendar container styles */
+.calendar-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Calendar styles */
+.calendar {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+/* Table styles */
+table {
+  border-collapse: collapse;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Table cell styles */
+td {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Table header styles */
+th {
+  padding: 15px;
+}
+
+/* Today styles */
+.today {
+  background-color: #ffd700;
+  color: black;
+}
+
+/* Inactive styles */
+.inactive {
+  color: #ccc;
+}
+
+/* Controls styles */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+/* Month-year styles */
+.month-year {
+  font-size: 48px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the content horizontally */
+}
+
+/* Arrow styles */
+.arrow {
+  cursor: pointer;
+  margin: 0 10px;
+  color: #333;
+}
+
+/* Hover effect on arrow */
+.arrow:hover {
+  color: #555;
+}
+
+/* Holiday styles */
+.holiday {
+  background-color: #b0e57c; /* Green color for holidays */
+  color: black;
+}
+
+.content-container {
+  flex: 1;
+  padding: 20px; /* Adjust padding as needed */
+  transition: margin-left 0.3s; /* Smooth transition when sidebar width changes */
+  margin-left: 160px
+}
