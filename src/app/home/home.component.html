@@ -1,6 +1,6 @@
 <div class="home-container">
-  <app-sidebar></app-sidebar>
-  <div class="content-container">
+  <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
+  <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <h1>Welcome to the Home Page!</h1>
   </div>
 </div>

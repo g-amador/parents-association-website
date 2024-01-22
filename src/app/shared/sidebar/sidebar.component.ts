@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,11 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-  sidebarVisible = true;
+  @Input() sidebarVisible = true;
+  @Output() sidebarVisibilityChange = new EventEmitter<boolean>();
   selectedLink: string | null = null;
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
+    this.sidebarVisibilityChange.emit(this.sidebarVisible);
   }
 
   changeColor(selected: string) {

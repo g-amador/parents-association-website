@@ -1,6 +1,6 @@
 <div class="news-container">
-  <app-sidebar></app-sidebar>
-  <div class="content-container">
+  <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
+  <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <h1>News</h1>
   </div>
 </div>

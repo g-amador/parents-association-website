@@ -7,6 +7,7 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  sidebarVisible = true;
   currentMonth: moment.Moment = moment(); // Initialize currentMonth
   calendar: moment.Moment[][] = []; // Initialize calendar as an empty array
 
@@ -76,5 +77,9 @@ export class CalendarComponent implements OnInit {
     }
 
     return classes;
+  }
+
+  toggleSidebarVisibility(sidebarVisible: boolean) {
+    this.sidebarVisible = sidebarVisible;
   }
 }

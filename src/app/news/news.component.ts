@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./news.component.scss']
 })
 export class NewsComponent {
+  sidebarVisible = true;
 
+  toggleSidebarVisibility(sidebarVisible: boolean) {
+    this.sidebarVisible = sidebarVisible;
+  }
 }

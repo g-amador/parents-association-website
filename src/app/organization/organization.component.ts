@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./organization.component.scss']
 })
 export class OrganizationComponent {
+  sidebarVisible = true;
 
+  toggleSidebarVisibility(sidebarVisible: boolean) {
+    this.sidebarVisible = sidebarVisible;
+  }
 }
