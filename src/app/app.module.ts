@@ -10,6 +10,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { NewsComponent } from './news/news.component';
 import { NewsArchiveSidebarComponent } from './shared/news-archive-sidebar/news-archive-sidebar.component';
+import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NewsArchiveSidebarComponent } from './shared/news-archive-sidebar/news-
     CalendarComponent,
     OrganizationComponent,
     NewsComponent,
-    NewsArchiveSidebarComponent
+    NewsArchiveSidebarComponent,
+    QuillEditorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, forwardRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss']
+  styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent implements OnInit {
   sidebarVisible = true;
@@ -22,7 +22,7 @@ export class NewsComponent implements OnInit {
   createForm() {
     this.articleForm = this.fb.group({
       title: ['', Validators.required],
-      content: ['', Validators.required]
+      content: [''],
     });
   }
 
