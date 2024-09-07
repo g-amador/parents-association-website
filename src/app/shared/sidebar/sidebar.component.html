@@ -1,15 +1,15 @@
 <div id="sidebar" [ngClass]="{'sidebar-closed': !sidebarVisible}" class="sidebar">
   <a (click)="toggleSidebar()" class="toggle-btn"><i class="fa fa-bars"></i></a>
   <a routerLink="/" (click)="changeColor('home')" [class.active]="selectedLink === 'home'">
-    <i class="fa fa-home"></i><span class="sidebar-text" *ngIf="sidebarVisible"> Home</span>
+    <i class="fa fa-home"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'Home' | translate }}</span>
   </a>
   <a routerLink="/organization" (click)="changeColor('organization')" [class.active]="selectedLink === 'organization'">
-    <i class="fa fa-building"></i><span class="sidebar-text" *ngIf="sidebarVisible"> Organization</span>
+    <i class="fa fa-building"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'Organization' | translate }}</span>
   </a>
   <a routerLink="/news" (click)="changeColor('news')" [class.active]="selectedLink === 'news'">
-    <i class="fa fa-book"></i><span class="sidebar-text" *ngIf="sidebarVisible"> News</span>
+    <i class="fa fa-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'News' | translate }}</span>
   </a>
   <a routerLink="/calendar" (click)="changeColor('calendar')" [class.active]="selectedLink === 'calendar'">
-    <i class="fa fa-calendar"></i><span class="sidebar-text" *ngIf="sidebarVisible"> Calendar</span>
+    <i class="fa fa-calendar"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'Calendar' | translate }}</span>
   </a>
 </div>

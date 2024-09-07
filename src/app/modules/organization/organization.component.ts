@@ -24,15 +24,15 @@ export class OrganizationComponent implements OnInit {
     this.http.get<any>('assets/data/roles.json').subscribe(data => {
       const members = data.members;
       this.contacts.direction = members.Direction.map((contact: { image: string; role: string; }) => {
-        contact.image = `assets/images/roles/generic-user.jpg` //assets/images/roles/${contact.role.replace(/\s+/g, '-')}.jpeg`;
+        contact.image = `assets/images/roles/generic-user.jpg`; // Use default or computed image path
         return contact;
       });
       this.contacts.assembly = members.Assembly.map((contact: { image: string; role: string; }) => {
-        contact.image = `assets/images/roles/generic-user.jpg` //`assets/images/roles/${contact.role.replace(/\s+/g, '-')}.jpeg`;
+        contact.image = `assets/images/roles/generic-user.jpg`; // Use default or computed image path
         return contact;
       });
       this.contacts.fiscalCouncil = members['Fiscal Council'].map((contact: { image: string; role: string; }) => {
-        contact.image = `assets/images/roles/generic-user.jpg` //`assets/images/roles/${contact.role.replace(/\s+/g, '-')}.jpeg`;
+        contact.image = `assets/images/roles/generic-user.jpg`; // Use default or computed image path
         return contact;
       });
     });

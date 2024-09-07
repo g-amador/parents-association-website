@@ -2,21 +2,20 @@
   flex: 1;
   padding: 20px;
   transition: margin-left 0.3s;
-  margin-left: 160px; /* Set the initial margin to the width of the open sidebar */
+  margin-left: 160px; /* Initial margin for open sidebar */
+
+  &.sidebar-closed {
+    margin-left: 35px; /* Adjusted margin when sidebar is hidden */
+  }
 }
 
-.content-container.sidebar-closed {
-  margin-left: 35px; /* Adjust the left margin when the sidebar is hidden */
-}
-
-.title {
+.title, .group-title {
   text-align: center;
   margin-bottom: 20px;
 }
 
 .group-title {
-  text-align: center;
-  margin: 20px 0;
+  margin-top: 20px;
 }
 
 .contact-row {
@@ -30,14 +29,14 @@
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
-}
 
-.image-container {
-  display: flex;
-  justify-content: center; /* Center image horizontally */
-  margin-bottom: 10px;
-}
+  .image-container {
+    display: flex;
+    justify-content: center; /* Center image horizontally */
+    margin-bottom: 10px;
+  }
 
-.contact-details {
-  text-align: center;
+  .contact-details {
+    text-align: center;
+  }
 }

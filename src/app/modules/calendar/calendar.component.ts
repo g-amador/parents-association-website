@@ -8,7 +8,7 @@ import * as moment from 'moment';
 })
 export class CalendarComponent implements OnInit {
   sidebarVisible = true;
-  currentMonth: moment.Moment = moment(); // Initialize currentMonth
+  currentMonthYear: moment.Moment = moment(); // Initialize currentMonthYear
   calendar: moment.Moment[][] = []; // Initialize calendar as an empty array
 
   ngOnInit() {
@@ -35,8 +35,8 @@ export class CalendarComponent implements OnInit {
 
   // Function to generate the calendar
   generateCalendar(): void {
-    const startOfMonth = moment(this.currentMonth).startOf('month');
-    const endOfMonth = moment(this.currentMonth).endOf('month');
+    const startOfMonth = moment(this.currentMonthYear).startOf('month');
+    const endOfMonth = moment(this.currentMonthYear).endOf('month');
 
     let calendarRows: moment.Moment[][] = [];
     let day = moment(startOfMonth).startOf('week');
@@ -55,23 +55,23 @@ export class CalendarComponent implements OnInit {
 
   // Function to move to the previous or next month
   moveMonth(offset: number): void {
-    this.currentMonth.add(offset, 'months');
+    this.currentMonthYear.add(offset, 'months');
     this.generateCalendar();
   }
 
   // Function to get classes for each day cell
   getDayClasses(day: moment.Moment): string[] {
-    const isCurrentMonth = day.isSame(this.currentMonth, 'month');
-    const isToday = day.isSame(moment(), 'day') && day.isSame(this.currentMonth, 'month');
+    const iscurrentMonthYear = day.isSame(this.currentMonthYear, 'month');
+    const isToday = day.isSame(moment(), 'day') && day.isSame(this.currentMonthYear, 'month');
 
     let classes: string[] = [];
-    if (!isCurrentMonth) {
+    if (!iscurrentMonthYear) {
       classes.push('inactive');
     } else if (isToday) {
       classes.push('today');
     }
 
-    const isHoliday = this.getPublicHolidays(this.currentMonth.year()).includes(day.format('YYYY-MM-DD'));
+    const isHoliday = this.getPublicHolidays(this.currentMonthYear.year()).includes(day.format('YYYY-MM-DD'));
     if (isHoliday) {
       classes.push('holiday');
     }
@@ -81,5 +81,6 @@ export class CalendarComponent implements OnInit {
 
   toggleSidebarVisibility(sidebarVisible: boolean) {
     this.sidebarVisible = sidebarVisible;
+    console.log(this.currentMonthYear)
   }
 }

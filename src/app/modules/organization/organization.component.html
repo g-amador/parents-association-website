@@ -1,15 +1,16 @@
 <div class="organization-container">
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
-    <h1 class="title">{{ 'ORGANIZATION_MEMBERS' }}</h1>
-    <h2 class="group-title">{{ 'DIRECTION' }}</h2>
+    <app-language-switcher></app-language-switcher> <!-- Language Switcher Component on the Left -->
+    <h1 class="title">{{ 'ORGANIZATION MEMBERS' | translate }}</h1>
+    <h2 class="group-title">{{ 'DIRECTION' | translate }}</h2>
     <div class="contact-row">
       <div *ngFor="let contact of contacts.direction" class="contact-card">
         <div class="image-container">
           <img [src]="contact.image" alt="Contact Image" width="100">
         </div>
         <div class="contact-details">
-          <div *ngIf="contact.role"><strong>{{ contact.role }}</strong></div>
+          <div *ngIf="contact.role"><strong>{{ contact.role | translate }}</strong></div>
           <div *ngIf="contact.name">{{ contact.name }}</div>
           <div *ngIf="contact.email">{{ contact.email }}</div>
           <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
@@ -17,14 +18,14 @@
       </div>
     </div>
 
-    <h2 class="group-title">{{ 'ASSEMBLY' }}</h2>
+    <h2 class="group-title">{{ 'ASSEMBLY' | translate }}</h2>
     <div class="contact-row">
       <div *ngFor="let contact of contacts.assembly" class="contact-card">
         <div class="image-container">
           <img [src]="contact.image" alt="Contact Image" width="100">
         </div>
         <div class="contact-details">
-          <div *ngIf="contact.role"><strong>{{ contact.role }}</strong></div>
+          <div *ngIf="contact.role"><strong>{{ contact.role | translate }}</strong></div>
           <div *ngIf="contact.name">{{ contact.name }}</div>
           <div *ngIf="contact.email">{{ contact.email }}</div>
           <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
@@ -32,14 +33,14 @@
       </div>
     </div>
 
-    <h2 class="group-title">{{ 'FISCAL_COUNCIL' }}</h2>
+    <h2 class="group-title">{{ 'FISCAL COUNCIL' | translate }}</h2>
     <div class="contact-row">
       <div *ngFor="let contact of contacts.fiscalCouncil" class="contact-card">
         <div class="image-container">
           <img [src]="contact.image" alt="Contact Image" width="100">
         </div>
         <div class="contact-details">
-          <div *ngIf="contact.role"><strong>{{ contact.role }}</strong></div>
+          <div *ngIf="contact.role"><strong>{{ contact.role | translate }}</strong></div>
           <div *ngIf="contact.name">{{ contact.name }}</div>
           <div *ngIf="contact.email">{{ contact.email }}</div>
           <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>

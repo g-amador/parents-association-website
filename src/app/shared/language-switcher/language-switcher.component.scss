@@ -1,0 +1,19 @@
+.language-switcher {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-left: auto; /* Pushes the language switcher to the right */
+  justify-content: flex-end; /* Align items to the right */
+}
+
+.language-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.fi {
+  font-size: 30px; /* Adjust size as needed */
+  vertical-align: middle;
+}

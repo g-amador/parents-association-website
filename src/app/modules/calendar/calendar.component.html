@@ -1,14 +1,23 @@
 <div class="calendar-container">
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
+    <app-language-switcher></app-language-switcher> <!-- Language Switcher Component on the Left -->
     <div class="month-year">
       <span (click)="moveMonth(-1)" class="arrow">&#10094;</span>
-      <span id="monthText">{{ currentMonth.format('MMMM YYYY') }}</span>
+      <span id="monthText">{{ currentMonthYear.format('MMMM') | translate }} {{ currentMonthYear.format('YYYY') }}</span>
       <span (click)="moveMonth(1)" class="arrow">&#10095;</span>
     </div>
     <div id="calendar" class="calendar">
       <table>
-        <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+        <tr>
+          <th>{{ 'Sun' | translate }}</th>
+          <th>{{ 'Mon' | translate }}</th>
+          <th>{{ 'Tue' | translate }}</th>
+          <th>{{ 'Wed' | translate }}</th>
+          <th>{{ 'Thu' | translate }}</th>
+          <th>{{ 'Fri' | translate }}</th>
+          <th>{{ 'Sat' | translate }}</th>
+        </tr>
         <tr *ngFor="let week of calendar">
           <td *ngFor="let day of week" [ngClass]="getDayClasses(day)">
             {{ day.format('D') }}
