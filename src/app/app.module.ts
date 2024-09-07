@@ -4,13 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import Rea
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './modules/home/home.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { OrganizationComponent } from './organization/organization.component';
-import { NewsComponent } from './news/news.component';
+import { CalendarComponent } from './modules/calendar/calendar.component';
+import { OrganizationComponent } from './modules/organization/organization.component';
+import { NewsComponent } from './modules/news/news.component';
 import { NewsArchiveSidebarComponent } from './shared/news-archive-sidebar/news-archive-sidebar.component';
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
+import { EditContactComponent } from './modules/organization/edit-contact/edit-contact.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { QuillEditorComponent } from './shared/quill-editor/quill-editor.compone
     OrganizationComponent,
     NewsComponent,
     NewsArchiveSidebarComponent,
-    QuillEditorComponent
+    QuillEditorComponent,
+    EditContactComponent
   ],
   imports: [
     BrowserModule,

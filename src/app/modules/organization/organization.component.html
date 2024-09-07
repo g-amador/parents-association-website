@@ -1,0 +1,20 @@
+<div class="organization-container">
+  <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
+  <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
+    <h1>Direction</h1>
+    <table id="direction-table">
+      <tr>
+        <!-- Loop through rolesData and display each contact in the same row -->
+        <td *ngFor="let role of rolesData; let i = index">
+          <img [src]="role.image" alt="Contact Image">
+          <div>{{ role.role }}</div>
+          <div>{{ role.name }}</div>
+          <div>{{ role.email }}</div>
+          <div>{{ role.phoneNumber }}</div>
+          <button (click)="editContact(i)">Edit</button>
+          <input type="file" (change)="onFileChange($event, i)" accept="image/*">
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

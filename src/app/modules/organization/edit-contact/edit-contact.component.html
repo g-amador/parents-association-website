@@ -1,0 +1,9 @@
+<div id="edit-contact-container">
+  <h1>Edit Contact</h1>
+  <input type="text" [(ngModel)]="contactDetails.name" placeholder="Name">
+  <input type="email" [(ngModel)]="contactDetails.email" placeholder="Email">
+  <input type="tel" [(ngModel)]="contactDetails.phoneNumber" placeholder="Phone Number">
+  <input type="file" (change)="onFileChange($event)" accept="image/*">
+  <img [src]="contactDetails.image" alt="Contact Image">
+  <button (click)="saveContactChanges()">Save Contact</button>
+</div>
