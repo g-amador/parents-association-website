@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { HomeComponent } from './modules/home/home.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CalendarComponent } from './modules/calendar/calendar.component';
@@ -11,7 +13,6 @@ import { OrganizationComponent } from './modules/organization/organization.compo
 import { NewsComponent } from './modules/news/news.component';
 import { NewsArchiveSidebarComponent } from './shared/news-archive-sidebar/news-archive-sidebar.component';
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
-import { EditContactComponent } from './modules/organization/edit-contact/edit-contact.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +23,13 @@ import { EditContactComponent } from './modules/organization/edit-contact/edit-c
     OrganizationComponent,
     NewsComponent,
     NewsArchiveSidebarComponent,
-    QuillEditorComponent,
-    EditContactComponent
+    QuillEditorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
