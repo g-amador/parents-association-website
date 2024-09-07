@@ -1,20 +1,50 @@
 <div class="organization-container">
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
-    <h1>Direction</h1>
-    <table id="direction-table">
-      <tr>
-        <!-- Loop through rolesData and display each contact in the same row -->
-        <td *ngFor="let role of rolesData; let i = index">
-          <img [src]="role.image" alt="Contact Image">
-          <div>{{ role.role }}</div>
-          <div>{{ role.name }}</div>
-          <div>{{ role.email }}</div>
-          <div>{{ role.phoneNumber }}</div>
-          <button (click)="editContact(i)">Edit</button>
-          <input type="file" (change)="onFileChange($event, i)" accept="image/*">
-        </td>
-      </tr>
-    </table>
+    <h1 class="title">{{ 'ORGANIZATION_MEMBERS' }}</h1>
+    <h2 class="group-title">{{ 'DIRECTION' }}</h2>
+    <div class="contact-row">
+      <div *ngFor="let contact of contacts.direction" class="contact-card">
+        <div class="image-container">
+          <img [src]="contact.image" alt="Contact Image" width="100">
+        </div>
+        <div class="contact-details">
+          <div *ngIf="contact.role"><strong>{{ contact.role }}</strong></div>
+          <div *ngIf="contact.name">{{ contact.name }}</div>
+          <div *ngIf="contact.email">{{ contact.email }}</div>
+          <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="group-title">{{ 'ASSEMBLY' }}</h2>
+    <div class="contact-row">
+      <div *ngFor="let contact of contacts.assembly" class="contact-card">
+        <div class="image-container">
+          <img [src]="contact.image" alt="Contact Image" width="100">
+        </div>
+        <div class="contact-details">
+          <div *ngIf="contact.role"><strong>{{ contact.role }}</strong></div>
+          <div *ngIf="contact.name">{{ contact.name }}</div>
+          <div *ngIf="contact.email">{{ contact.email }}</div>
+          <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="group-title">{{ 'FISCAL_COUNCIL' }}</h2>
+    <div class="contact-row">
+      <div *ngFor="let contact of contacts.fiscalCouncil" class="contact-card">
+        <div class="image-container">
+          <img [src]="contact.image" alt="Contact Image" width="100">
+        </div>
+        <div class="contact-details">
+          <div *ngIf="contact.role"><strong>{{ contact.role }}</strong></div>
+          <div *ngIf="contact.name">{{ contact.name }}</div>
+          <div *ngIf="contact.email">{{ contact.email }}</div>
+          <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
