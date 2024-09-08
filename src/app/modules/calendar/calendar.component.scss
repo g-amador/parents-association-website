@@ -76,6 +76,12 @@ th {
   color: black;
 }
 
+/* Day with events */
+.has-events {
+  background-color: red; /* Highlight days with events in red */
+  color: white;
+}
+
 /* Content container styles */
 .content-container {
   flex: 1;
@@ -109,3 +115,5 @@ button {
   margin-top: 16px;
   font-size: 16px;
 }
+
+

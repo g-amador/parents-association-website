@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -25,6 +26,7 @@ import { NewsArchiveSidebarComponent } from './shared/news-archive-sidebar/news-
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
+import { AddEventFormDialogComponent } from './modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { OrderByPipe } from './pipes/order-by.pipe';
     NewsArchiveSidebarComponent,
     QuillEditorComponent,
     LanguageSwitcherComponent,
-    OrderByPipe
+    OrderByPipe,
+    AddEventFormDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatDialogModule,
     MatInputModule,
     MatButtonModule,
     MatExpansionModule,

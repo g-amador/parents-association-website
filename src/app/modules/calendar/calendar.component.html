@@ -35,26 +35,9 @@
       </table>
     </div>
 
-    <!-- Event Form -->
-    <div class="event-form">
-      <mat-form-field appearance="fill">
-        <mat-label>Event Title</mat-label>
-        <input matInput [(ngModel)]="eventTitle" placeholder="Enter event title">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Event Date</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="eventDate" placeholder="Choose a date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="eventDescription" placeholder="Enter event description"></textarea>
-      </mat-form-field>
-
-      <button mat-raised-button color="primary" (click)="addEvent()">Add Event</button>
-    </div>
+    <!-- Button to open the event form dialog -->
+    <button mat-raised-button color="primary" (click)="openAddEventFormDialog()">
+      Add Event
+    </button>
   </div>
 </div>

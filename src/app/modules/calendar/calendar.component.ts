@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEventFormDialogComponent } from 'src/app/modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { Event } from 'src/app/shared/models/event.model';
 
 @Component({
@@ -12,9 +14,8 @@ export class CalendarComponent implements OnInit {
   currentMonthYear: moment.Moment = moment();
   calendar: moment.Moment[][] = [];
   events: { [key: string]: Event[] } = {}; // Store events by date
-  eventTitle = '';
-  eventDate: string | null = null;
-  eventDescription = '';
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
     this.generateCalendar();
@@ -54,6 +55,7 @@ export class CalendarComponent implements OnInit {
     }
 
     this.calendar = calendarRows;
+    console.log('Calendar generated:', this.calendar);
   }
 
   moveMonth(offset: number): void {
@@ -64,12 +66,18 @@ export class CalendarComponent implements OnInit {
   getDayClasses(day: moment.Moment): string[] {
     const isCurrentMonthYear = day.isSame(this.currentMonthYear, 'month');
     const isToday = day.isSame(moment(), 'day') && day.isSame(this.currentMonthYear, 'month');
+    const hasEvents = this.events[day.format('YYYY-MM-DD')] && this.events[day.format('YYYY-MM-DD')].length > 0;
 
     let classes: string[] = [];
     if (!isCurrentMonthYear) {
       classes.push('inactive');
     } else if (isToday) {
       classes.push('today');
+    }
+
+    if (hasEvents) {
+      classes.push('has-events');
+      console.log('Day with events:', day.format('YYYY-MM-DD'));
     }
 
     const isHoliday = this.getPublicHolidays(this.currentMonthYear.year()).includes(day.format('YYYY-MM-DD'));
@@ -81,42 +89,84 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDate(day: moment.Moment): void {
-    // Handle date selection if needed
+    const dateStr = day.format('YYYY-MM-DD');
+    const eventsForDay = this.events[dateStr] || [];
+
+    console.log('Selected date:', dateStr);
+    console.log('Events for selected date:', eventsForDay);
+
+    const dialogRef = this.dialog.open(AddEventFormDialogComponent, {
+      width: '400px',
+      data: { title: '', date: dateStr, description: '', events: eventsForDay }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog result:', result);
+        if (result.index !== undefined && result.index !== null) {
+          this.updateEvent(result);
+        } else {
+          this.addEvent(result);
+        }
+      }
+    });
   }
 
-  addEvent(): void {
-    if (this.eventTitle && this.eventDate) {
+  openAddEventFormDialog(): void {
+    const dialogRef = this.dialog.open(AddEventFormDialogComponent, {
+      width: '400px',
+      data: { title: '', date: null, description: '', events: [] }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog result:', result);
+        this.addEvent(result);
+      }
+    });
+  }
+
+  addEvent(eventData: { title: string, date: string | null, description: string }): void {
+    if (eventData.title && eventData.date) {
       const newEvent: Event = {
-        title: this.eventTitle,
-        date: this.eventDate,
-        description: this.eventDescription
+        title: eventData.title,
+        date: eventData.date,
+        description: eventData.description
       };
 
-      if (!this.events[this.eventDate]) {
-        this.events[this.eventDate] = [];
+      if (!this.events[eventData.date]) {
+        this.events[eventData.date] = [];
       }
-      this.events[this.eventDate].push(newEvent);
+      this.events[eventData.date].push(newEvent);
+      console.log('Event added:', newEvent);
       this.saveEvents();
-      this.resetForm();
-      this.generateCalendar(); // Update calendar view if needed
+      this.generateCalendar(); // Update calendar view
+    }
+  }
+
+  updateEvent(eventData: { title: string, date: string | null, description: string, index: number }): void {
+    const { date, title, description, index: eventIndex } = eventData;
+
+    if (date && this.events[date] && eventIndex !== undefined) {
+      this.events[date][eventIndex] = { ...this.events[date][eventIndex], title, description };
+      console.log('Event updated:', this.events[date][eventIndex]);
+      this.saveEvents();
+      this.generateCalendar(); // Update calendar view
     }
   }
 
   saveEvents(): void {
     localStorage.setItem('events', JSON.stringify(this.events));
+    console.log('Events saved to localStorage:', this.events);
   }
 
   loadEvents(): void {
     const storedEvents = localStorage.getItem('events');
     if (storedEvents) {
       this.events = JSON.parse(storedEvents);
+      console.log('Events loaded from localStorage:', this.events);
+      this.generateCalendar(); // Ensure calendar is updated with loaded events
     }
-  }
-
-  resetForm(): void {
-    this.eventTitle = '';
-    this.eventDate = null;
-    this.eventDescription = '';
   }
 
   toggleSidebarVisibility(sidebarVisible: boolean): void {
