@@ -9,10 +9,15 @@ import { Article, YearArticles } from 'src/app/shared/models/article.model'; // 
 export class NewsArchiveSidebarComponent implements OnInit {
   @Input() archive: YearArticles = {};
   @Output() articleSelected = new EventEmitter<Article>();
+  @Output() archiveCleared = new EventEmitter<void>();
 
   ngOnInit() {}
 
   selectArticle(article: Article) {
     this.articleSelected.emit(article);
+  }
+
+  clearArchive() {
+    this.archiveCleared.emit();
   }
 }

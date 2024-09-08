@@ -98,6 +98,11 @@ export class NewsComponent implements OnInit {
     this.archive = {}; // Clear the archive object in the component
   }
 
+  handleArchiveCleared() {
+    this.clearArchive();
+    this.loadArticles(); // Refresh the archive display
+  }
+
   resetForm() {
     this.articleForm.reset();
     this.selectedArticle = null;
