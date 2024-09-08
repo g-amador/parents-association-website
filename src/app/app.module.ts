@@ -27,6 +27,7 @@ import { QuillEditorComponent } from './shared/quill-editor/quill-editor.compone
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { AddEventFormDialogComponent } from './modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
+import { EditContactDialogComponent } from './modules/organization/edit-contact-dialog/edit-contact-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AddEventFormDialogComponent } from './modules/calendar/edit-event-form-
     QuillEditorComponent,
     LanguageSwitcherComponent,
     OrderByPipe,
-    AddEventFormDialogComponent
+    AddEventFormDialogComponent,
+    EditContactDialogComponent
   ],
   imports: [
     BrowserModule,

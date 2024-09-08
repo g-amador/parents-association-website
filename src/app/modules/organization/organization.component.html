@@ -1,11 +1,16 @@
 <div class="organization-container">
+  <!-- Sidebar Component -->
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
+
+  <!-- Main Content Container -->
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
-    <app-language-switcher></app-language-switcher> <!-- Language Switcher Component on the Left -->
+    <app-language-switcher></app-language-switcher>
     <h1 class="title">{{ 'ORGANIZATION MEMBERS' | translate }}</h1>
+
+    <!-- Section for Direction Group -->
     <h2 class="group-title">{{ 'DIRECTION' | translate }}</h2>
     <div class="contact-row">
-      <div *ngFor="let contact of contacts.direction" class="contact-card">
+      <div *ngFor="let contact of contacts.direction; let i = index" class="contact-card" (click)="editContact(contact, 'direction', i)">
         <div class="image-container">
           <img [src]="contact.image" alt="Contact Image" width="100">
         </div>
@@ -18,9 +23,10 @@
       </div>
     </div>
 
+    <!-- Section for Assembly Group -->
     <h2 class="group-title">{{ 'ASSEMBLY' | translate }}</h2>
     <div class="contact-row">
-      <div *ngFor="let contact of contacts.assembly" class="contact-card">
+      <div *ngFor="let contact of contacts.assembly; let i = index" class="contact-card" (click)="editContact(contact, 'assembly', i)">
         <div class="image-container">
           <img [src]="contact.image" alt="Contact Image" width="100">
         </div>
@@ -33,9 +39,10 @@
       </div>
     </div>
 
+    <!-- Section for Fiscal Council Group -->
     <h2 class="group-title">{{ 'FISCAL COUNCIL' | translate }}</h2>
     <div class="contact-row">
-      <div *ngFor="let contact of contacts.fiscalCouncil" class="contact-card">
+      <div *ngFor="let contact of contacts.fiscalCouncil; let i = index" class="contact-card" (click)="editContact(contact, 'fiscalCouncil', i)">
         <div class="image-container">
           <img [src]="contact.image" alt="Contact Image" width="100">
         </div>
