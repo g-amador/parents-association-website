@@ -28,12 +28,17 @@ export class AddEventFormDialogComponent {
       title: this.data.title,
       date: this.data.date,
       description: this.data.description,
-      index: this.eventIndex
+      index: this.editMode ? this.eventIndex : null // only pass index if in edit mode
     };
     this.dialogRef.close(result);
   }
 
+
   onCancel(): void {
     this.dialogRef.close();
+  }
+
+  onCancelEvent(): void {
+    this.dialogRef.close({ cancel: true, date: this.data.date, index: this.data.events.indexOf(this.data) }); // Pass information back to parent component
   }
 }

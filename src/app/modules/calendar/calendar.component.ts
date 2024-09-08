@@ -55,7 +55,6 @@ export class CalendarComponent implements OnInit {
     }
 
     this.calendar = calendarRows;
-    console.log('Calendar generated:', this.calendar);
   }
 
   moveMonth(offset: number): void {
@@ -77,7 +76,6 @@ export class CalendarComponent implements OnInit {
 
     if (hasEvents) {
       classes.push('has-events');
-      console.log('Day with events:', day.format('YYYY-MM-DD'));
     }
 
     const isHoliday = this.getPublicHolidays(this.currentMonthYear.year()).includes(day.format('YYYY-MM-DD'));
@@ -92,9 +90,6 @@ export class CalendarComponent implements OnInit {
     const dateStr = day.format('YYYY-MM-DD');
     const eventsForDay = this.events[dateStr] || [];
 
-    console.log('Selected date:', dateStr);
-    console.log('Events for selected date:', eventsForDay);
-
     const dialogRef = this.dialog.open(AddEventFormDialogComponent, {
       width: '400px',
       data: { title: '', date: dateStr, description: '', events: eventsForDay }
@@ -102,26 +97,15 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog result:', result);
-        if (result.index !== undefined && result.index !== null) {
+        if (result.cancel) {
+          this.deleteEvent(result.date, result.index); // Delete the event if canceled
+        } else if (result.index !== undefined && result.index !== null) {
           this.updateEvent(result);
         } else {
           this.addEvent(result);
         }
-      }
-    });
-  }
 
-  openAddEventFormDialog(): void {
-    const dialogRef = this.dialog.open(AddEventFormDialogComponent, {
-      width: '400px',
-      data: { title: '', date: null, description: '', events: [] }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Dialog result:', result);
-        this.addEvent(result);
+        this.generateCalendar(); // Refresh calendar after updating or adding event
       }
     });
   }
@@ -137,8 +121,7 @@ export class CalendarComponent implements OnInit {
       if (!this.events[eventData.date]) {
         this.events[eventData.date] = [];
       }
-      this.events[eventData.date].push(newEvent);
-      console.log('Event added:', newEvent);
+      this.events[eventData.date] = [...this.events[eventData.date], newEvent]; // Create new array to trigger change detection
       this.saveEvents();
       this.generateCalendar(); // Update calendar view
     }
@@ -148,23 +131,38 @@ export class CalendarComponent implements OnInit {
     const { date, title, description, index: eventIndex } = eventData;
 
     if (date && this.events[date] && eventIndex !== undefined) {
-      this.events[date][eventIndex] = { ...this.events[date][eventIndex], title, description };
-      console.log('Event updated:', this.events[date][eventIndex]);
+      const updatedEvent = { ...this.events[date][eventIndex], title, description };
+      const eventsCopy = [...this.events[date]];
+      eventsCopy[eventIndex] = updatedEvent;
+      this.events = { ...this.events, [date]: eventsCopy }; // Update reference to trigger change detection
+
       this.saveEvents();
+      this.generateCalendar(); // Update calendar view
+    }
+  }
+
+  deleteEvent(date: string, index: number): void {
+    if (date && this.events[date] && index !== undefined) {
+      const eventsForDate = this.events[date];
+      eventsForDate.splice(index, 1); // Remove the event from the list
+
+      if (eventsForDate.length === 0) {
+        delete this.events[date]; // Remove the date key if no events remain
+      }
+
+      this.saveEvents(); // Save changes to localStorage
       this.generateCalendar(); // Update calendar view
     }
   }
 
   saveEvents(): void {
     localStorage.setItem('events', JSON.stringify(this.events));
-    console.log('Events saved to localStorage:', this.events);
   }
 
   loadEvents(): void {
     const storedEvents = localStorage.getItem('events');
     if (storedEvents) {
       this.events = JSON.parse(storedEvents);
-      console.log('Events loaded from localStorage:', this.events);
       this.generateCalendar(); // Ensure calendar is updated with loaded events
     }
   }

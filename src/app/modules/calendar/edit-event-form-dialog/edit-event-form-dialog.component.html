@@ -20,4 +20,5 @@
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancel</button>
   <button mat-button (click)="onSave()">Save</button>
+  <button mat-button (click)="onCancelEvent()" *ngIf="data.events.length > 0">Cancel Event</button> <!-- New Cancel Event Button -->
 </div>

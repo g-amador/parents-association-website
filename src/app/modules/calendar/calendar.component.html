@@ -23,21 +23,10 @@
         <tr *ngFor="let week of calendar">
           <td *ngFor="let day of week" [ngClass]="getDayClasses(day)" (click)="selectDate(day)">
             {{ day.format('D') }}
-            <div *ngIf="events[day.format('YYYY-MM-DD')]">
-              <ul>
-                <li *ngFor="let event of events[day.format('YYYY-MM-DD')]">
-                  <strong>{{ event.title }}</strong> - {{ event.description }}
-                </li>
-              </ul>
-            </div>
+            <!-- Removed event titles and descriptions -->
           </td>
         </tr>
       </table>
     </div>
-
-    <!-- Button to open the event form dialog -->
-    <button mat-raised-button color="primary" (click)="openAddEventFormDialog()">
-      Add Event
-    </button>
   </div>
 </div>
