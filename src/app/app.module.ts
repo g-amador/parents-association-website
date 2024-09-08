@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { HomeComponent } from './modules/home/home.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -15,6 +21,7 @@ import { NewsComponent } from './modules/news/news.component';
 import { NewsArchiveSidebarComponent } from './shared/news-archive-sidebar/news-archive-sidebar.component';
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
   declarations: [
@@ -26,10 +33,12 @@ import { LanguageSwitcherComponent } from './shared/language-switcher/language-s
     NewsComponent,
     NewsArchiveSidebarComponent,
     QuillEditorComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -40,7 +49,11 @@ import { LanguageSwitcherComponent } from './shared/language-switcher/language-s
     }),
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

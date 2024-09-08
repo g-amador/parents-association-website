@@ -1,8 +1,7 @@
 <div class="news-container">
-  <!-- Include the yellow background sidebar directly -->
   <app-news-archive-sidebar></app-news-archive-sidebar>
-
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
+
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <h1>News</h1>
 
@@ -12,7 +11,39 @@
       <label for="content">Content:</label>
       <app-quill-editor formControlName="content" [ngModel]="articleForm.get('content')?.value"></app-quill-editor>
       <button type="submit" *ngIf="!selectedArticle">Add Article</button>
-      <button type="button" *ngIf="selectedArticle" (click)="updateArticle()">Update Article</button>
+      <button type="button" *ngIf="selectedArticle" (click)="addOrUpdateArticle()">Update Article</button>
     </form>
+
+    <button (click)="clearArchive()">Clear Archive</button>
+
+    <div class="archive-container">
+      <h2>Archive</h2>
+      <div *ngFor="let year of archive | keyvalue">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ year.key }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let month of year.value | keyvalue">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ month.key }}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngFor="let day of month.value | keyvalue">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{ day.key }}</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul>
+                    <li *ngFor="let article of day.value | orderBy:'date'" (click)="selectArticle(article)">
+                      <strong>{{ article.title }}</strong> - {{ article.date }}
+                    </li>
+                  </ul>
+                </mat-expansion-panel>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
   </div>
 </div>
