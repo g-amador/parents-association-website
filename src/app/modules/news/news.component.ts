@@ -1,28 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-interface Article {
-  title: string;
-  content: string;
-  date: string;
-}
-
-interface DayArticles {
-  [key: string]: Article[];
-}
-
-interface MonthArticles {
-  [key: string]: DayArticles;
-}
-
-interface YearArticles {
-  [key: string]: MonthArticles;
-}
+import { Article, YearArticles } from 'src/app/shared/models/article.model'; // Adjust path as needed
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss'],
+  styleUrls: ['./news.component.scss']
 })
 export class NewsComponent implements OnInit {
   sidebarVisible = true;

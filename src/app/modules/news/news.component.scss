@@ -9,3 +9,10 @@
 .content-container.sidebar-closed {
   margin-left: 35px; /* Adjust the left margin when the sidebar is hidden */
 }
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+

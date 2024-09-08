@@ -1,7 +1,30 @@
 <div class="archive-sidebar">
   <h2>Archive</h2>
-  <div id="articles">
-    <!-- Existing News articles will be dynamically added here -->
+  <div *ngFor="let year of archive | keyvalue">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ year.key }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let month of year.value | keyvalue">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ month.key }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let day of month.value | keyvalue">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ day.key }}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <ul>
+                <li *ngFor="let article of day.value | orderBy:'date'" (click)="selectArticle(article)">
+                  <strong>{{ article.title }}</strong> - {{ article.date }}
+                </li>
+              </ul>
+            </mat-expansion-panel>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-expansion-panel>
   </div>
-  <button id="clearArticlesBtn">Clear Articles</button>
 </div>
+

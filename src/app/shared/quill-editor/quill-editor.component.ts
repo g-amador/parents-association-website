@@ -25,8 +25,6 @@ export class QuillEditorComponent implements ControlValueAccessor, AfterViewInit
 
   ngAfterViewInit() {
     if (this.editorElement) {
-      console.log('Quill Editor Element:', this.editorElement.nativeElement);
-
       this.quill = new Quill(this.editorElement.nativeElement, {
         theme: 'snow',
         placeholder: 'Write something...',
