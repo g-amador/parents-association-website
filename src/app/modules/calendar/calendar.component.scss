@@ -2,6 +2,7 @@
 .calendar-container {
   text-align: center;
   margin-bottom: 20px;
+  padding: 16px;
 }
 
 /* Calendar styles */
@@ -75,6 +76,7 @@ th {
   color: black;
 }
 
+/* Content container styles */
 .content-container {
   flex: 1;
   padding: 20px;
@@ -85,4 +87,25 @@ th {
 /* Adjust content margin when sidebar is closed */
 .content-container.sidebar-closed {
   margin-left: 35px; /* Adjust the left margin when the sidebar is hidden */
+}
+
+/* Event form styles */
+.event-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Form field styles */
+mat-form-field {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 16px;
+}
+
+/* Button styles */
+button {
+  margin-top: 16px;
+  font-size: 16px;
 }

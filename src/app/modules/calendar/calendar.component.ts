@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { Event } from 'src/app/shared/models/event.model';
 
 @Component({
   selector: 'app-calendar',
@@ -8,32 +9,34 @@ import * as moment from 'moment';
 })
 export class CalendarComponent implements OnInit {
   sidebarVisible = true;
-  currentMonthYear: moment.Moment = moment(); // Initialize currentMonthYear
-  calendar: moment.Moment[][] = []; // Initialize calendar as an empty array
+  currentMonthYear: moment.Moment = moment();
+  calendar: moment.Moment[][] = [];
+  events: { [key: string]: Event[] } = {}; // Store events by date
+  eventTitle = '';
+  eventDate: string | null = null;
+  eventDescription = '';
 
   ngOnInit() {
     this.generateCalendar();
+    this.loadEvents();
   }
 
-  // Function to get public holidays
   getPublicHolidays(year: number): string[] {
     const publicHolidays = [
-      `${year}-01-01`, // New Year's Day
-      `${year}-04-25`, // Freedom Day
-      `${year}-05-01`, // Labor Day
-      `${year}-06-10`, // Portugal Day
-      `${year}-08-15`, // Assumption of Mary
-      `${year}-10-05`, // Republic Day
-      `${year}-11-01`, // All Saints' Day
-      `${year}-12-01`, // Restoration of Independence
-      `${year}-12-08`, // Immaculate Conception
-      `${year}-12-25`  // Christmas Day
+      `${year}-01-01`,
+      `${year}-04-25`,
+      `${year}-05-01`,
+      `${year}-06-10`,
+      `${year}-08-15`,
+      `${year}-10-05`,
+      `${year}-11-01`,
+      `${year}-12-01`,
+      `${year}-12-08`,
+      `${year}-12-25`
     ];
-
     return publicHolidays;
   }
 
-  // Function to generate the calendar
   generateCalendar(): void {
     const startOfMonth = moment(this.currentMonthYear).startOf('month');
     const endOfMonth = moment(this.currentMonthYear).endOf('month');
@@ -53,19 +56,17 @@ export class CalendarComponent implements OnInit {
     this.calendar = calendarRows;
   }
 
-  // Function to move to the previous or next month
   moveMonth(offset: number): void {
     this.currentMonthYear.add(offset, 'months');
     this.generateCalendar();
   }
 
-  // Function to get classes for each day cell
   getDayClasses(day: moment.Moment): string[] {
-    const iscurrentMonthYear = day.isSame(this.currentMonthYear, 'month');
+    const isCurrentMonthYear = day.isSame(this.currentMonthYear, 'month');
     const isToday = day.isSame(moment(), 'day') && day.isSame(this.currentMonthYear, 'month');
 
     let classes: string[] = [];
-    if (!iscurrentMonthYear) {
+    if (!isCurrentMonthYear) {
       classes.push('inactive');
     } else if (isToday) {
       classes.push('today');
@@ -79,8 +80,46 @@ export class CalendarComponent implements OnInit {
     return classes;
   }
 
-  toggleSidebarVisibility(sidebarVisible: boolean) {
+  selectDate(day: moment.Moment): void {
+    // Handle date selection if needed
+  }
+
+  addEvent(): void {
+    if (this.eventTitle && this.eventDate) {
+      const newEvent: Event = {
+        title: this.eventTitle,
+        date: this.eventDate,
+        description: this.eventDescription
+      };
+
+      if (!this.events[this.eventDate]) {
+        this.events[this.eventDate] = [];
+      }
+      this.events[this.eventDate].push(newEvent);
+      this.saveEvents();
+      this.resetForm();
+      this.generateCalendar(); // Update calendar view if needed
+    }
+  }
+
+  saveEvents(): void {
+    localStorage.setItem('events', JSON.stringify(this.events));
+  }
+
+  loadEvents(): void {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      this.events = JSON.parse(storedEvents);
+    }
+  }
+
+  resetForm(): void {
+    this.eventTitle = '';
+    this.eventDate = null;
+    this.eventDescription = '';
+  }
+
+  toggleSidebarVisibility(sidebarVisible: boolean): void {
     this.sidebarVisible = sidebarVisible;
-    console.log(this.currentMonthYear)
   }
 }

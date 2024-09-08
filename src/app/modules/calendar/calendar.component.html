@@ -1,12 +1,14 @@
 <div class="calendar-container">
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
-    <app-language-switcher></app-language-switcher> <!-- Language Switcher Component on the Left -->
+    <app-language-switcher></app-language-switcher>
+
     <div class="month-year">
       <span (click)="moveMonth(-1)" class="arrow">&#10094;</span>
       <span id="monthText">{{ currentMonthYear.format('MMMM') | translate }} {{ currentMonthYear.format('YYYY') }}</span>
       <span (click)="moveMonth(1)" class="arrow">&#10095;</span>
     </div>
+
     <div id="calendar" class="calendar">
       <table>
         <tr>
@@ -19,11 +21,40 @@
           <th>{{ 'Sat' | translate }}</th>
         </tr>
         <tr *ngFor="let week of calendar">
-          <td *ngFor="let day of week" [ngClass]="getDayClasses(day)">
+          <td *ngFor="let day of week" [ngClass]="getDayClasses(day)" (click)="selectDate(day)">
             {{ day.format('D') }}
+            <div *ngIf="events[day.format('YYYY-MM-DD')]">
+              <ul>
+                <li *ngFor="let event of events[day.format('YYYY-MM-DD')]">
+                  <strong>{{ event.title }}</strong> - {{ event.description }}
+                </li>
+              </ul>
+            </div>
           </td>
         </tr>
       </table>
+    </div>
+
+    <!-- Event Form -->
+    <div class="event-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Event Title</mat-label>
+        <input matInput [(ngModel)]="eventTitle" placeholder="Enter event title">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Event Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="eventDate" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="eventDescription" placeholder="Enter event description"></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="addEvent()">Add Event</button>
     </div>
   </div>
 </div>
