@@ -18,7 +18,7 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onSave()">Save</button>
-  <button mat-button (click)="onCancelEvent()" *ngIf="data.events.length > 0">Cancel Event</button> <!-- New Cancel Event Button -->
+  <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="warn" (click)="onCancelEvent()" *ngIf="data.events.length > 0">Cancel Event</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
 </div>

@@ -1,9 +1,10 @@
 .language-switcher {
+  position: fixed; /* Fixes the switcher to a specific position */
+  top: 20px; /* Adjust top position as needed */
+  right: 20px; /* Adjust right position as needed */
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
-  margin-left: auto; /* Pushes the language switcher to the right */
-  justify-content: flex-end; /* Align items to the right */
+  z-index: 1000; /* Ensure it appears above other components */
 }
 
 .language-button {

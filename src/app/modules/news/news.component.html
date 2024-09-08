@@ -1,17 +1,19 @@
 <div class="news-container">
-  <app-news-archive-sidebar [archive]="archive" (archiveCleared)="clearArchive()" (articleSelected)="selectArticle($event)"></app-news-archive-sidebar>
+  <app-news-archive-sidebar [archive]="archive" (archiveCleared)="handleArchiveCleared()" (articleSelected)="selectArticle($event)"></app-news-archive-sidebar>
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
 
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
-    <h1>News</h1>
+    <app-language-switcher></app-language-switcher>
+
+    <h1>{{ 'NEWS' | translate }}</h1>
 
     <form class="add-article-form" (ngSubmit)="addOrUpdateArticle()" [formGroup]="articleForm">
-      <label for="title">Title:</label>
+      <label for="title">{{ 'TITLE' | translate }}:</label>
       <input matInput type="text" id="title" formControlName="title"><br><br>
-      <label for="content">Content:</label>
+      <label for="content">{{ 'CONTENT' | translate }}:</label>
       <app-quill-editor formControlName="content" [ngModel]="articleForm.get('content')?.value"></app-quill-editor>
-      <button mat-raised-button color="primary" type="submit" *ngIf="!selectedArticle">Add Article</button>
-      <button mat-raised-button color="primary" type="button" *ngIf="selectedArticle" (click)="addOrUpdateArticle()">Update Article</button>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!selectedArticle">{{ 'ADD ARTICLE' | translate }}</button>
+      <button mat-raised-button color="primary" type="button" *ngIf="selectedArticle" (click)="addOrUpdateArticle()">{{ 'UPDATE ARTICLE' | translate }}</button>
     </form>
   </div>
 </div>

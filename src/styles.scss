@@ -2,3 +2,27 @@
 @import '~flag-icons/css/flag-icons.min.css';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* styles.scss */
+button.mat-raised-button {
+  font-family: Arial, sans-serif; /* Ensure Arial font for buttons */
+}
+
+button.mat-raised-button {
+  padding: 8px 16px; /* Adjust padding */
+  font-size: 16px; /* Adjust font size */
+  border-radius: 4px; /* Rounded corners */
+}
+
+button.mat-raised-button[color='warn'] {
+  background-color: #f44336; /* Red background for cancel button */
+  color: white; /* White text */
+}
+
+button.mat-raised-button[color='primary'] {
+  background-color: #3f51b5; /* Blue background for save button */
+  color: white; /* White text */
+}
