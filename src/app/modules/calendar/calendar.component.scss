@@ -31,7 +31,7 @@ th {
 
 /* Today styles */
 .today {
-  background-color: #ffd700;
+  background-color: #ffd700; /* Adjusted color for today */
   color: black;
 }
 
@@ -116,4 +116,46 @@ button {
   font-size: 16px;
 }
 
+/* Legend styles */
+.legend {
+  margin-top: 20px;
+  text-align: center; /* Center the legend text */
+}
 
+.legend h3 {
+  margin-bottom: 10px;
+}
+
+.legend-items {
+  display: flex;
+  justify-content: center; /* Center the items horizontally */
+  align-items: center;
+  flex-wrap: wrap; /* Wrap items if they overflow */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 0 15px; /* Space between items */
+}
+
+.color-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Specific color boxes */
+.today {
+  background-color: yellow;
+}
+
+.holiday {
+  background-color: green;
+}
+
+.event {
+  background-color: red;
+}

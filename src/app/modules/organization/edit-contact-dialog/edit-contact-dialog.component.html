@@ -1,32 +1,32 @@
-<h1 mat-dialog-title>{{ 'Edit Contact' | translate }}</h1>
+<h1 mat-dialog-title>{{ 'EDIT MEMBER DATA' | translate }}</h1>
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'Role' | translate }}</mat-label>
+    <mat-label>{{ 'ROLE' | translate }}</mat-label>
     <input matInput [(ngModel)]="contact.role" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'Name' | translate }}</mat-label>
+    <mat-label>{{ 'NAME' | translate }}</mat-label>
     <input matInput [(ngModel)]="contact.name" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'Email' | translate }}</mat-label>
+    <mat-label>{{ 'EMAIL' | translate }}</mat-label>
     <input matInput [(ngModel)]="contact.email" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'Phone Number' | translate }}</mat-label>
+    <mat-label>{{ 'PHONE NUMBER' | translate }}</mat-label>
     <input matInput [(ngModel)]="contact.phoneNumber" />
   </mat-form-field>
 
   <div class="image-upload">
-    <label>{{ 'Change Image' | translate }}</label>
+    <label>{{ 'CHANGE IMAGE' | translate }}</label>
     <input type="file" (change)="onImageChange($event)" />
     <img *ngIf="contact.image" [src]="contact.image" alt="Contact Image" width="100" />
   </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="warn" (click)="onCancel()">{{ 'Cancel' | translate }}</button>
-  <button mat-raised-button color="primary" (click)="onSave()">{{ 'Save' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSave()">{{ 'SAVE' | translate }}</button>
 </div>
