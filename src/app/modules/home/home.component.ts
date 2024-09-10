@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-interface Article {
-  title: string;
-  content: string;
-  date: string;
-}
+import { Article } from 'src/app/shared/models/article.model';
+import { Event } from 'src/app/shared/models/event.model';
 
 @Component({
   selector: 'app-home',
@@ -14,32 +10,70 @@ interface Article {
 export class HomeComponent implements OnInit {
   sidebarVisible = true;
   latestArticles: Article[] = [];
+  upcomingEvents: Event[] = [];
   currentIndex = 0;
+  currentEventIndex = 0; // For events carousel
   intervalId: any;
+  eventIntervalId: any; // For event carousel rotation
 
   ngOnInit() {
     this.loadLatestArticles();
+    this.loadUpcomingEvents();
     this.startCarouselRotation();
+    this.startEventCarouselRotation(); // Start event carousel rotation
   }
 
   toggleSidebarVisibility(sidebarVisible: boolean) {
     this.sidebarVisible = sidebarVisible;
   }
 
+  // Load the latest articles
   loadLatestArticles() {
     const articles = this.getArticlesFromLocalStorage();
-    this.latestArticles = articles.slice(-3).reverse(); // Get the last 3 articles, in reverse order (latest first)
+    this.latestArticles = Array.isArray(articles) ? articles.slice(-3).reverse() : []; // Ensure it's an array
   }
 
+  // Load upcoming events
+  loadUpcomingEvents() {
+    const events = this.getEventsFromLocalStorage();
+
+    if (events && typeof events === 'object') {
+      // Transform the object with date keys into a flat array of event objects
+      const transformedEvents = Object.keys(events).flatMap(dateKey => {
+        return (events as unknown as Record<string, Event[]>)[dateKey].map(event => ({
+          ...event,
+          date: dateKey
+        }));
+      });
+
+      const sortedTransformedEvents = transformedEvents
+        .filter(event => event.date && new Date(event.date) >= new Date()) // Filter out past events
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // Sort events by date
+
+      this.upcomingEvents = sortedTransformedEvents.slice(0, 3); // Get the next 3 upcoming events
+    } else {
+      this.upcomingEvents = [];
+    }
+  }
+
+  // Retrieve articles from local storage
   getArticlesFromLocalStorage(): Article[] {
     const articles = localStorage.getItem('articles');
     return articles ? JSON.parse(articles) : [];
   }
 
+  // Retrieve events from local storage
+  getEventsFromLocalStorage(): Event[] | Record<string, Event[]> {
+    const events = localStorage.getItem('events');
+    return events ? JSON.parse(events) : {};
+  }
+
   startCarouselRotation() {
-    this.intervalId = setInterval(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.latestArticles.length;
-    }, 5000); // Change every 5 seconds
+    if (this.latestArticles.length > 0) {
+      this.intervalId = setInterval(() => {
+        this.currentIndex = (this.currentIndex + 1) % this.latestArticles.length;
+      }, 5000); // Change every 5 seconds
+    }
   }
 
   stopCarouselRotation() {
@@ -62,5 +96,36 @@ export class HomeComponent implements OnInit {
     this.stopCarouselRotation();
     this.currentIndex = (this.currentIndex + 1) % this.latestArticles.length;
     this.startCarouselRotation();
+  }
+
+  // Event Carousel Methods
+  startEventCarouselRotation() {
+    if (this.upcomingEvents.length > 0) {
+      this.eventIntervalId = setInterval(() => {
+        this.currentEventIndex = (this.currentEventIndex + 1) % this.upcomingEvents.length;
+      }, 5000); // Change every 5 seconds
+    }
+  }
+
+  stopEventCarouselRotation() {
+    clearInterval(this.eventIntervalId);
+  }
+
+  selectEvent(index: number) {
+    this.stopEventCarouselRotation();
+    this.currentEventIndex = index;
+    this.startEventCarouselRotation();
+  }
+
+  prevEvent() {
+    this.stopEventCarouselRotation();
+    this.currentEventIndex = (this.currentEventIndex - 1 + this.upcomingEvents.length) % this.upcomingEvents.length;
+    this.startEventCarouselRotation();
+  }
+
+  nextEvent() {
+    this.stopEventCarouselRotation();
+    this.currentEventIndex = (this.currentEventIndex + 1) % this.upcomingEvents.length;
+    this.startEventCarouselRotation();
   }
 }

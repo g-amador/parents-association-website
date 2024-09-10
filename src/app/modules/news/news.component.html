@@ -12,8 +12,8 @@
       <input matInput type="text" id="title" formControlName="title"><br><br>
       <label for="content">{{ 'CONTENT' | translate }}:</label>
       <app-quill-editor formControlName="content" [ngModel]="articleForm.get('content')?.value"></app-quill-editor>
-      <button mat-raised-button color="primary" type="submit" *ngIf="!selectedArticle">{{ 'ADD ARTICLE' | translate }}</button>
-      <button mat-raised-button color="primary" type="button" *ngIf="selectedArticle" (click)="addOrUpdateArticle()">{{ 'UPDATE ARTICLE' | translate }}</button>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!selectedArticle">{{ 'ADD_ARTICLE' | translate }}</button>
+      <button mat-raised-button color="primary" type="button" *ngIf="selectedArticle" (click)="addOrUpdateArticle()">{{ 'UPDATE_ARTICLE' | translate }}</button>
     </form>
   </div>
 </div>

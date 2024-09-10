@@ -6,7 +6,7 @@
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher></app-language-switcher>
 
-    <h1 class="title">{{ 'ORGANIZATION MEMBERS' | translate }}</h1>
+    <h1 class="title">{{ 'ORGANIZATION_MEMBERS' | translate }}</h1>
 
     <!-- Section for Direction Group -->
     <h2 class="group-title">{{ 'DIRECTION' | translate }}</h2>
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Section for Fiscal Council Group -->
-    <h2 class="group-title">{{ 'FISCAL COUNCIL' | translate }}</h2>
+    <h2 class="group-title">{{ 'FISCAL_COUNCIL' | translate }}</h2>
     <div class="contact-row">
       <div *ngFor="let contact of contacts.fiscalCouncil; let i = index" class="contact-card" (click)="editContact(contact, 'fiscalCouncil', i)">
         <div class="image-container">

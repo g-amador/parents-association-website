@@ -1,25 +1,25 @@
-<h1 mat-dialog-title *ngIf="editMode">{{ 'EDIT EVENT' | translate }}</h1>
-<h1 mat-dialog-title *ngIf="!editMode">{{ 'ADD EVENT' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="editMode">{{ 'EDIT_EVENT' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="!editMode">{{ 'ADD_EVENT' | translate }}</h1>
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'EVENT TITLE' | translate }}</mat-label>
-    <input matInput [(ngModel)]="data.title" placeholder="{{ 'ENTER EVENT TITLE' | translate }}">
+    <mat-label>{{ 'EVENT_TITLE' | translate }}</mat-label>
+    <input matInput [(ngModel)]="data.title" placeholder="{{ 'ENTER_EVENT_TITLE' | translate }}">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'EVENT DATE' | translate }}</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="data.date" placeholder="{{ 'CHOOSE A DATE' | translate }}" [disabled]="editMode">
+    <mat-label>{{ 'EVENT_DATE' | translate }}</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="data.date" placeholder="{{ 'CHOOSE_A_DATE' | translate }}" [disabled]="editMode">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
-    <textarea matInput [(ngModel)]="data.description" placeholder="{{ 'ENTER EVENT DESCRIPTION' | translate }}"></textarea>
+    <textarea matInput [(ngModel)]="data.description" placeholder="{{ 'ENTER_EVENT_DESCRIPTION' | translate }}"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button color="warn" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
-  <button mat-raised-button color="warn" (click)="onCancelEvent()" *ngIf="data.events.length > 0">{{ 'CANCEL EVENT' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="onCancelEvent()" *ngIf="data.events.length > 0">{{ 'CANCEL_EVENT' | translate }}</button>
   <button mat-raised-button color="primary" (click)="onSave()">{{ 'SAVE' | translate }}</button>
 </div>
