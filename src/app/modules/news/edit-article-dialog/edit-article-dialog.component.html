@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>{{ data.article ? 'Edit Article' : 'Add New Article' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="articleForm">
+    <!-- Title Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="articleForm.get('title')?.hasError('required')">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Content Field (Quill Editor) -->
+    <app-quill-editor formControlName="content"></app-quill-editor>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</div>

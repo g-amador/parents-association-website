@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Article, YearArticles } from 'src/app/shared/models/article.model'; // Adjust path as needed
+import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component'; // Adjust path as needed
 
 @Component({
   selector: 'app-news',
@@ -9,7 +11,6 @@ import { Article, YearArticles } from 'src/app/shared/models/article.model'; // 
 })
 export class NewsComponent implements OnInit {
   sidebarVisible = true;
-  articleForm!: FormGroup;
   selectedArticle: Article | null = null;
   archive: YearArticles = {};
 
@@ -22,40 +23,32 @@ export class NewsComponent implements OnInit {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private dialog: MatDialog) {}
 
   ngOnInit() {
-    this.createForm();
     this.loadArticles();
-  }
-
-  createForm() {
-    this.articleForm = this.fb.group({
-      title: ['', Validators.required],
-      content: [''],
-    });
   }
 
   toggleSidebarVisibility(sidebarVisible: boolean) {
     this.sidebarVisible = sidebarVisible;
   }
 
-  addOrUpdateArticle() {
-    if (this.articleForm.valid) {
-      const title = this.articleForm.get('title')!.value.trim();
-      const content = this.articleForm.get('content')!.value.trim();
+  openEditArticleDialog(article: Article | null) {
+    const dialogRef = this.dialog.open(EditArticleDialogComponent, {
+      width: '500px',
+      data: { article }
+    });
 
-      if (title && content) {
-        if (this.selectedArticle) {
-          this.updateArticle(title, content);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (article) {
+          this.updateArticle(article, result.title, result.content);
         } else {
-          this.saveArticle(title, content);
+          this.saveArticle(result.title, result.content);
         }
-
         this.loadArticles();
-        this.resetForm();
       }
-    }
+    });
   }
 
   saveArticle(title: string, content: string) {
@@ -66,11 +59,11 @@ export class NewsComponent implements OnInit {
     localStorage.setItem('articles', JSON.stringify(articles));
   }
 
-  updateArticle(title: string, content: string) {
+  updateArticle(original: Article, title: string, content: string) {
     const articles = this.getArticlesFromLocalStorage();
-    const index = articles.findIndex((a: Article) => a.date === this.selectedArticle?.date && a.title === this.selectedArticle?.title);
+    const index = articles.findIndex(a => a.date === original.date && a.title === original.title);
     if (index !== -1) {
-      articles[index] = { ...this.selectedArticle!, title, content };
+      articles[index] = { ...original, title, content };
       localStorage.setItem('articles', JSON.stringify(articles));
     }
   }
@@ -110,27 +103,15 @@ export class NewsComponent implements OnInit {
   clearArchive() {
     localStorage.removeItem('articles');
     this.archive = {};
+    this.loadArticles();
   }
 
   handleArchiveCleared() {
     this.clearArchive();
-    this.loadArticles();
-  }
-
-  resetForm() {
-    this.articleForm.reset();
-    this.selectedArticle = null;
   }
 
   selectArticle(article: Article) {
-    // If you still need to select an article for editing, add conditions here
-    // For carousel dot click, just update the index
-    this.currentIndex = this.latestArticles.findIndex(a => a.title === article.title && a.date === article.date);
-    /*this.selectedArticle = article;
-    this.articleForm.setValue({
-      title: article.title,
-      content: article.content,
-    });*/
+    this.openEditArticleDialog(article);
   }
 
   // Carousel Controls

@@ -28,6 +28,7 @@ import { LanguageSwitcherComponent } from './shared/language-switcher/language-s
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { AddEventFormDialogComponent } from './modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { EditContactDialogComponent } from './modules/organization/edit-contact-dialog/edit-contact-dialog.component';
+import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/edit-article-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { EditContactDialogComponent } from './modules/organization/edit-contact-
     LanguageSwitcherComponent,
     OrderByPipe,
     AddEventFormDialogComponent,
-    EditContactDialogComponent
+    EditContactDialogComponent,
+    EditArticleDialogComponent
   ],
   imports: [
     BrowserModule,

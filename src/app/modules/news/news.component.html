@@ -39,15 +39,10 @@
         <small>{{ article.date }}</small>
       </div>
     </div>
+  </div>
 
-    <!-- Add or Update Article Form -->
-    <!--form class="add-article-form" (ngSubmit)="addOrUpdateArticle()" [formGroup]="articleForm">
-      <label for="title">{{ 'TITLE' | translate }}:</label>
-      <input matInput type="text" id="title" formControlName="title"><br><br>
-      <label for="content">{{ 'CONTENT' | translate }}:</label>
-      <app-quill-editor formControlName="content" [ngModel]="articleForm.get('content')?.value"></app-quill-editor>
-      <button mat-raised-button color="primary" type="submit" *ngIf="!selectedArticle">{{ 'ADD_ARTICLE' | translate }}</button>
-      <button mat-raised-button color="primary" type="button" *ngIf="selectedArticle" (click)="addOrUpdateArticle()">{{ 'UPDATE_ARTICLE' | translate }}</button>
-    </form-->
+  <!-- Button for adding new article -->
+  <div class="add-article-container">
+    <button mat-raised-button color="primary" (click)="openEditArticleDialog(null)">Add New Article</button>
   </div>
 </div>
