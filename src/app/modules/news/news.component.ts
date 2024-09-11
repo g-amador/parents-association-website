@@ -13,6 +13,10 @@ export class NewsComponent implements OnInit {
   selectedArticle: Article | null = null;
   archive: YearArticles = {};
 
+  latestArticles: Article[] = []; // For the latest 3 articles in the carousel
+  recentArticles: Article[] = []; // For the next 4 articles in separate boxes
+  currentIndex: number = 0; // Carousel index
+
   private monthNames: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -73,13 +77,23 @@ export class NewsComponent implements OnInit {
 
   loadArticles() {
     const articles = this.getArticlesFromLocalStorage();
+
+    // Sort articles by date descending
+    articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    // Assign latest 3 articles to the carousel
+    this.latestArticles = articles.slice(0, 3);
+
+    // Assign the next 4 articles to separate boxes
+    this.recentArticles = articles.slice(3, 7);
+
     this.archive = this.groupArticlesByDate(articles);
   }
 
   groupArticlesByDate(articles: Article[]): YearArticles {
     return articles.reduce((acc: YearArticles, article: Article) => {
       const [year, monthNumber, day] = article.date.split('-');
-      const monthName = this.monthNames[parseInt(monthNumber, 10) - 1]; // Convert month number to name
+      const monthName = this.monthNames[parseInt(monthNumber, 10) - 1];
       if (!acc[year]) acc[year] = {};
       if (!acc[year][monthName]) acc[year][monthName] = {};
       if (!acc[year][monthName][day]) acc[year][monthName][day] = [];
@@ -95,12 +109,12 @@ export class NewsComponent implements OnInit {
 
   clearArchive() {
     localStorage.removeItem('articles');
-    this.archive = {}; // Clear the archive object in the component
+    this.archive = {};
   }
 
   handleArchiveCleared() {
     this.clearArchive();
-    this.loadArticles(); // Refresh the archive display
+    this.loadArticles();
   }
 
   resetForm() {
@@ -109,10 +123,27 @@ export class NewsComponent implements OnInit {
   }
 
   selectArticle(article: Article) {
-    this.selectedArticle = article;
+    // If you still need to select an article for editing, add conditions here
+    // For carousel dot click, just update the index
+    this.currentIndex = this.latestArticles.findIndex(a => a.title === article.title && a.date === article.date);
+    /*this.selectedArticle = article;
     this.articleForm.setValue({
       title: article.title,
       content: article.content,
-    });
+    });*/
+  }
+
+  // Carousel Controls
+  prevArticle() {
+    this.currentIndex = (this.currentIndex === 0) ? this.latestArticles.length - 1 : this.currentIndex - 1;
+  }
+
+  nextArticle() {
+    this.currentIndex = (this.currentIndex === this.latestArticles.length - 1) ? 0 : this.currentIndex + 1;
+  }
+
+  // Method to handle dot click
+  onDotClick(index: number) {
+    this.currentIndex = index;
   }
 }

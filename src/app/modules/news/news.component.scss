@@ -1,13 +1,22 @@
+/* Base Styles for Content Container */
 .content-container {
   flex: 1;
   padding: 20px;
   transition: margin-left 0.3s;
   margin-left: 160px; /* Set the initial margin to the width of the open sidebar */
+
+  /* Adjust content margin when sidebar is closed */
+  &.sidebar-closed {
+    margin-left: 35px;
+  }
 }
 
-/* Adjust content margin when sidebar is closed */
-.content-container.sidebar-closed {
-  margin-left: 35px; /* Adjust the left margin when the sidebar is hidden */
+/* Centering Content Within the Container */
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  width: 100%;
 }
 
 .button-group {
@@ -16,3 +25,160 @@
   margin-top: 20px;
 }
 
+/* Wrapper for centering content within 75% of the page */
+.carousel-wrapper {
+  width: 50%; /* Container occupies 75% of the page width */
+  margin: 0 auto; /* Center the wrapper horizontally */
+  //padding: 20px; /* Optional padding for spacing */
+  padding-right: 25%;
+  box-sizing: border-box; /* Include padding in width calculations */
+}
+
+/* Carousel Container for Latest News */
+.carousel-container {
+  position: relative;
+  max-width: 100%; /* Ensure carousel fits within its container */
+  margin: 0 auto; /* Center the carousel within its wrapper */
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.carousel-container:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.carousel-item {
+  display: none;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.carousel-item.active {
+  display: block;
+  opacity: 1;
+}
+
+.carousel h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.carousel div[innerHTML] {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.carousel small {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-container:hover .carousel-control {
+  opacity: 1;
+}
+
+.carousel-control.prev {
+  left: 10px;
+}
+
+.carousel-control.next {
+  right: 10px;
+}
+
+.carousel-indicators {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.carousel-indicators span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: gray;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-indicators .active {
+  background-color: black;
+}
+
+/* Title for Latest News */
+.latest-news-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  padding-right: 25%;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Recent News Grid for displaying 4 articles in a single row */
+.recent-news-wrapper {
+  width: 75%; /* Container occupies 75% of the page width */
+  margin: 0 auto; /* Center the wrapper horizontally */
+  padding: 20px; /* Optional padding for spacing */
+  box-sizing: border-box; /* Include padding in width calculations */
+}
+
+/* Recent News Grid for displaying 4 articles in a single row */
+.recent-news-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Ensure 4 articles in a single row */
+  gap: 20px;
+  width: 75%; /* Full width of the wrapper */
+  max-width: 75%; /* Ensure it doesn’t exceed the width of the wrapper */
+  padding-left: 1%;
+}
+
+/* Individual News Box Styles */
+.news-box {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  text-align: center; /* Center text inside each news box */
+}
+
+.recent-news-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  padding-right: 25%;
+  text-align: center;
+  font-weight: bold;
+}
