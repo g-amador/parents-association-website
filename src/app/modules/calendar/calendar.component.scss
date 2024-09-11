@@ -88,11 +88,11 @@ th {
   padding: 20px;
   transition: margin-left 0.3s;
   margin-left: 160px; /* Set the initial margin to the width of the open sidebar */
-}
 
-/* Adjust content margin when sidebar is closed */
-.content-container.sidebar-closed {
-  margin-left: 35px; /* Adjust the left margin when the sidebar is hidden */
+  /* Adjust content margin when sidebar is closed */
+  &.sidebar-closed {
+    margin-left: 35px;
+  }
 }
 
 /* Event form styles */

@@ -22,7 +22,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CalendarComponent } from './modules/calendar/calendar.component';
 import { OrganizationComponent } from './modules/organization/organization.component';
 import { NewsComponent } from './modules/news/news.component';
-import { NewsArchiveSidebarComponent } from './shared/news-archive-sidebar/news-archive-sidebar.component';
+import { NewsArchiveSidebarComponent } from './modules/news/news-archive-sidebar/news-archive-sidebar.component';
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
