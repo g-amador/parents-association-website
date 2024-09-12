@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEventFormDialogComponent } from './edit-event-form-dialog.component';
+import { EditEventFormDialogComponent } from './edit-event-form-dialog.component';
 
-describe('AddEventFormDialogComponent', () => {
-  let component: AddEventFormDialogComponent;
-  let fixture: ComponentFixture<AddEventFormDialogComponent>;
+describe('EditEventFormDialogComponent', () => {
+  let component: EditEventFormDialogComponent;
+  let fixture: ComponentFixture<EditEventFormDialogComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AddEventFormDialogComponent]
+      declarations: [EditEventFormDialogComponent]
     });
-    fixture = TestBed.createComponent(AddEventFormDialogComponent);
+    fixture = TestBed.createComponent(EditEventFormDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

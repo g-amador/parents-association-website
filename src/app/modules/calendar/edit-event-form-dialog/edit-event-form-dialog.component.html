@@ -1,22 +1,20 @@
 <h1 mat-dialog-title *ngIf="editMode">{{ 'EDIT_EVENT' | translate }}</h1>
 <h1 mat-dialog-title *ngIf="!editMode">{{ 'ADD_EVENT' | translate }}</h1>
-<div mat-dialog-content>
+<div mat-dialog-content [formGroup]="eventForm">
   <mat-form-field appearance="fill">
     <mat-label>{{ 'EVENT_TITLE' | translate }}</mat-label>
-    <input matInput [(ngModel)]="data.title" placeholder="{{ 'ENTER_EVENT_TITLE' | translate }}">
+    <input matInput formControlName="title" placeholder="{{ 'ENTER_EVENT_TITLE' | translate }}">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>{{ 'EVENT_DATE' | translate }}</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="data.date" placeholder="{{ 'CHOOSE_A_DATE' | translate }}" [disabled]="editMode">
+    <input matInput [matDatepicker]="picker" formControlName="date" placeholder="{{ 'CHOOSE_A_DATE' | translate }}" [disabled]="editMode">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
-    <textarea matInput [(ngModel)]="data.description" placeholder="{{ 'ENTER_EVENT_DESCRIPTION' | translate }}"></textarea>
-  </mat-form-field>
+  <!-- Use Reactive Forms Control for Quill Editor -->
+  <app-quill-editor formControlName="description"></app-quill-editor>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button color="warn" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>

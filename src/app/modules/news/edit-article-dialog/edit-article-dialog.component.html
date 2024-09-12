@@ -1,12 +1,13 @@
-<h1 mat-dialog-title>{{ data.article ? 'Edit Article' : 'Add New Article' }}</h1>
+<h1 mat-dialog-title *ngIf="data.article">{{ 'EDIT_ARTICLE' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="!data.article">{{ 'ADD_ARTICLE' | translate }}</h1>
 <div mat-dialog-content>
   <form [formGroup]="articleForm">
     <!-- Title Field -->
     <mat-form-field appearance="fill">
-      <mat-label>Title</mat-label>
+      <mat-label>{{ 'TITLE' | translate }}</mat-label>
       <input matInput formControlName="title">
       <mat-error *ngIf="articleForm.get('title')?.hasError('required')">
-        Title is required
+        {{ 'TITLE_IS_REQUIRED' | translate }}
       </mat-error>
     </mat-form-field>
 

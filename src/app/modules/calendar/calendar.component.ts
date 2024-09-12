@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
-import { AddEventFormDialogComponent } from 'src/app/modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
+import { EditEventFormDialogComponent } from 'src/app/modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { Event } from 'src/app/shared/models/event.model';
 
 @Component({
@@ -90,8 +90,8 @@ export class CalendarComponent implements OnInit {
     const dateStr = day.format('YYYY-MM-DD');
     const eventsForDay = this.events[dateStr] || [];
 
-    const dialogRef = this.dialog.open(AddEventFormDialogComponent, {
-      width: '400px',
+    const dialogRef = this.dialog.open(EditEventFormDialogComponent, {
+      width: '500px',
       data: { title: '', date: dateStr, description: '', events: eventsForDay }
     });
 

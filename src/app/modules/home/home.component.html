@@ -36,7 +36,7 @@
       <div class="carousel">
         <div class="carousel-item" *ngFor="let event of upcomingEvents; let i = index" [ngClass]="{'active': i === currentEventIndex}">
           <h3>{{ event.title }}</h3>
-          <p>{{ event.description }}</p>
+          <div [innerHTML]="event.description"></div>
           <small>{{ event.date }}</small>
         </div>
       </div>
