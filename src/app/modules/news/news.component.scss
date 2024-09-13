@@ -33,9 +33,8 @@
 
 /* Wrapper for centering content within 75% of the page */
 .carousel-wrapper {
-  width: 60%; /* Container occupies 75% of the page width */
+  width: 60%; /* Container occupies 60% of the page width */
   margin: 0 auto; /* Center the wrapper horizontally */
-  //padding: 20px; /* Optional padding for spacing */
   padding-right: 25%;
   box-sizing: border-box; /* Include padding in width calculations */
 }
@@ -153,14 +152,6 @@
 }
 
 /* Recent News Grid for displaying 4 articles in a single row */
-.recent-news-wrapper {
-  width: 75%; /* Container occupies 75% of the page width */
-  margin: 0 auto; /* Center the wrapper horizontally */
-  padding: 20px; /* Optional padding for spacing */
-  box-sizing: border-box; /* Include padding in width calculations */
-}
-
-/* Recent News Grid for displaying 4 articles in a single row */
 .recent-news-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* Ensure 4 articles in a single row */
@@ -178,8 +169,17 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   text-align: center; /* Center text inside each news box */
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease; /* Add transition for hover effect */
 }
 
+/* Hover effect for news boxes */
+.news-box:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  transform: scale(1.02); /* Slightly scale up on hover */
+  background-color: #d0eaff; /* Light blue background color on hover */
+}
+
+/* Title for Recent News */
 .recent-news-title {
   font-size: 1.8rem;
   color: #333;

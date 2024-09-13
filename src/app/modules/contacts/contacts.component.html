@@ -1,0 +1,15 @@
+<div class="contacts-container">
+  <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
+
+  <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
+    <app-language-switcher></app-language-switcher>
+    <h2>{{"CONTACTS" | translate}}</h2>
+    <ul>
+      <li *ngFor="let contact of contacts">
+        <strong>{{ contact.name | translate }}</strong>
+        <span *ngIf="contact.person">: {{ contact.person }}</span>
+        <span *ngIf="contact.phone"> - {{ contact.phone }}</span>
+        <span *ngIf="contact.email"> - <a [href]="'mailto:' + contact.email">{{ contact.email }}</a></span>
+      </li>
+    </ul>
+</div>

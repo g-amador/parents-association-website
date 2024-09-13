@@ -29,6 +29,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { EditEventFormDialogComponent } from './modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { EditContactDialogComponent } from './modules/organization/edit-contact-dialog/edit-contact-dialog.component';
 import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/edit-article-dialog.component';
+import { ContactsComponent } from './modules/contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/e
     OrderByPipe,
     EditEventFormDialogComponent,
     EditContactDialogComponent,
-    EditArticleDialogComponent
+    EditArticleDialogComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,

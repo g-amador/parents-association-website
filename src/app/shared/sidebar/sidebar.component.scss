@@ -21,6 +21,12 @@
   display: flex;
   align-items: center;
   font-size: 20px;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.sidebar a:hover {
+  background-color: lightblue; /* Change background color on hover */
+  border-radius: 4px; /* Optional: Add some border-radius for a rounded look */
 }
 
 .sidebar a i {

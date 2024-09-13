@@ -29,6 +29,7 @@
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions for background color and scaling */
 
   .image-container {
     display: flex;
@@ -38,5 +39,10 @@
 
   .contact-details {
     text-align: center;
+  }
+
+  &:hover {
+    background-color: #e0f7fa; /* Light blue color */
+    transform: scale(1.02); /* Slightly scale up the card */
   }
 }

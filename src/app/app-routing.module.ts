@@ -4,6 +4,7 @@ import { HomeComponent } from './modules/home/home.component'; // Import your ho
 import { OrganizationComponent } from './modules/organization/organization.component';
 import { NewsComponent } from './modules/news/news.component';
 import { CalendarComponent } from './modules/calendar/calendar.component';
+import { ContactsComponent } from './modules/contacts/contacts.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'organization', component: OrganizationComponent },
   { path: 'news', component: NewsComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'contacts', component: ContactsComponent },
 ];
 
 @NgModule({
