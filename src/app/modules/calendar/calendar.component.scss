@@ -1,24 +1,22 @@
 /* Calendar container styles */
+
 .calendar-container {
   text-align: center;
   margin-bottom: 20px;
   padding: 16px;
 }
 
-/* Calendar styles */
 .calendar {
   font-size: 36px;
   margin-bottom: 20px;
 }
 
-/* Table styles */
 table {
   border-collapse: collapse;
   width: 80%;
   margin: 0 auto;
 }
 
-/* Table cell styles */
 td {
   padding: 15px;
   text-align: center;
@@ -31,23 +29,19 @@ td:hover {
   border-radius: 4px; /* Optional: Add some border-radius for a rounded look */
 }
 
-/* Table header styles */
 th {
   padding: 15px;
 }
 
-/* Today styles */
 .today {
   background-color: #ffd700; /* Adjusted color for today */
   color: black;
 }
 
-/* Inactive styles */
 .inactive {
   color: #ccc;
 }
 
-/* Controls styles */
 .controls {
   display: flex;
   align-items: center;
@@ -56,7 +50,6 @@ th {
   font-size: 24px;
 }
 
-/* Month-year styles */
 .month-year {
   font-size: 48px;
   margin-bottom: 10px;
@@ -65,7 +58,6 @@ th {
   justify-content: center; /* Center the content horizontally */
 }
 
-/* Arrow styles */
 .arrow {
   cursor: pointer;
   margin: 0 10px;
@@ -77,7 +69,6 @@ th {
   color: #555;
 }
 
-/* Holiday styles */
 .holiday {
   background-color: #b0e57c; /* Green color for holidays */
   color: black;
@@ -89,7 +80,6 @@ th {
   color: white;
 }
 
-/* Content container styles */
 .content-container {
   flex: 1;
   padding: 20px;
@@ -102,7 +92,6 @@ th {
   }
 }
 
-/* Event form styles */
 .event-form {
   display: flex;
   flex-direction: column;
@@ -110,20 +99,17 @@ th {
   margin-top: 20px;
 }
 
-/* Form field styles */
 mat-form-field {
   width: 100%;
   max-width: 500px;
   margin-bottom: 16px;
 }
 
-/* Button styles */
 button {
   margin-top: 16px;
   font-size: 16px;
 }
 
-/* Legend styles */
 .legend {
   margin-top: 20px;
   text-align: center; /* Center the legend text */
