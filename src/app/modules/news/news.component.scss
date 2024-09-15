@@ -1,17 +1,5 @@
 /* News component Styles */
 
-.content-container {
-  flex: 1;
-  padding: 20px;
-  transition: margin-left 0.3s;
-  margin-left: 160px; /* Set the initial margin to the width of the open sidebar */
-
-  /* Adjust content margin when sidebar is closed */
-  &.sidebar-closed {
-    margin-left: 35px;
-  }
-}
-
 .add-article-container {
   margin-top: 20px; /* Adjust margin to fit your design */
   display: flex;
@@ -49,97 +37,10 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
-}
 
-.carousel-container:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.carousel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #fff;
-}
-
-.carousel-item {
-  display: none;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.carousel-item.active {
-  display: block;
-  opacity: 1;
-}
-
-.carousel h3 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.carousel div[innerHTML] {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.carousel small {
-  color: #999;
-  font-size: 0.9rem;
-}
-
-.carousel-control {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 18px;
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.carousel-container:hover .carousel-control {
-  opacity: 1;
-}
-
-.carousel-control.prev {
-  left: 10px;
-}
-
-.carousel-control.next {
-  right: 10px;
-}
-
-.carousel-indicators {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.carousel-indicators span {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 5px;
-  background-color: gray;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.carousel-indicators .active {
-  background-color: black;
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
 }
 
 /* Title for Latest News */

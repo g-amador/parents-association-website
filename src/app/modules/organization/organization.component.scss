@@ -1,16 +1,5 @@
 /* Organization component Styles */
 
-.content-container {
-  flex: 1;
-  padding: 20px;
-  transition: margin-left 0.3s;
-  margin-left: 160px; /* Initial margin for open sidebar */
-
-  &.sidebar-closed {
-    margin-left: 35px; /* Adjusted margin when sidebar is hidden */
-  }
-}
-
 .title, .group-title {
   text-align: center;
   margin-bottom: 20px;
