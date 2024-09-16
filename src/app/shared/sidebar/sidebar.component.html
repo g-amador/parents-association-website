@@ -13,6 +13,6 @@
     <i class="fa fa-calendar"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'CALENDAR' | translate }}</span>
   </a>
   <a routerLink="/contacts" (click)="changeColor('contacts')" [class.active]="selectedLink === 'contacts'">
-    <i class="fa fa-calendar"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'CONTACTS' | translate }}</span>
+    <i class="fa fa-address-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'CONTACTS' | translate }}</span>
   </a>
 </div>
