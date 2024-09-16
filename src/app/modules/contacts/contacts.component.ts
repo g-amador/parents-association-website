@@ -19,7 +19,7 @@ export class ContactsComponent {
     { name: 'AAAF_CAF_COORDINATION', person: 'Nuno Guimarães' },
     { name: 'SAFE_COORDINATION', person: 'Gonçalo Fonseca' },
     { name: 'AAAF_CAF', phone: '(+351) 925 977 565' },
-    { name: 'AAAF_CAF_CONTACT_MONITORS', person: 'Joaquim Pinto, Lúcia Gonçalves' }
+    { name: 'AAAF_CAF_CONTACT_MONITORS', person: 'Joaquim Pinto, Ligia Gonçalves' }
   ];
 
   toggleSidebarVisibility(sidebarVisible: boolean) {
