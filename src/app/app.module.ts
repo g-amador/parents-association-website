@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,49 +31,42 @@ import { EditContactDialogComponent } from './modules/organization/edit-contact-
 import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/edit-article-dialog.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    SidebarComponent,
-    CalendarComponent,
-    OrganizationComponent,
-    NewsComponent,
-    NewsArchiveSidebarComponent,
-    QuillEditorComponent,
-    LanguageSwitcherComponent,
-    OrderByPipe,
-    EditEventFormDialogComponent,
-    EditContactDialogComponent,
-    EditArticleDialogComponent,
-    ContactsComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatDialogModule,
-    MatInputModule,
-    MatButtonModule,
-    MatExpansionModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatRippleModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        SidebarComponent,
+        CalendarComponent,
+        OrganizationComponent,
+        NewsComponent,
+        NewsArchiveSidebarComponent,
+        QuillEditorComponent,
+        LanguageSwitcherComponent,
+        OrderByPipe,
+        EditEventFormDialogComponent,
+        EditContactDialogComponent,
+        EditArticleDialogComponent,
+        ContactsComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        MatInputModule,
+        MatButtonModule,
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatRippleModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
   constructor(translate: TranslateService) {
     translate.setDefaultLang('pt'); // Default language
