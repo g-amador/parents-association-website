@@ -14,6 +14,15 @@
   width: 35px;
 }
 
+/* Hide text by default on mobile */
+.sidebar a .sidebar-text {
+  display: inline; /* Show text if the sidebar is open */
+}
+
+.sidebar-closed .sidebar a .sidebar-text {
+  display: none; /* Hide text when the sidebar is closed */
+}
+
 .sidebar a {
   padding: 6px 8px;
   text-decoration: none;
@@ -34,10 +43,18 @@
   margin-right: 10px;
 }
 
-/* Hide text for smaller screens */
+/* Mobile-specific styles */
 @media screen and (max-width: 768px) {
+  .sidebar {
+    width: 50px; /* Narrow width for mobile */
+  }
+
+  .sidebar-closed .sidebar {
+    width: 50px; /* Ensure width remains narrow when closed */
+  }
+
   .sidebar a .sidebar-text {
-    display: none; /* Hide sidebar text when next to icon */
+    display: none; /* Always hide text on mobile */
   }
 }
 

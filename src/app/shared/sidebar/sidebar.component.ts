@@ -11,8 +11,10 @@ export class SidebarComponent {
   selectedLink: string | null = null;
 
   toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
-    this.sidebarVisibilityChange.emit(this.sidebarVisible);
+    if (window.innerWidth > 768) {
+      this.sidebarVisible = !this.sidebarVisible;
+      this.sidebarVisibilityChange.emit(this.sidebarVisible);
+    }
   }
 
   changeColor(selected: string) {

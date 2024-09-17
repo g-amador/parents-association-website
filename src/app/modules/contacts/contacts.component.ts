@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss']
 })
-export class ContactsComponent {
-  sidebarVisible = true;
+export class ContactsComponent implements OnInit {
+  sidebarVisible = true; // Default to true, will adjust based on screen size
 
   contacts = [
     { name: 'SCHOOL_COORDINATOR', email: 'manuel.grilo@agpm.edu.pt' },
@@ -21,6 +21,19 @@ export class ContactsComponent {
     { name: 'AAAF_CAF', phone: '(+351) 925 977 565' },
     { name: 'AAAF_CAF_CONTACT_MONITORS', person: 'Joaquim Pinto, Ligia Gonçalves' }
   ];
+
+  ngOnInit() {
+    this.adjustSidebarVisibility();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.adjustSidebarVisibility();
+  }
+
+  adjustSidebarVisibility() {
+    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
+  }
 
   toggleSidebarVisibility(sidebarVisible: boolean) {
     this.sidebarVisible = sidebarVisible;

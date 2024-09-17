@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component'; // Import the dialog component
@@ -10,23 +10,34 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./organization.component.scss']
 })
 export class OrganizationComponent implements OnInit {
+  sidebarVisible = true; // Default to true, will adjust based on screen size
+
   contacts: any = {
     direction: [],
     assembly: [],
     fiscalCouncil: []
   };
-  sidebarVisible = true;
 
   isAdminRoute: boolean = false;
 
   constructor(private http: HttpClient, public dialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.adjustSidebarVisibility();
     this.loadContacts();
 
     this.route.data.subscribe(data => {
       this.isAdminRoute = data['isAdminRoute'];
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.adjustSidebarVisibility();
+  }
+
+  adjustSidebarVisibility() {
+    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
   // Load contacts from localStorage or the initial JSON file

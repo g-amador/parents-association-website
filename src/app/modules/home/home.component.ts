@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Event } from '../../shared/models/event.model';
 
@@ -8,7 +8,7 @@ import { Event } from '../../shared/models/event.model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  sidebarVisible = true;
+  sidebarVisible = true; // Default to true, will adjust based on screen size
   latestArticles: Article[] = [];
   upcomingEvents: Event[] = [];
   currentIndex = 0;
@@ -17,10 +17,20 @@ export class HomeComponent implements OnInit {
   eventIntervalId: any; // For event carousel rotation
 
   ngOnInit() {
+    this.adjustSidebarVisibility();
     this.loadLatestArticles();
     this.loadUpcomingEvents();
     this.startCarouselRotation();
     this.startEventCarouselRotation(); // Start event carousel rotation
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.adjustSidebarVisibility();
+  }
+
+  adjustSidebarVisibility() {
+    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
   toggleSidebarVisibility(sidebarVisible: boolean) {

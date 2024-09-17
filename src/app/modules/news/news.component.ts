@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Article, YearArticles } from '../../shared/models/article.model';
 import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component';
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./news.component.scss']
 })
 export class NewsComponent implements OnInit {
-  sidebarVisible = true;
+  sidebarVisible = true; // Default to true, will adjust based on screen size
   archive: YearArticles = {};
 
   latestArticles: Article[] = []; // For the latest 3 articles in the carousel
@@ -28,11 +28,21 @@ export class NewsComponent implements OnInit {
   constructor(private dialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.adjustSidebarVisibility();
     this.loadArticles();
 
     this.route.data.subscribe(data => {
       this.isAdminRoute = data['isAdminRoute'];
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.adjustSidebarVisibility();
+  }
+
+  adjustSidebarVisibility() {
+    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
   toggleSidebarVisibility(sidebarVisible: boolean) {

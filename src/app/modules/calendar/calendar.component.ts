@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { EditEventFormDialogComponent } from '../../modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
@@ -12,7 +12,7 @@ import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  sidebarVisible = true;
+  sidebarVisible = true; // Default to true, will adjust based on screen size
   currentMonthYear: moment.Moment = moment();
   calendar: moment.Moment[][] = [];
   events: { [key: string]: Event[] } = {}; // Store events by date
@@ -22,12 +22,22 @@ export class CalendarComponent implements OnInit {
   constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.adjustSidebarVisibility();
     this.generateCalendar();
     this.loadEvents();
 
     this.route.data.subscribe(data => {
       this.isAdminRoute = data['isAdminRoute'];
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.adjustSidebarVisibility();
+  }
+
+  adjustSidebarVisibility() {
+    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
   getPublicHolidays(year: number): string[] {
