@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { Article, YearArticles } from 'src/app/shared/models/article.model'; // Adjust path as needed
+import { Article, YearArticles } from '../../../shared/models/article.model';
 
 @Component({
   selector: 'app-news-archive-sidebar',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from 'src/app/shared/models/article.model';
-import { Event } from 'src/app/shared/models/event.model';
+import { Article } from '../../shared/models/article.model';
+import { Event } from '../../shared/models/event.model';
 
 @Component({
   selector: 'app-home',

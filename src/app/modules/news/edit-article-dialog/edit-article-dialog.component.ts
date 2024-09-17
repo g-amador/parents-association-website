@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Article } from 'src/app/shared/models/article.model'; // Adjust path as needed
+import { Article } from '../../../shared/models/article.model';
 
 @Component({
   selector: 'app-edit-article-dialog',

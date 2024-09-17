@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
-import { EditEventFormDialogComponent } from 'src/app/modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
-import { Event } from 'src/app/shared/models/event.model';
+import { EditEventFormDialogComponent } from '../../modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
+import { Event } from '../../shared/models/event.model';
 
 @Component({
   selector: 'app-calendar',
