@@ -55,7 +55,7 @@ export class NewsComponent implements OnInit {
           this.saveArticle(result.title, result.content);
         }
       }
-      this.loadArticles();
+      this.loadArticles(); // Refresh articles after edit
     });
   }
 
@@ -64,6 +64,14 @@ export class NewsComponent implements OnInit {
       width: '400px',
       data: { title: article.title, content: article.content }
     });
+  }
+
+  handleArticleClick(article: Article) {
+    if (this.isAdminRoute) {
+      this.openEditArticleDialog(article);
+    } else {
+      this.openViewArticleDialog(article);
+    }
   }
 
   handleArticleSelection({ article, isAdmin }: { article: Article; isAdmin: boolean }) {

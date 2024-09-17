@@ -33,7 +33,7 @@
     <!-- Next 4 Articles in Boxes -->
     <h2 class="recent-news-title">{{ 'RECENT_NEWS' | translate }}</h2>
     <div class="recent-news-grid">
-      <div class="news-box" *ngFor="let article of recentArticles">
+      <div class="news-box" *ngFor="let article of recentArticles" (click)="handleArticleClick(article)">
         <h3>{{ article.title }}</h3>
         <div [innerHTML]="article.content"></div>
         <small>{{ article.date }}</small>
