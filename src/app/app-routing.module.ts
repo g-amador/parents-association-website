@@ -7,12 +7,15 @@ import { CalendarComponent } from './modules/calendar/calendar.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: '', redirectTo: '/organization', pathMatch: 'full' },
-  { path: 'organization', component: OrganizationComponent },
-  { path: 'news', component: NewsComponent },
-  { path: 'calendar', component: CalendarComponent },
-  { path: 'contacts', component: ContactsComponent },
+  { path: 'home', component: HomeComponent, data: { isAdminRoute: false } },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'organization', component: OrganizationComponent, data: { isAdminRoute: false } },
+  { path: 'organization/admin', component: OrganizationComponent, data: { isAdminRoute: true } },
+  { path: 'news', component: NewsComponent, data: { isAdminRoute: false } },
+  { path: 'news/admin', component: NewsComponent, data: { isAdminRoute: true } },
+  { path: 'calendar', component: CalendarComponent, data: { isAdminRoute: false } },
+  { path: 'calendar/admin', component: CalendarComponent, data: { isAdminRoute: true } },
+  { path: 'contacts', component: ContactsComponent, data: { isAdminRoute: false } }
 ];
 
 @NgModule({

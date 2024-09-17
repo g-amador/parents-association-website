@@ -42,7 +42,7 @@
   </div>
 
   <!-- Button for adding new article -->
-  <div class="add-article-container">
+  <div class="add-article-container" *ngIf="isAdminRoute">
     <button mat-raised-button color="primary" (click)="openEditArticleDialog(null)">{{ 'ADD_ARTICLE' | translate }}</button>
   </div>
 </div>

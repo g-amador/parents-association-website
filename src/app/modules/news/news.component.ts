@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Article, YearArticles } from 'src/app/shared/models/article.model'; // Adjust path as needed
-import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component'; // Adjust path as needed
+import { Article, YearArticles } from '../../shared/models/article.model';
+import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-news',
@@ -18,15 +18,21 @@ export class NewsComponent implements OnInit {
   recentArticles: Article[] = []; // For the next 4 articles in separate boxes
   currentIndex: number = 0; // Carousel index
 
+  isAdminRoute: boolean = false;
+
   private monthNames: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.loadArticles();
+
+    this.route.data.subscribe(data => {
+      this.isAdminRoute = data['isAdminRoute'];
+    });
   }
 
   toggleSidebarVisibility(sidebarVisible: boolean) {
@@ -40,14 +46,20 @@ export class NewsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'delete' && article) {
+        // Call the deleteArticle method to delete the article
+        this.deleteArticle(article);
+      } else if (result) {
         if (article) {
+          // Call the updateArticle method to update the article
           this.updateArticle(article, result.title, result.content);
         } else {
+          // Call the saveArticle method to save a new article
           this.saveArticle(result.title, result.content);
         }
-        this.loadArticles();
       }
+      // Reload the articles after any operation (delete, update, or save)
+      this.loadArticles();
     });
   }
 
@@ -66,6 +78,12 @@ export class NewsComponent implements OnInit {
       articles[index] = { ...original, title, content };
       localStorage.setItem('articles', JSON.stringify(articles));
     }
+  }
+
+  deleteArticle(article: Article) {
+    const articles = this.getArticlesFromLocalStorage();
+    const updatedArticles = articles.filter(a => !(a.title === article.title && a.date === article.date));
+    localStorage.setItem('articles', JSON.stringify(updatedArticles));
   }
 
   loadArticles() {

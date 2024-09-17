@@ -37,4 +37,10 @@ export class EditArticleDialogComponent implements OnInit {
   cancel() {
     this.dialogRef.close();
   }
+
+  // This method will be called when the delete button is clicked.
+  delete() {
+    // You can return a special value or trigger a service call to delete the article
+    this.dialogRef.close('delete');
+  }
 }

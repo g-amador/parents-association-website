@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Article, YearArticles } from '../../../shared/models/article.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-news-archive-sidebar',
@@ -11,10 +12,21 @@ export class NewsArchiveSidebarComponent implements OnInit {
   @Output() articleSelected = new EventEmitter<Article>();
   @Output() archiveCleared = new EventEmitter<void>();
 
-  ngOnInit() {}
+  isAdminRoute: boolean = false;
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.isAdminRoute = data['isAdminRoute'];
+    });
+
+  }
 
   selectArticle(article: Article) {
-    this.articleSelected.emit(article);
+    if (this.isAdminRoute) {
+      this.articleSelected.emit(article);
+    }
   }
 
   clearArchive() {

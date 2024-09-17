@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { EditEventFormDialogComponent } from '../../modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { Event } from '../../shared/models/event.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -15,11 +16,17 @@ export class CalendarComponent implements OnInit {
   calendar: moment.Moment[][] = [];
   events: { [key: string]: Event[] } = {}; // Store events by date
 
-  constructor(public dialog: MatDialog) {}
+  isAdminRoute: boolean = false;
+
+  constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.generateCalendar();
     this.loadEvents();
+
+    this.route.data.subscribe(data => {
+      this.isAdminRoute = data['isAdminRoute'];
+    });
   }
 
   getPublicHolidays(year: number): string[] {
@@ -87,27 +94,29 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDate(day: moment.Moment): void {
-    const dateStr = day.format('YYYY-MM-DD');
-    const eventsForDay = this.events[dateStr] || [];
+    if (this.isAdminRoute) {
+      const dateStr = day.format('YYYY-MM-DD');
+      const eventsForDay = this.events[dateStr] || [];
 
-    const dialogRef = this.dialog.open(EditEventFormDialogComponent, {
-      width: '500px',
-      data: { title: '', date: dateStr, description: '', events: eventsForDay }
-    });
+      const dialogRef = this.dialog.open(EditEventFormDialogComponent, {
+        width: '500px',
+        data: { title: '', date: dateStr, description: '', events: eventsForDay }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result.cancel) {
-          this.deleteEvent(result.date, result.index); // Delete the event if canceled
-        } else if (result.index !== undefined && result.index !== null) {
-          this.updateEvent(result);
-        } else {
-          this.addEvent(result);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result.cancel) {
+            this.deleteEvent(result.date, result.index); // Delete the event if canceled
+          } else if (result.index !== undefined && result.index !== null) {
+            this.updateEvent(result);
+          } else {
+            this.addEvent(result);
+          }
+
+          this.generateCalendar(); // Refresh calendar after updating or adding event
         }
-
-        this.generateCalendar(); // Refresh calendar after updating or adding event
-      }
-    });
+      });
+    }
   }
 
   addEvent(eventData: { title: string, date: string | null, description: string }): void {

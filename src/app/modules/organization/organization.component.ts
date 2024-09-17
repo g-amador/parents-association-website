@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component'; // Import the dialog component
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-organization',
@@ -16,10 +17,16 @@ export class OrganizationComponent implements OnInit {
   };
   sidebarVisible = true;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  isAdminRoute: boolean = false;
+
+  constructor(private http: HttpClient, public dialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.loadContacts();
+
+    this.route.data.subscribe(data => {
+      this.isAdminRoute = data['isAdminRoute'];
+    });
   }
 
   // Load contacts from localStorage or the initial JSON file
@@ -50,18 +57,20 @@ export class OrganizationComponent implements OnInit {
 
   // Open the edit dialog when a contact card is clicked
   editContact(contact: any, group: string, index: number) {
-    const dialogRef = this.dialog.open(EditContactDialogComponent, {
-      width: '400px',
-      data: { contact }
-    });
+    if (this.isAdminRoute) {
+      const dialogRef = this.dialog.open(EditContactDialogComponent, {
+        width: '400px',
+        data: { contact }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // If the dialog returned a result, update the contact
-        this.contacts[group][index] = result;
-        this.saveToLocalStorage();
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          // If the dialog returned a result, update the contact
+          this.contacts[group][index] = result;
+          this.saveToLocalStorage();
+        }
+      });
+    }
   }
 
   // Save contacts to localStorage
