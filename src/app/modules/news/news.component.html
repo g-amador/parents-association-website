@@ -1,5 +1,5 @@
 <div class="news-container">
-  <app-news-archive-sidebar [archive]="archive" (archiveCleared)="handleArchiveCleared()" (articleSelected)="selectArticle($event)"></app-news-archive-sidebar>
+  <app-news-archive-sidebar [archive]="archive" (archiveCleared)="handleArchiveCleared()" (articleSelected)="handleArticleSelection($event)"></app-news-archive-sidebar>
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
 
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Article, YearArticles } from '../../shared/models/article.model';
 import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component';
+import { ViewArticleDialogComponent } from './view-article-dialog/view-article-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,14 +12,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NewsComponent implements OnInit {
   sidebarVisible = true;
-  selectedArticle: Article | null = null;
   archive: YearArticles = {};
 
   latestArticles: Article[] = []; // For the latest 3 articles in the carousel
   recentArticles: Article[] = []; // For the next 4 articles in separate boxes
   currentIndex: number = 0; // Carousel index
 
-  isAdminRoute: boolean = false;
+  isAdminRoute: boolean = false; // Determine if the route is admin
 
   private monthNames: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -47,20 +47,31 @@ export class NewsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'delete' && article) {
-        // Call the deleteArticle method to delete the article
         this.deleteArticle(article);
       } else if (result) {
         if (article) {
-          // Call the updateArticle method to update the article
           this.updateArticle(article, result.title, result.content);
         } else {
-          // Call the saveArticle method to save a new article
           this.saveArticle(result.title, result.content);
         }
       }
-      // Reload the articles after any operation (delete, update, or save)
       this.loadArticles();
     });
+  }
+
+  openViewArticleDialog(article: Article) {
+    this.dialog.open(ViewArticleDialogComponent, {
+      width: '400px',
+      data: { title: article.title, content: article.content }
+    });
+  }
+
+  handleArticleSelection({ article, isAdmin }: { article: Article; isAdmin: boolean }) {
+    if (isAdmin) {
+      this.openEditArticleDialog(article);
+    } else {
+      this.openViewArticleDialog(article);
+    }
   }
 
   saveArticle(title: string, content: string) {
@@ -128,11 +139,6 @@ export class NewsComponent implements OnInit {
     this.clearArchive();
   }
 
-  selectArticle(article: Article) {
-    this.openEditArticleDialog(article);
-  }
-
-  // Carousel Controls
   prevArticle() {
     this.currentIndex = (this.currentIndex === 0) ? this.latestArticles.length - 1 : this.currentIndex - 1;
   }
@@ -141,7 +147,6 @@ export class NewsComponent implements OnInit {
     this.currentIndex = (this.currentIndex === this.latestArticles.length - 1) ? 0 : this.currentIndex + 1;
   }
 
-  // Method to handle dot click
   onDotClick(index: number) {
     this.currentIndex = index;
   }

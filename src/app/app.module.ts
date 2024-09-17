@@ -29,6 +29,8 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { EditEventFormDialogComponent } from './modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { EditContactDialogComponent } from './modules/organization/edit-contact-dialog/edit-contact-dialog.component';
 import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/edit-article-dialog.component';
+import { ViewEventDialogComponent } from './modules/calendar/view-event-dialog/view-event-dialog.component';
+import { ViewArticleDialogComponent } from './modules/news/view-article-dialog/view-article-dialog.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
 
 @NgModule({ declarations: [
@@ -45,6 +47,8 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
         EditEventFormDialogComponent,
         EditContactDialogComponent,
         EditArticleDialogComponent,
+        ViewEventDialogComponent,
+        ViewArticleDialogComponent,
         ContactsComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,

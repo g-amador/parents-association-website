@@ -1,0 +1,7 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <div [innerHTML]="data.description"></div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="cancel" mat-dialog-close>{{ 'CANCEL' | translate }}</button>
+</mat-dialog-actions>

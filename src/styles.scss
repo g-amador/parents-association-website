@@ -51,6 +51,11 @@ button.mat-raised-button[color='primary'] {
   color: white; /* White text */
 }
 
+button.mat-raised-button[color='cancel'] {
+  background-color: #565658; /* Blue background for save button */
+  color: white; /* White text */
+}
+
 .content-container {
   flex: 1;
   padding: 20px;

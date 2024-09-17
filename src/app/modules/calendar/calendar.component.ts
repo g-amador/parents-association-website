@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditEventFormDialogComponent } from '../../modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { Event } from '../../shared/models/event.model';
 import { ActivatedRoute } from '@angular/router';
+import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 
 @Component({
   selector: 'app-calendar',
@@ -94,10 +95,10 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDate(day: moment.Moment): void {
-    if (this.isAdminRoute) {
-      const dateStr = day.format('YYYY-MM-DD');
-      const eventsForDay = this.events[dateStr] || [];
+    const dateStr = day.format('YYYY-MM-DD');
+    const eventsForDay = this.events[dateStr] || [];
 
+    if (this.isAdminRoute) {
       const dialogRef = this.dialog.open(EditEventFormDialogComponent, {
         width: '500px',
         data: { title: '', date: dateStr, description: '', events: eventsForDay }
@@ -106,18 +107,25 @@ export class CalendarComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           if (result.cancel) {
-            this.deleteEvent(result.date, result.index); // Delete the event if canceled
+            this.deleteEvent(result.date, result.index);
           } else if (result.index !== undefined && result.index !== null) {
             this.updateEvent(result);
           } else {
             this.addEvent(result);
           }
 
-          this.generateCalendar(); // Refresh calendar after updating or adding event
+          this.generateCalendar();
         }
+      });
+    } else {
+      const event = eventsForDay.length > 0 ? eventsForDay[0] : { title: 'No events', description: '' };
+      this.dialog.open(ViewEventDialogComponent, {
+        width: '300px',
+        data: event
       });
     }
   }
+
 
   addEvent(eventData: { title: string, date: string | null, description: string }): void {
     if (eventData.title && eventData.date) {

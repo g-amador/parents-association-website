@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NewsArchiveSidebarComponent implements OnInit {
   @Input() archive: YearArticles = {};
-  @Output() articleSelected = new EventEmitter<Article>();
+  @Output() articleSelected = new EventEmitter<{ article: Article; isAdmin: boolean }>();
   @Output() archiveCleared = new EventEmitter<void>();
 
   isAdminRoute: boolean = false;
@@ -20,13 +20,10 @@ export class NewsArchiveSidebarComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.isAdminRoute = data['isAdminRoute'];
     });
-
   }
 
   selectArticle(article: Article) {
-    if (this.isAdminRoute) {
-      this.articleSelected.emit(article);
-    }
+    this.articleSelected.emit({ article, isAdmin: this.isAdminRoute });
   }
 
   clearArchive() {
