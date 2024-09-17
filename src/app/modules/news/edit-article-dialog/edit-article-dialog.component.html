@@ -16,7 +16,7 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="warn" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
+  <button mat-raised-button color="cancel" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
 
   <!-- Only show the delete button if we are editing an existing article -->
   <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.article">{{ 'DELETE_ARTICLE' | translate }}</button>

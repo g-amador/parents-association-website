@@ -17,7 +17,7 @@
   <app-quill-editor formControlName="description"></app-quill-editor>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="warn" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
+  <button mat-raised-button color="cancel" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
   <button mat-raised-button color="warn" (click)="onCancelEvent()" *ngIf="data.events.length > 0">{{ 'CANCEL_EVENT' | translate }}</button>
   <button mat-raised-button color="primary" (click)="onSave()">{{ 'SAVE' | translate }}</button>
 </div>
