@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -33,7 +33,8 @@ import { ViewEventDialogComponent } from './modules/calendar/view-event-dialog/v
 import { ViewArticleDialogComponent } from './modules/news/view-article-dialog/view-article-dialog.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         HomeComponent,
         SidebarComponent,
@@ -51,7 +52,8 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
         ViewArticleDialogComponent,
         ContactsComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    imports: [
+        BrowserModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot({
             loader: {
@@ -70,13 +72,19 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
         MatExpansionModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatRippleModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        MatRippleModule
+    ],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ],
+    bootstrap: [AppComponent]
+})
 export class AppModule {
-  constructor(translate: TranslateService) {
-    translate.setDefaultLang('pt'); // Default language
-  }
+    constructor(translate: TranslateService) {
+        translate.setDefaultLang('pt'); // Default language
+    }
 }
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
+    return new TranslateHttpLoader(http);
 }
