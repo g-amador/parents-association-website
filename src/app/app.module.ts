@@ -25,7 +25,7 @@ import { NewsComponent } from './modules/news/news.component';
 import { NewsArchiveSidebarComponent } from './modules/news/news-archive-sidebar/news-archive-sidebar.component';
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
-import { OrderByPipe } from './pipes/order-by.pipe';
+import { OrderByPipe } from './shared/pipes/order-by.pipe';
 import { EditEventFormDialogComponent } from './modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
 import { EditContactDialogComponent } from './modules/organization/edit-contact-dialog/edit-contact-dialog.component';
 import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/edit-article-dialog.component';
