@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,6 +12,10 @@ export class SidebarComponent {
   @Output() sidebarVisibilityChange = new EventEmitter<boolean>();
   selectedLink: string | null = null;
 
+  constructor(
+    private authService: AuthService,
+    private router: Router) {}
+
   toggleSidebar() {
     if (window.innerWidth > 768) {
       this.sidebarVisible = !this.sidebarVisible;
@@ -19,5 +25,14 @@ export class SidebarComponent {
 
   changeColor(selected: string) {
     this.selectedLink = selected;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/home']); // Redirect to home after logout
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isAuthenticated();
   }
 }

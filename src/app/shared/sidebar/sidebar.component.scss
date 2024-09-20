@@ -7,72 +7,86 @@
   background-color: #f1f1f1;
   overflow-x: hidden;
   padding-top: 20px;
-  transition: width 0.3s ease; /* Smooth transition when sidebar width changes */
-}
-
-.sidebar-closed {
-  width: 35px;
-}
-
-/* Hide text by default on mobile */
-.sidebar a .sidebar-text {
-  display: inline; /* Show text if the sidebar is open */
-}
-
-.sidebar-closed .sidebar a .sidebar-text {
-  display: none; /* Hide text when the sidebar is closed */
-}
-
-.sidebar a {
-  padding: 6px 8px;
-  text-decoration: none;
-  color: black;
   display: flex;
-  align-items: center;
-  font-size: 20px;
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
-}
+  flex-direction: column; /* Align items in a column */
+  transition: width 0.3s ease;
 
-.sidebar a:hover {
-  background-color: lightblue; /* Change background color on hover */
-  border-radius: 4px; /* Optional: Add some border-radius for a rounded look */
-}
+  &.sidebar-closed {
+    width: 35px;
 
-.sidebar a i {
-  width: 20px;
-  margin-right: 10px;
+    .sidebar-text {
+      display: none; /* Hide text when sidebar is closed */
+    }
+
+    a {
+      justify-content: center; /* Center icon when closed */
+    }
+  }
+
+  a {
+    padding: 6px 8px;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: lightblue;
+      border-radius: 4px;
+    }
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  /* Pushes logout to the bottom */
+  .logout-container {
+    margin-top: auto; /* This will push the logout button to the bottom */
+    padding: 0 10px 20px; /* Adjusts padding for the logout button */
+
+    a {
+      display: flex;
+      align-items: center;
+
+      i {
+        margin-right: 10px; /* Space between icon and text */
+      }
+    }
+  }
 }
 
 /* Mobile-specific styles */
 @media screen and (max-width: 768px) {
   .sidebar {
-    width: 50px; /* Narrow width for mobile */
-  }
+    width: 50px;
 
-  .sidebar-closed .sidebar {
-    width: 50px; /* Ensure width remains narrow when closed */
-  }
+    &.sidebar-closed {
+      width: 50px; /* Ensure width remains narrow when closed */
+    }
 
-  .sidebar a .sidebar-text {
-    display: none; /* Always hide text on mobile */
+    a .sidebar-text {
+      display: none; /* Always hide text on mobile */
+    }
   }
 }
 
 .toggle-btn {
-  padding: 6px 8px 6px 16px;
+  padding: 6px 8px;
   text-decoration: none;
   font-size: 20px;
   color: black;
   display: block;
-  margin-bottom: 10px; /* Adjust margin as needed */
+  margin-bottom: 10px;
 }
 
 .main-content {
-  transition: margin-left 0.3s ease; /* Add a transition for smooth animation */
-  margin-left: 160px; /* Set the initial margin to the width of the open sidebar */
-}
+  transition: margin-left 0.3s ease;
+  margin-left: 160px;
 
-/* Adjust main content margin when sidebar is closed */
-.sidebar-closed .main-content {
-  margin-left: 35px; /* Adjust the left margin when the sidebar is hidden */
+  .sidebar-closed & {
+    margin-left: 35px; /* Adjust margin when sidebar is hidden */
+  }
 }

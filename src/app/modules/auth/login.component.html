@@ -1,0 +1,35 @@
+<div class="login-container">
+  <app-language-switcher></app-language-switcher>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{'LOGIN' | translate}}</mat-card-title>
+      <mat-card-subtitle>{{'ACCESS_ACCOUNT' | translate}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+        <mat-form-field appearance="fill">
+          <mat-label>{{'EMAIL' | translate}}</mat-label>
+          <input matInput type="email" name="email" ngModel required>
+          <mat-error *ngIf="loginForm.controls['email']?.invalid && loginForm.controls['email']?.touched">
+            {{'ENTER_VALID_EMAIL' | translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>{{'PASSWORD' | translate}}</mat-label>
+          <input matInput type="password" name="password" ngModel required>
+          <mat-error *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched">
+            {{'ENTER_PASSWORD' | translate}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-error *ngIf="loginFailed" style="color: red;">
+
+          {{'INVALID_EMAIL_PASSWORD' | translate}}
+        </mat-error>
+
+        <button mat-raised-button color="primary" type="submit">{{'LOGIN' | translate}}</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

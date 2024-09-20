@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component'; // Import the dialog component
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-organization',
@@ -20,14 +21,18 @@ export class OrganizationComponent implements OnInit {
 
   isAdminRoute: boolean = false;
 
-  constructor(private http: HttpClient, public dialog: MatDialog, private route: ActivatedRoute) {}
+  constructor(
+    private http: HttpClient,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private authService: AuthService) {}
 
   ngOnInit() {
     this.adjustSidebarVisibility();
     this.loadContacts();
 
     this.route.data.subscribe(data => {
-      this.isAdminRoute = data['isAdminRoute'];
+      this.isAdminRoute = data['isAdminRoute'] || this.authService.isAuthenticated();
     });
   }
 

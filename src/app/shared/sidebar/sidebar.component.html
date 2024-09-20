@@ -1,5 +1,6 @@
 <div id="sidebar" [ngClass]="{'sidebar-closed': !sidebarVisible}" class="sidebar">
   <a (click)="toggleSidebar()" class="toggle-btn"><i class="fa fa-bars"></i></a>
+
   <a routerLink="/" (click)="changeColor('home')" [class.active]="selectedLink === 'home'">
     <i class="fa fa-home"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'HOME' | translate }}</span>
   </a>
@@ -15,4 +16,10 @@
   <a routerLink="/contacts" (click)="changeColor('contacts')" [class.active]="selectedLink === 'contacts'">
     <i class="fa fa-address-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'CONTACTS' | translate }}</span>
   </a>
+
+  <div class="logout-container" *ngIf="isLoggedIn()">
+    <a (click)="logout()">
+      <i class="fa fa-sign-out"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'LOGOUT' | translate }}</span>
+    </a>
+  </div>
 </div>

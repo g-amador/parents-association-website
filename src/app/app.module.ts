@@ -8,15 +8,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatRippleModule } from '@angular/material/core';
+// Services and Guards
+import { AuthGuard } from './core/guards/auth.guard';
+import { AuthService } from './core/services/auth.service';
 
+// Components
+import { LoginComponent } from './modules/auth/login.component';
 import { HomeComponent } from './modules/home/home.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CalendarComponent } from './modules/calendar/calendar.component';
@@ -32,6 +29,17 @@ import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/e
 import { ViewEventDialogComponent } from './modules/calendar/view-event-dialog/view-event-dialog.component';
 import { ViewArticleDialogComponent } from './modules/news/view-article-dialog/view-article-dialog.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
+
+// Angular Material Modules
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -50,7 +58,8 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
         EditArticleDialogComponent,
         ViewEventDialogComponent,
         ViewArticleDialogComponent,
-        ContactsComponent
+        ContactsComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -65,16 +74,19 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
+        MatCardModule,
         MatFormFieldModule,
-        MatDialogModule,
         MatInputModule,
         MatButtonModule,
+        MatDialogModule,
         MatExpansionModule,
         MatDatepickerModule,
         MatNativeDateModule,
         MatRippleModule
     ],
     providers: [
+        AuthService,
+        AuthGuard,
         provideHttpClient(withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent]

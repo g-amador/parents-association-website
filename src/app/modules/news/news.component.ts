@@ -4,6 +4,7 @@ import { Article, YearArticles } from '../../shared/models/article.model';
 import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component';
 import { ViewArticleDialogComponent } from './view-article-dialog/view-article-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-news',
@@ -25,14 +26,17 @@ export class NewsComponent implements OnInit {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute) {}
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private authService: AuthService) {}
 
   ngOnInit() {
     this.adjustSidebarVisibility();
     this.loadArticles();
 
     this.route.data.subscribe(data => {
-      this.isAdminRoute = data['isAdminRoute'];
+      this.isAdminRoute = data['isAdminRoute'] || this.authService.isAuthenticated();
     });
   }
 

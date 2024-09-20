@@ -5,6 +5,7 @@ import { EditEventFormDialogComponent } from '../../modules/calendar/edit-event-
 import { Event } from '../../shared/models/event.model';
 import { ActivatedRoute } from '@angular/router';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -19,7 +20,10 @@ export class CalendarComponent implements OnInit {
 
   isAdminRoute: boolean = false;
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
+  constructor(
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private authService: AuthService) {}
 
   ngOnInit() {
     this.adjustSidebarVisibility();
@@ -27,7 +31,7 @@ export class CalendarComponent implements OnInit {
     this.loadEvents();
 
     this.route.data.subscribe(data => {
-      this.isAdminRoute = data['isAdminRoute'];
+      this.isAdminRoute = data['isAdminRoute'] || this.authService.isAuthenticated();
     });
   }
 

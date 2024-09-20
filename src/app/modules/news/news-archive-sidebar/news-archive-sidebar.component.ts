@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Article, YearArticles } from '../../../shared/models/article.model';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-news-archive-sidebar',
@@ -14,11 +15,13 @@ export class NewsArchiveSidebarComponent implements OnInit {
 
   isAdminRoute: boolean = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService) {}
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.isAdminRoute = data['isAdminRoute'];
+      this.isAdminRoute = data['isAdminRoute'] || this.authService.isAuthenticated();
     });
   }
 
