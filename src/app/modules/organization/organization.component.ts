@@ -32,7 +32,7 @@ export class OrganizationComponent implements OnInit {
     this.loadContacts();
 
     this.route.data.subscribe(data => {
-      this.isAdminRoute = data['isAdminRoute'] || this.authService.isAuthenticated();
+      this.isAdminRoute = this.authService.isAuthenticated();
     });
   }
 

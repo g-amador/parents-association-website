@@ -8,8 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// Services and Guards
-import { AuthGuard } from './core/guards/auth.guard';
+// Services
 import { AuthService } from './core/services/auth.service';
 
 // Components
@@ -86,7 +85,6 @@ import { MatRippleModule } from '@angular/material/core';
     ],
     providers: [
         AuthService,
-        AuthGuard,
         provideHttpClient(withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent]

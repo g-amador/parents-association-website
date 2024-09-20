@@ -36,7 +36,7 @@ export class NewsComponent implements OnInit {
     this.loadArticles();
 
     this.route.data.subscribe(data => {
-      this.isAdminRoute = data['isAdminRoute'] || this.authService.isAuthenticated();
+      this.isAdminRoute = this.authService.isAuthenticated();
     });
   }
 

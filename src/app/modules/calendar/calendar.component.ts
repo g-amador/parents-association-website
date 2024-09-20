@@ -31,7 +31,7 @@ export class CalendarComponent implements OnInit {
     this.loadEvents();
 
     this.route.data.subscribe(data => {
-      this.isAdminRoute = data['isAdminRoute'] || this.authService.isAuthenticated();
+      this.isAdminRoute = this.authService.isAuthenticated();
     });
   }
 

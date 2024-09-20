@@ -8,18 +8,17 @@ import { NewsComponent } from './modules/news/news.component';
 import { CalendarComponent } from './modules/calendar/calendar.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
 
-import { AuthGuard } from './core/guards/auth.guard'; // Import AuthGuard
-
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, data: { isAdminRoute: false } },
-  { path: 'organization', component: OrganizationComponent, data: { isAdminRoute: false } },
-  { path: 'organization/admin', component: OrganizationComponent, canActivate: [AuthGuard], data: { isAdminRoute: true } }, // Protected route
-  { path: 'news', component: NewsComponent, data: { isAdminRoute: false } },
-  { path: 'news/admin', component: NewsComponent, canActivate: [AuthGuard], data: { isAdminRoute: true } }, // Protected route
-  { path: 'calendar', component: CalendarComponent, data: { isAdminRoute: false } },
-  { path: 'calendar/admin', component: CalendarComponent, canActivate: [AuthGuard], data: { isAdminRoute: true } }, // Protected route
-  { path: 'contacts', component: ContactsComponent, data: { isAdminRoute: false } },
+  { path: 'home', component: HomeComponent },
+  { path: 'organization', component: OrganizationComponent },
+  { path: 'news', component: NewsComponent },
+  { path: 'calendar', component: CalendarComponent },
+  { path: 'contacts', component: ContactsComponent },
+
+  // Admin hidden route redirects to login
+  { path: 'admin', redirectTo: 'auth/login', pathMatch: 'full' }, // This will redirect /admin to /auth/login
+
   { path: 'auth/login', component: LoginComponent }, // Login route
   { path: '**', redirectTo: '/home' } // Wildcard route redirects to home
 ];
