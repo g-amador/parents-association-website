@@ -1,0 +1,19 @@
+/* Remove extra padding from mat-dialog-content */
+mat-dialog-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensure mat-form-fields take full width */
+mat-form-field {
+  width: 100%;
+}
+
+/* Adjust the actions section to align properly */
+mat-dialog-actions {
+  padding: 8px 0;
+  margin: 0;
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+}

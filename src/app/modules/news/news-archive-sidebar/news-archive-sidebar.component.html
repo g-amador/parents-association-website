@@ -1,5 +1,5 @@
 <div class="archive-sidebar">
-  <h2>{{ 'ARCHIVE' | translate }}</h2>
+  <h2>{{ 'news_page.archive.title' | translate }}</h2>
   <div *ngFor="let year of archive | keyvalue">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -26,5 +26,5 @@
       </div>
     </mat-expansion-panel>
   </div>
-  <button mat-raised-button color="warn" (click)="clearArchive()" *ngIf="isAdminRoute"> {{ 'CLEAR_ARCHIVE' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="clearArchive()" *ngIf="isAdminRoute">{{ 'news_page.archive.clear' | translate }}</button>
 </div>

@@ -1,4 +1,6 @@
-/* Calendar container styles */
+h1 {
+  text-align: left;
+}
 
 .calendar-container {
   text-align: center;
@@ -104,10 +106,11 @@ button {
 }
 
 .legend h3 {
-  margin-bottom: 10px;
+  font-size: 44px;
 }
 
 .legend-items {
+  margin-top: 40px;
   display: flex;
   justify-content: center; /* Center the items horizontally */
   align-items: center;
@@ -118,6 +121,7 @@ button {
   display: flex;
   align-items: center;
   margin: 0 15px; /* Space between items */
+  font-size: 36px;
 }
 
 .color-box {

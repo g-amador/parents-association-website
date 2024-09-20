@@ -5,10 +5,10 @@
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher></app-language-switcher>
 
-    <h1>{{ 'NEWS' | translate }}</h1>
+    <!--h1><i class="fa fa-book icon-spacing"></i><span>{{ 'news' | translate }}</span></h1-->
 
     <!-- Latest News Carousel -->
-    <h2 class="latest-news-title">{{ 'LATEST_NEWS' | translate }}</h2>
+    <h2 class="latest-news-title">{{ 'news_page.latest_news' | translate }}</h2>
     <div class="carousel-wrapper">
       <div class="carousel-container">
         <div class="carousel">
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Next 4 Articles in Boxes -->
-    <h2 class="recent-news-title">{{ 'RECENT_NEWS' | translate }}</h2>
+    <h2 class="recent-news-title">{{ 'news_page.recent_news' | translate }}</h2>
     <div class="recent-news-grid">
       <div class="news-box" *ngFor="let article of recentArticles" (click)="handleArticleClick(article)">
         <h3>{{ article.title }}</h3>
@@ -43,6 +43,6 @@
 
   <!-- Button for adding new article -->
   <div class="add-article-container" *ngIf="isAdminRoute">
-    <button mat-raised-button color="primary" (click)="openEditArticleDialog(null)">{{ 'ADD_ARTICLE' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="openEditArticleDialog(null)">{{ 'news_page.article.add' | translate }}</button>
   </div>
 </div>

@@ -9,17 +9,17 @@ export class ContactsComponent implements OnInit {
   sidebarVisible = true; // Default to true, will adjust based on screen size
 
   contacts = [
-    { name: 'SCHOOL_COORDINATOR', email: 'manuel.grilo@agpm.edu.pt' },
-    { name: 'PARENTS_ASSOCIATION', email: 'apesalvadorampai@hotmail.com' },
-    { name: 'PRESIDENT_PARENTS_ASSOCIATION', phone: '(+351) 936 257 567', email: 'sandrina.vb@gmail.com' },
-    { name: 'SCHOOL', phone: '(+351) 217 605 771' },
-    { name: 'EDUCATION_OFFICE_JFB', phone: '(+351) 217 123 000', email: 'educacao@jfbenfica.pt' },
-    { name: 'EDUCATION_MANAGER', person: 'Tânia Lopes' },
-    { name: 'AEC_COORDINATION', person: 'João Batista' },
-    { name: 'AAAF_CAF_COORDINATION', person: 'Nuno Guimarães' },
-    { name: 'SAFE_COORDINATION', person: 'Gonçalo Fonseca' },
-    { name: 'AAAF_CAF', phone: '(+351) 925 977 565' },
-    { name: 'AAAF_CAF_CONTACT_MONITORS', person: 'Joaquim Pinto, Ligia Gonçalves' }
+    { name: 'contacts_page.coordinator', email: 'manuel.grilo@agpm.edu.pt' },
+    { name: 'contacts_page.parents_association', email: 'apesalvadorampai@hotmail.com' },
+    { name: 'contacts_page.president_parents_association', phone: '(+351) 936 257 567', email: 'sandrina.vb@gmail.com' },
+    { name: 'contacts_page.school', phone: '(+351) 217 605 771' },
+    { name: 'contacts_page.education_office_jfb', phone: '(+351) 217 123 000', email: 'educacao@jfbenfica.pt' },
+    { name: 'contacts_page.education_manager', person: 'Tânia Lopes' },
+    { name: 'contacts_page.aec_coordination', person: 'João Batista' },
+    { name: 'contacts_page.aaaf_caf_coordination', person: 'Nuno Guimarães' },
+    { name: 'contacts_page.safe_coordination', person: 'Gonçalo Fonseca' },
+    { name: 'contacts_page.aaaf_caf', phone: '(+351) 925 977 565' },
+    { name: 'contacts_page.aaaf_caf_contact_monitors', person: 'Joaquim Pinto, Ligia Gonçalves' }
   ];
 
   ngOnInit() {

@@ -1,32 +1,38 @@
-<h1 mat-dialog-title>{{ 'EDIT_MEMBER_DATA' | translate }}</h1>
+<h1 mat-dialog-title>{{ 'organization_page.edit_member_data' | translate }}</h1>
 <div mat-dialog-content>
+  <!-- Role Field -->
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'ROLE' | translate }}</mat-label>
-    <input matInput [(ngModel)]="contact.role" />
+    <mat-label>{{ 'organization_page.role' | translate }}</mat-label>
+    <input matInput [value]="'organization_page.roles.' + contact.role | translate" />
   </mat-form-field>
 
+  <!-- Name Field -->
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'NAME' | translate }}</mat-label>
+    <mat-label>{{ 'organization_page.name' | translate }}</mat-label>
     <input matInput [(ngModel)]="contact.name" />
   </mat-form-field>
 
+  <!-- Email Field -->
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+    <mat-label>{{ 'organization_page.email' | translate }}</mat-label>
     <input matInput [(ngModel)]="contact.email" />
   </mat-form-field>
 
+  <!-- Phone Number Field -->
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'PHONE_NUMBER' | translate }}</mat-label>
+    <mat-label>{{ 'organization_page.phone_number' | translate }}</mat-label>
     <input matInput [(ngModel)]="contact.phoneNumber" />
   </mat-form-field>
 
+  <!-- Image Upload Section -->
   <div class="image-upload">
-    <label>{{ 'CHANGE_IMAGE' | translate }}</label>
+    <label>{{ 'organization_page.change_image' | translate }}</label>
     <input type="file" (change)="onImageChange($event)" />
     <img *ngIf="contact.image" [src]="contact.image" alt="Contact Image" width="100" />
   </div>
 </div>
+
 <div mat-dialog-actions>
-  <button mat-raised-button color="cancel" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
-  <button mat-raised-button color="primary" (click)="onSave()">{{ 'SAVE' | translate }}</button>
+  <button mat-raised-button color="cancel" (click)="onCancel()">{{ 'dialog.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSave()">{{ 'dialog.save' | translate }}</button>
 </div>

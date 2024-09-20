@@ -6,54 +6,24 @@
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher></app-language-switcher>
 
-    <h1 class="title">{{ 'ORGANIZATION_MEMBERS' | translate }}</h1>
-
-    <!-- Section for Direction Group -->
-    <h2 class="group-title">{{ 'DIRECTION' | translate }}</h2>
-    <div class="contact-row">
-      <div *ngFor="let contact of contacts.direction; let i = index" class="contact-card" (click)="editContact(contact, 'direction', i)">
-        <div class="image-container">
-          <img [src]="contact.image" alt="Contact Image" width="100">
-        </div>
-        <div class="contact-details">
-          <div *ngIf="contact.role"><strong>{{ contact.role | translate }}</strong></div>
-          <div *ngIf="contact.name">{{ contact.name }}</div>
-          <div *ngIf="contact.email">{{ contact.email }}</div>
-          <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section for Assembly Group -->
-    <h2 class="group-title">{{ 'ASSEMBLY' | translate }}</h2>
-    <div class="contact-row">
-      <div *ngFor="let contact of contacts.assembly; let i = index" class="contact-card" (click)="editContact(contact, 'assembly', i)">
-        <div class="image-container">
-          <img [src]="contact.image" alt="Contact Image" width="100">
-        </div>
-        <div class="contact-details">
-          <div *ngIf="contact.role"><strong>{{ contact.role | translate }}</strong></div>
-          <div *ngIf="contact.name">{{ contact.name }}</div>
-          <div *ngIf="contact.email">{{ contact.email }}</div>
-          <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
+    <!--h1><i class="fa fa-building icon-spacing"></i><span>{{ 'organization_page.members' | translate }}</span></h1-->
+    <!-- Function to render contact groups -->
+    <ng-container *ngFor="let group of ['direction', 'assembly', 'fiscalCouncil']">
+      <h2 class="group-title">{{ 'organization_page.' + (group === 'fiscalCouncil' ? 'fiscal_council' : group) | translate }}</h2>
+      <div class="contact-row">
+        <div *ngFor="let contact of contacts[group]; let i = index" class="contact-card" (click)="editContact(contact, group, i)">
+          <div class="image-container">
+            <img [src]="contact.image" alt="Contact Image" width="100">
+          </div>
+          <div class="contact-details">
+            <div *ngIf="contact.role"><strong>{{ 'organization_page.roles.' + contact.role | translate }}</strong>
+            </div>
+            <div *ngIf="contact.name">{{ contact.name }}</div>
+            <div *ngIf="contact.email">{{ contact.email }}</div>
+            <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Section for Fiscal Council Group -->
-    <h2 class="group-title">{{ 'FISCAL_COUNCIL' | translate }}</h2>
-    <div class="contact-row">
-      <div *ngFor="let contact of contacts.fiscalCouncil; let i = index" class="contact-card" (click)="editContact(contact, 'fiscalCouncil', i)">
-        <div class="image-container">
-          <img [src]="contact.image" alt="Contact Image" width="100">
-        </div>
-        <div class="contact-details">
-          <div *ngIf="contact.role"><strong>{{ contact.role | translate }}</strong></div>
-          <div *ngIf="contact.name">{{ contact.name }}</div>
-          <div *ngIf="contact.email">{{ contact.email }}</div>
-          <div *ngIf="contact.phoneNumber">{{ contact.phoneNumber }}</div>
-        </div>
-      </div>
-    </div>
+    </ng-container>
   </div>
 </div>

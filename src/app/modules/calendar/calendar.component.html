@@ -2,23 +2,24 @@
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher></app-language-switcher>
+    <!--h1><i class="fa fa-calendar icon-spacing"></i><span>{{ 'calendar' | translate }}</span></h1-->
 
     <div class="month-year">
       <span (click)="moveMonth(-1)" class="arrow">&#10094;</span>
-      <span id="monthText">{{ currentMonthYear.format('MMMM') | translate }} {{ currentMonthYear.format('YYYY') }}</span>
+      <span id="monthText">{{ 'calendar_page.months.' + currentMonthYear.month() | translate }} {{ currentMonthYear.format('YYYY') }}</span>
       <span (click)="moveMonth(1)" class="arrow">&#10095;</span>
     </div>
 
     <div id="calendar" class="calendar">
       <table>
         <tr>
-          <th>{{ 'Sun' | translate }}</th>
-          <th>{{ 'Mon' | translate }}</th>
-          <th>{{ 'Tue' | translate }}</th>
-          <th>{{ 'Wed' | translate }}</th>
-          <th>{{ 'Thu' | translate }}</th>
-          <th>{{ 'Fri' | translate }}</th>
-          <th>{{ 'Sat' | translate }}</th>
+          <th>{{ 'calendar_page.weekdays.0' | translate }}</th>
+          <th>{{ 'calendar_page.weekdays.1' | translate }}</th>
+          <th>{{ 'calendar_page.weekdays.2' | translate }}</th>
+          <th>{{ 'calendar_page.weekdays.3' | translate }}</th>
+          <th>{{ 'calendar_page.weekdays.4' | translate }}</th>
+          <th>{{ 'calendar_page.weekdays.5' | translate }}</th>
+          <th>{{ 'calendar_page.weekdays.6' | translate }}</th>
         </tr>
         <tr *ngFor="let week of calendar">
           <td *ngFor="let day of week" [ngClass]="getDayClasses(day)" (click)="selectDate(day)">
@@ -31,16 +32,16 @@
 
     <!-- Legend section -->
     <div class="legend">
-      <h3>{{ 'LEGEND' | translate }}</h3>
+      <!--h3>{{ 'calendar_page.legend' | translate }}</h3-->
       <div class="legend-items">
         <div class="legend-item">
-          <span class="color-box today"></span> {{ 'TODAY' | translate }}
+          <span class="color-box today"></span> {{ 'calendar_page.today' | translate }}
         </div>
         <div class="legend-item">
-          <span class="color-box holiday"></span> {{ 'HOLIDAY' | translate }}
+          <span class="color-box holiday"></span> {{ 'calendar_page.holiday' | translate }}
         </div>
         <div class="legend-item">
-          <span class="color-box event"></span> {{ 'EVENT' | translate }}
+          <span class="color-box event"></span> {{ 'calendar_page.event.event' | translate }}
         </div>
       </div>
     </div>

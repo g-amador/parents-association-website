@@ -2,24 +2,24 @@
   <a (click)="toggleSidebar()" class="toggle-btn"><i class="fa fa-bars"></i></a>
 
   <a routerLink="/" (click)="changeColor('home')" [class.active]="selectedLink === 'home'">
-    <i class="fa fa-home"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'HOME' | translate }}</span>
+    <i class="fa fa-home"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'home' | translate }}</span>
   </a>
   <a routerLink="/organization" (click)="changeColor('organization')" [class.active]="selectedLink === 'organization'">
-    <i class="fa fa-building"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'ORGANIZATION' | translate }}</span>
+    <i class="fa fa-building"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'organization' | translate }}</span>
   </a>
   <a routerLink="/news" (click)="changeColor('news')" [class.active]="selectedLink === 'news'">
-    <i class="fa fa-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'NEWS' | translate }}</span>
+    <i class="fa fa-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'news' | translate }}</span>
   </a>
   <a routerLink="/calendar" (click)="changeColor('calendar')" [class.active]="selectedLink === 'calendar'">
-    <i class="fa fa-calendar"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'CALENDAR' | translate }}</span>
+    <i class="fa fa-calendar"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'calendar' | translate }}</span>
   </a>
   <a routerLink="/contacts" (click)="changeColor('contacts')" [class.active]="selectedLink === 'contacts'">
-    <i class="fa fa-address-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'CONTACTS' | translate }}</span>
+    <i class="fa fa-address-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'contacts' | translate }}</span>
   </a>
 
   <div class="logout-container" *ngIf="isLoggedIn()">
     <a (click)="logout()">
-      <i class="fa fa-sign-out"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'LOGOUT' | translate }}</span>
+      <i class="fa fa-sign-out"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'auth.logout' | translate }}</span>
     </a>
   </div>
 </div>

@@ -17,17 +17,17 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<boolean> {
     const hashedPasswordInput = await this.hashPassword(password);
-    console.log(`Attempting login for ${email}`);
+    //console.log(`Attempting login for ${email}`);
 
     const user = this.users.find(u => u.email === email && u.password === hashedPasswordInput);
 
     if (user) {
       const session = { email, loginTime: new Date().getTime() };
       localStorage.setItem(this.sessionKey, JSON.stringify(session));
-      console.log('Login successful!');
+      //console.log('Login successful!');
       return true;
     } else {
-      console.log('Login failed: Invalid credentials');
+      //console.log('Login failed: Invalid credentials');
       return false;
     }
   }
@@ -35,7 +35,7 @@ export class AuthService {
   isAuthenticated(): boolean {
     const session = localStorage.getItem(this.sessionKey);
     if (!session) {
-      console.log("User not authenticated: No session found");
+      //console.log("User not authenticated: No session found");
       return false;
     }
 
@@ -44,17 +44,17 @@ export class AuthService {
 
     if (now - sessionObj.loginTime > this.sessionTimeout) {
       this.logout();
-      console.log("Session has expired!");
+      ////console.log("Session has expired!");
       return false;
     }
 
-    console.log("User is authenticated: Session is valid");
+    ////console.log("User is authenticated: Session is valid");
     return true;
   }
 
   logout(): void {
     localStorage.removeItem(this.sessionKey);
-    console.log("User logged out.");
+    //console.log("User logged out.");
   }
 
   private async hashPassword(password: string): Promise<string> {

@@ -1,14 +1,15 @@
-<h1 mat-dialog-title *ngIf="editMode">{{ 'EDIT_EVENT' | translate }}</h1>
-<h1 mat-dialog-title *ngIf="!editMode">{{ 'ADD_EVENT' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="editMode">{{ 'calendar_page.event.edit' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="!editMode">{{ 'calendar_page.event.add' | translate }}</h1>
+
 <div mat-dialog-content [formGroup]="eventForm">
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'EVENT_TITLE' | translate }}</mat-label>
-    <input matInput formControlName="title" placeholder="{{ 'ENTER_EVENT_TITLE' | translate }}">
+    <mat-label>{{ 'calendar_page.event.title' | translate }}</mat-label>
+    <input matInput formControlName="title" placeholder="{{ 'calendar_page.event.enter_title' | translate }}">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{ 'EVENT_DATE' | translate }}</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="date" placeholder="{{ 'CHOOSE_A_DATE' | translate }}" [disabled]="editMode">
+    <mat-label>{{ 'calendar_page.event.date' | translate }}</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date" placeholder="{{ 'calendar.choose_a_date' | translate }}" [disabled]="editMode">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
@@ -16,8 +17,9 @@
   <!-- Use Reactive Forms Control for Quill Editor -->
   <app-quill-editor formControlName="description"></app-quill-editor>
 </div>
+
 <div mat-dialog-actions>
-  <button mat-raised-button color="cancel" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
-  <button mat-raised-button color="warn" (click)="onCancelEvent()" *ngIf="data.events.length > 0">{{ 'CANCEL_EVENT' | translate }}</button>
-  <button mat-raised-button color="primary" (click)="onSave()">{{ 'SAVE' | translate }}</button>
+  <button mat-raised-button color="cancel" (click)="onCancel()">{{ 'dialog.cancel' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="onCancelEvent()" *ngIf="data.events.length > 0">{{ 'calendar_page.event.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSave()">{{ 'dialog.save' | translate }}</button>
 </div>

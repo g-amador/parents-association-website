@@ -1,9 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component'; // Import the dialog component
+import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-organization',

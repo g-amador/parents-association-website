@@ -1,13 +1,13 @@
-<h1 mat-dialog-title *ngIf="data.article">{{ 'EDIT_ARTICLE' | translate }}</h1>
-<h1 mat-dialog-title *ngIf="!data.article">{{ 'ADD_ARTICLE' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="data.article">{{ 'news_page.article.edit' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="!data.article">{{ 'news_page.article.add' | translate }}</h1>
 <div mat-dialog-content>
   <form [formGroup]="articleForm">
     <!-- Title Field -->
     <mat-form-field appearance="fill">
-      <mat-label>{{ 'TITLE' | translate }}</mat-label>
+      <mat-label>{{ 'news_page.article.title' | translate }}</mat-label>
       <input matInput formControlName="title">
       <mat-error *ngIf="articleForm.get('title')?.hasError('required')">
-        {{ 'TITLE_IS_REQUIRED' | translate }}
+        {{ 'article.title_required' | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -16,11 +16,10 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="cancel" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
+  <button mat-raised-button color="cancel" (click)="cancel()">{{ 'dialog.cancel' | translate }}</button>
 
   <!-- Only show the delete button if we are editing an existing article -->
-  <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.article">{{ 'DELETE_ARTICLE' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.article">{{ 'news_page.article.delete' | translate }}</button>
 
-  <button mat-raised-button color="primary" (click)="save()">{{ 'SAVE' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="save()">{{ 'dialog.save' | translate }}</button>
 </div>
-
