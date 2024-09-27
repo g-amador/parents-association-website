@@ -6,7 +6,9 @@
 
     <div class="month-year">
       <span (click)="moveMonth(-1)" class="arrow">&#10094;</span>
-      <span id="monthText">{{ 'calendar_page.months.' + currentMonthYear.month() | translate }} {{ currentMonthYear.format('YYYY') }}</span>
+      <span id="monthText">
+                {{ 'calendar_page.months.' + (currentMonthYear.getMonth()) | translate }} {{ currentMonthYear.getFullYear() }}
+      </span>
       <span (click)="moveMonth(1)" class="arrow">&#10095;</span>
     </div>
 
@@ -23,8 +25,7 @@
         </tr>
         <tr *ngFor="let week of calendar">
           <td *ngFor="let day of week" [ngClass]="getDayClasses(day)" (click)="selectDate(day)">
-            {{ day.format('D') }}
-            <!-- Removed event titles and descriptions -->
+            {{ day.getDate() }}
           </td>
         </tr>
       </table>
@@ -32,7 +33,6 @@
 
     <!-- Legend section -->
     <div class="legend">
-      <!--h3>{{ 'calendar_page.legend' | translate }}</h3-->
       <div class="legend-items">
         <div class="legend-item">
           <span class="color-box today"></span> {{ 'calendar_page.today' | translate }}
