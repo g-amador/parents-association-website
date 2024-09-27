@@ -3,7 +3,7 @@
   <!-- Role Field -->
   <mat-form-field appearance="fill">
     <mat-label>{{ 'organization_page.role' | translate }}</mat-label>
-    <input matInput [value]="'organization_page.roles.' + contact.role | translate" />
+    <input matInput [value]="'organization_page.roles.' + contact.role | translate" readonly disabled />
   </mat-form-field>
 
   <!-- Name Field -->
