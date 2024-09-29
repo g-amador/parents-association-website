@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -14,7 +14,13 @@ export class SidebarComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router) {}
+    private router: Router,
+    private activatedRoute: ActivatedRoute // Inject ActivatedRoute
+  ) {
+    this.router.events.subscribe(() => {
+      this.selectedLink = this.router.url.split('/')[1]; // Get the current route
+    });
+  }
 
   toggleSidebar() {
     if (window.innerWidth > 768) {

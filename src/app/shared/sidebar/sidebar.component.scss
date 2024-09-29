@@ -42,6 +42,11 @@
     }
   }
 
+  a.active {
+    background-color: lightblue;
+    color: white;
+  }
+
   /* Pushes logout to the bottom */
   .logout-container {
     margin-top: auto; /* This will push the logout button to the bottom */
