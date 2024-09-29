@@ -32,7 +32,7 @@
     <h2 class="upcoming-events-title">{{ 'home_page.upcoming_events' | translate }}</h2>
 
     <!-- Carousel Container for Upcoming Events -->
-    <div class="carousel-container">
+    <div class="carousel-container" *ngIf="upcomingEvents.length > 0; else noEvents">
       <div class="carousel">
         <div class="carousel-item" *ngFor="let event of upcomingEvents; let i = index" [ngClass]="{'active': i === currentEventIndex}">
           <h3>{{ event.title }}</h3>
@@ -50,5 +50,9 @@
         <span *ngFor="let event of upcomingEvents; let i = index" [ngClass]="{'active': i === currentEventIndex}" (click)="selectEvent(i)"></span>
       </div>
     </div>
+
+    <ng-template #noEvents>
+      <p>{{ 'home_page.no_upcoming_events' | translate }}</p>
+    </ng-template>
   </div>
 </div>

@@ -18,7 +18,8 @@
   },
   "home_page": {
     "welcome": "Bem-vindo à página inicial!",
-    "upcoming_events": "Próximos Eventos"
+    "upcoming_events": "Próximos Eventos",
+    "no_upcoming_events": "Nenhum evento futuro disponível no momento"
   },
   "organization_page": {
     "members": "Membros da Organização",
@@ -70,7 +71,8 @@
       "description": "Descrição",
       "enter_title": "Introduza o Título do Evento",
       "choose_date": "Escolha a data",
-      "enter_description": "Introduza a Descrição do Evento"
+      "enter_description": "Introduza a Descrição do Evento",
+      "no_events": "Nenhum Evento"
     },
     "months": [
       "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"

@@ -18,7 +18,8 @@
   },
   "home_page": {
     "welcome": "Welcome to the Home Page!",
-    "upcoming_events": "Upcoming Events"
+    "upcoming_events": "Upcoming Events",
+    "no_upcoming_events": "No upcoming events available at the moment."
   },
   "organization_page": {
     "members": "Organization Members",
@@ -70,7 +71,8 @@
       "description": "Description",
       "enter_title": "Enter Event Title",
       "choose_date": "Choose a date",
-      "enter_description": "Enter event description"
+      "enter_description": "Enter event description",
+      "no_events": "No events"
     },
     "months": [
       "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"

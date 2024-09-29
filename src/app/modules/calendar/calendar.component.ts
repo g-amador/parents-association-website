@@ -6,6 +6,7 @@ import { Event } from '../../shared/models/event.model';
 import { ActivatedRoute } from '@angular/router';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
   selector: 'app-calendar',
@@ -13,22 +14,23 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  sidebarVisible = true; // Default to true, will adjust based on screen size
+  sidebarVisible = true;
   currentMonthYear: Date = new Date();
   calendar: Date[][] = [];
-  events: { [key: string]: Event[] } = {}; // Store events by date
+  events: { [key: string]: Event[] } = {};
   isAdminRoute: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private localStorageService: LocalStorageService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.adjustSidebarVisibility();
     this.generateCalendar();
-    this.loadEvents();
+    await this.loadEvents(); // Ensure events are loaded
 
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
@@ -117,14 +119,14 @@ export class CalendarComponent implements OnInit {
         data: { title: '', date: dateStr, description: '', events: eventsForDay }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(async result => {
         if (result) {
           if (result.cancel) {
-            this.deleteEvent(result.date, result.index);
+            await this.deleteEvent(result.date, result.index);
           } else if (result.index !== undefined && result.index !== null) {
-            this.updateEvent(result);
+            await this.updateEvent(result);
           } else {
-            this.addEvent(result);
+            await this.addEvent(result);
           }
 
           this.generateCalendar();
@@ -139,7 +141,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  addEvent(eventData: { title: string, date: string | null, description: string }): void {
+  async addEvent(eventData: { title: string; date: string | null; description: string }): Promise<void> {
     if (eventData.title && eventData.date) {
       const newEvent: Event = {
         title: eventData.title,
@@ -150,27 +152,27 @@ export class CalendarComponent implements OnInit {
       if (!this.events[eventData.date]) {
         this.events[eventData.date] = [];
       }
-      this.events[eventData.date].push(newEvent); // Create new array to trigger change detection
-      this.saveEvents();
-      this.generateCalendar(); // Update calendar view
+      this.events[eventData.date].push(newEvent);
+      await this.localStorageService.addEvent(eventData.date, newEvent);
+      this.generateCalendar();
     }
   }
 
-  updateEvent(eventData: { title: string, date: string | null, description: string, index: number }): void {
+  async updateEvent(eventData: { title: string; date: string | null; description: string; index: number }): Promise<void> {
     const { date, title, description, index: eventIndex } = eventData;
 
     if (date && this.events[date] && eventIndex !== undefined) {
       const updatedEvent = { ...this.events[date][eventIndex], title, description };
       const eventsCopy = [...this.events[date]];
       eventsCopy[eventIndex] = updatedEvent;
-      this.events = { ...this.events, [date]: eventsCopy }; // Update reference to trigger change detection
+      this.events[date] = eventsCopy;
 
-      this.saveEvents();
-      this.generateCalendar(); // Update calendar view
+      await this.localStorageService.addEvent(date, updatedEvent);
+      this.generateCalendar();
     }
   }
 
-  deleteEvent(date: string, index: number): void {
+  async deleteEvent(date: string, index: number): Promise<void> {
     if (date && this.events[date] && index !== undefined) {
       const eventsForDate = this.events[date];
       eventsForDate.splice(index, 1); // Remove the event from the list
@@ -179,20 +181,16 @@ export class CalendarComponent implements OnInit {
         delete this.events[date]; // Remove the date key if no events remain
       }
 
-      this.saveEvents(); // Save changes
-      this.generateCalendar(); // Update calendar view
+      await this.localStorageService.deleteEvent(date);
+      this.generateCalendar();
     }
   }
 
-  saveEvents(): void {
-    localStorage.setItem('events', JSON.stringify(this.events));
-  }
-
-  loadEvents(): void {
-    const storedEvents = localStorage.getItem('events');
+  async loadEvents(): Promise<void> {
+    const storedEvents = await this.localStorageService.getAllEvents(); // Use the LocalStorageService to load all events
     if (storedEvents) {
-      this.events = JSON.parse(storedEvents);
-      this.generateCalendar(); // Ensure calendar is updated with loaded events
+      this.events = storedEvents;
+      this.generateCalendar();
     }
   }
 
