@@ -182,7 +182,7 @@ export class CalendarComponent implements OnInit {
       this.events[eventData.date].push(newEvent);
 
       if (environment.useLocalStorage) {
-        await this.localStorageService.addEvent(eventData.date, newEvent); // Use Local Storage
+        await this.localStorageService.setEvent(eventData.date, newEvent); // Use Local Storage
       } else {
         await this.firestoreService.setEvent(eventData.date, newEvent); // Use Firestore
       }
@@ -201,7 +201,7 @@ export class CalendarComponent implements OnInit {
       this.events[date] = eventsCopy;
 
       if (environment.useLocalStorage) {
-        await this.localStorageService.addEvent(date, updatedEvent); // Use Local Storage
+        await this.localStorageService.setEvent(date, updatedEvent); // Use Local Storage
       } else {
         await this.firestoreService.setEvent(date, updatedEvent); // Use Firestore
       }

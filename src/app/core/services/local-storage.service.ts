@@ -51,7 +51,7 @@ export class LocalStorageService {
   }
 
   // Add or update an event for a specific date
-  async addEvent(date: string, event: Event): Promise<void> {
+  async setEvent(date: string, event: Event): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
         localStorage.setItem(`event-${date}`, JSON.stringify(event));
