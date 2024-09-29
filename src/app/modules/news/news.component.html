@@ -9,36 +9,50 @@
 
     <!-- Latest News Carousel -->
     <h2 class="latest-news-title">{{ 'news_page.latest_news' | translate }}</h2>
-    <div class="carousel-wrapper">
-      <div class="carousel-container">
-        <div class="carousel">
-          <div class="carousel-item" *ngFor="let article of latestArticles; let i = index" [ngClass]="{'active': i === currentIndex}">
-            <h3>{{ article.title }}</h3>
-            <div [innerHTML]="article.content"></div>
-            <small>{{ article.date }}</small>
+    <div *ngIf="latestArticles.length > 0; else noLatestNews">
+      <div class="carousel-wrapper">
+        <div class="carousel-container">
+          <div class="carousel">
+            <div class="carousel-item" *ngFor="let article of latestArticles; let i = index" [ngClass]="{'active': i === currentIndex}">
+              <h3>{{ article.title }}</h3>
+              <div [innerHTML]="article.content"></div>
+              <small>{{ article.date }}</small>
+            </div>
           </div>
-        </div>
-        <!-- Navigation Arrows -->
-        <button class="carousel-control prev" (click)="prevArticle()">&#10094;</button>
-        <button class="carousel-control next" (click)="nextArticle()">&#10095;</button>
-        <!-- Dot Indicators -->
-        <div class="carousel-indicators">
-          <span *ngFor="let article of latestArticles; let i = index"
-                [ngClass]="{'active': i === currentIndex}"
-                (click)="onDotClick(i)"></span>
+          <!-- Navigation Arrows -->
+          <button class="carousel-control prev" (click)="prevArticle()">&#10094;</button>
+          <button class="carousel-control next" (click)="nextArticle()">&#10095;</button>
+          <!-- Dot Indicators -->
+          <div class="carousel-indicators">
+            <span *ngFor="let article of latestArticles; let i = index"
+                  [ngClass]="{'active': i === currentIndex}"
+                  (click)="onDotClick(i)"></span>
+          </div>
         </div>
       </div>
     </div>
+    <ng-template #noLatestNews>
+      <div class="no-content-message">
+        <p>{{ 'news_page.no_latest_news' | translate }}</p>
+      </div>
+    </ng-template>
 
     <!-- Next 4 Articles in Boxes -->
     <h2 class="recent-news-title">{{ 'news_page.recent_news' | translate }}</h2>
-    <div class="recent-news-grid">
-      <div class="news-box" *ngFor="let article of recentArticles" (click)="handleArticleClick(article)">
-        <h3>{{ article.title }}</h3>
-        <div [innerHTML]="article.content"></div>
-        <small>{{ article.date }}</small>
+    <div *ngIf="recentArticles.length > 0; else noRecentNews">
+      <div class="recent-news-grid">
+        <div class="news-box" *ngFor="let article of recentArticles" (click)="handleArticleClick(article)">
+          <h3>{{ article.title }}</h3>
+          <div [innerHTML]="article.content"></div>
+          <small>{{ article.date }}</small>
+        </div>
       </div>
     </div>
+    <ng-template #noRecentNews>
+      <div class="no-content-message">
+        <p>{{ 'news_page.no_recent_news' | translate }}</p>
+      </div>
+    </ng-template>
   </div>
 
   <!-- Button for adding new article -->

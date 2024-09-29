@@ -65,30 +65,53 @@ export class FirestoreService {
     return this.firestore.collection<Event>('events').valueChanges();
   }
 
-  // Add or update an article
-  async setArticle(date: string, article: Article): Promise<void> {
+  // Add a new article (Firestore auto-generates an ID)
+  async addArticle(article: Article): Promise<void> {
     try {
-      await this.firestore.collection('articles').doc(date).set(article, { merge: true });
-      console.log(`Article for date: ${date} updated successfully.`);
+      await this.firestore.collection('articles').add(article);
+      console.log(`Article added successfully.`);
+    } catch (error) {
+      console.error('Error adding article: ', error);
+      throw error;
+    }
+  }
+
+  // Update an article by document ID (use the document ID for specific updates)
+  async updateArticle(articleId: string, article: Article): Promise<void> {
+    try {
+      await this.firestore.collection('articles').doc(articleId).set(article, { merge: true });
+      console.log(`Article with ID: ${articleId} updated successfully.`);
     } catch (error) {
       console.error('Error updating article: ', error);
       throw error;
     }
   }
 
-  // Delete an article
-  async deleteArticle(date: string): Promise<void> {
+  // Delete an article by document ID
+  async deleteArticle(articleId: string): Promise<void> {
     try {
-      await this.firestore.collection('articles').doc(date).delete();
-      console.log(`Article for date: ${date} deleted successfully.`);
+      await this.firestore.collection('articles').doc(articleId).delete();
+      console.log(`Article with ID: ${articleId} deleted successfully.`);
     } catch (error) {
       console.error('Error deleting article: ', error);
       throw error;
     }
   }
 
-  // Get all articles
+  // Delete all articles
+  async deleteAllArticles(): Promise<void> {
+    const articlesSnapshot = await this.firestore.collection('articles').get().toPromise();
+
+    // Create an array of delete promises
+    const deletePromises = articlesSnapshot!.docs.map(doc => this.deleteArticle(doc.id));
+
+    // Wait for all delete promises to resolve
+    await Promise.all(deletePromises);
+    console.log('All articles deleted successfully.');
+  }
+
+  // Get all articles, making sure to include the document ID as 'id'
   getArticles(): Observable<Article[]> {
-    return this.firestore.collection<Article>('articles').valueChanges();
+    return this.firestore.collection<Article>('articles').valueChanges({ idField: 'id' });
   }
 }

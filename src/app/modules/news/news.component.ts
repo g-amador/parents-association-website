@@ -6,6 +6,8 @@ import { ViewArticleDialogComponent } from './view-article-dialog/view-article-d
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { FirestoreService } from 'src/app/core/services/firestore.service'; // Import Firestore service
+import { environment } from 'src/environments/environment'; // Import environment
 
 @Component({
   selector: 'app-news',
@@ -13,13 +15,14 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
   styleUrls: ['./news.component.scss']
 })
 export class NewsComponent implements OnInit {
-  sidebarVisible = true; // Default to true, will adjust based on screen size
+  sidebarVisible = true;
   archive: YearArticles = {};
-  latestArticles: Article[] = []; // For the latest 3 articles in the carousel
-  recentArticles: Article[] = []; // For the next 4 articles in separate boxes
-  currentIndex: number = 0; // Carousel index
-  isAdminRoute: boolean = false; // Determine if the route is admin
+  latestArticles: Article[] = [];
+  recentArticles: Article[] = [];
+  currentIndex: number = 0;
+  isAdminRoute: boolean = false;
 
+  private articleService: LocalStorageService | FirestoreService; // Dynamic service based on environment
   private monthNames: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -29,8 +32,14 @@ export class NewsComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private localStorageService: LocalStorageService
-  ) {}
+    private localStorageService: LocalStorageService,
+    private firestoreService: FirestoreService // Inject FirestoreService
+  ) {
+    // Decide which service to use based on environment
+    this.articleService = environment.production && !environment.useLocalStorage
+      ? this.firestoreService
+      : this.localStorageService;
+  }
 
   ngOnInit() {
     this.adjustSidebarVisibility();
@@ -62,15 +71,15 @@ export class NewsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async result => {
       if (result === 'delete' && article) {
-        await this.deleteArticle(article); // Await the deletion
+        await this.deleteArticle(article);
       } else if (result) {
         if (article) {
-          await this.updateArticle(article, result.title, result.content); // Await the update
+          await this.updateArticle(article, result.title, result.content);
         } else {
-          await this.saveArticle(result.title, result.content); // Await the saving
+          await this.saveArticle(result.title, result.content);
         }
       }
-      await this.loadArticles(); // Refresh articles after edit
+      await this.loadArticles(); // Refresh articles
     });
   }
 
@@ -100,32 +109,67 @@ export class NewsComponent implements OnInit {
   async saveArticle(title: string, content: string) {
     const date = new Date().toISOString().split('T')[0];
     const article: Article = { title, content, date };
-    await this.localStorageService.addArticle(article); // Use the service
+
+    if (environment.production && !environment.useLocalStorage) {
+      // Use Firestore service to add the article (let Firestore generate the document ID)
+      await (this.articleService as FirestoreService).addArticle(article);
+    } else {
+      // Local storage service to save the article
+      await (this.articleService as LocalStorageService).addArticle(article);
+    }
   }
 
   async updateArticle(original: Article, title: string, content: string) {
-    // Create an updated article object without altering the date
     const updatedArticle: Article = { ...original, title, content };
-    await this.localStorageService.deleteArticle(original); // Delete the old article
-    await this.localStorageService.addArticle(updatedArticle); // Add the updated article
+
+    if (environment.production && !environment.useLocalStorage) {
+      // Pass the document ID to update the article
+      const articleId = original.id; // Ensure `idField: 'id'` in Firestore collection
+      if (articleId) {
+        await (this.articleService as FirestoreService).updateArticle(articleId, updatedArticle);
+      }
+    } else {
+      // Local storage service to update the article
+      await this.localStorageService.deleteArticle(original);
+      await this.localStorageService.addArticle(updatedArticle);
+    }
   }
 
   async deleteArticle(article: Article) {
-    await this.localStorageService.deleteArticle(article); // Use the service
+    if (environment.production && !environment.useLocalStorage) {
+      if (article.id) {
+        // Pass the Firestore document ID to delete the article
+        await (this.articleService as FirestoreService).deleteArticle(article.id);
+      } else {
+        console.error('Article ID is missing, cannot delete.');
+      }
+    } else {
+      await (this.articleService as LocalStorageService).deleteArticle(article);
+    }
   }
 
   async loadArticles() {
-    const articles: Article[] = this.localStorageService.getAllArticles(); // Directly use service method
+    let articles: Article[] = [];
 
+    // Fetch articles based on the selected service
+    if (environment.production && !environment.useLocalStorage) {
+      const articlesObservable = (this.articleService as FirestoreService).getArticles();
+      articlesObservable.subscribe((fetchedArticles) => {
+        articles = fetchedArticles;
+        this.processArticles(articles);
+      });
+    } else {
+      articles = this.localStorageService.getAllArticles();
+      this.processArticles(articles);
+    }
+  }
+
+  processArticles(articles: Article[]) {
     // Sort articles by date descending
     articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    // Assign latest 3 articles to the carousel
     this.latestArticles = articles.slice(0, 3);
-
-    // Assign the next 4 articles to separate boxes
     this.recentArticles = articles.slice(3, 7);
-
     this.archive = this.groupArticlesByDate(articles);
   }
 
@@ -142,9 +186,22 @@ export class NewsComponent implements OnInit {
   }
 
   clearArchive() {
-    localStorage.removeItem('articles'); // Clear articles from localStorage
-    this.archive = {};
-    this.loadArticles();
+    if (environment.production && !environment.useLocalStorage) {
+      // Clear all articles from Firestore
+      this.firestoreService.deleteAllArticles()
+        .then(() => {
+          console.log("All articles cleared from Firestore");
+          this.archive = {}; // Reset the archive
+          this.loadArticles(); // Reload articles to reflect changes
+        })
+        .catch((error) => {
+          console.error("Error clearing articles from Firestore: ", error);
+        });
+    } else {
+      localStorage.removeItem('articles'); // Clear articles from localStorage
+      this.archive = {}; // Reset the archive
+      this.loadArticles(); // Reload articles to reflect changes
+    }
   }
 
   handleArchiveCleared() {

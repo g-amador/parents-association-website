@@ -44,6 +44,8 @@
   "news_page": {
     "latest_news": "Latest News/Information",
     "recent_news": "Recent News/Information",
+    "no_latest_news": "No Latest News/Information",
+    "no_recent_news": "No Recent News/Information",
     "archive": {
       "title": "Archive",
       "clear": "Clear Archive"
@@ -75,10 +77,27 @@
       "no_events": "No events"
     },
     "months": [
-      "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
     ],
     "weekdays": [
-      "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
     ]
   },
   "contacts_page": {

@@ -44,6 +44,8 @@
   "news_page": {
     "latest_news": "Últimas Notícias/Informações",
     "recent_news": "Notícias/Informações Recentes",
+    "no_latest_news": "Nenhunas Notícias/Informações",
+    "no_recent_news": "Nenhunas Notícias/Informações Recentes",
     "archive": {
       "title": "Arquivo",
       "clear": "Limpar Arquivo"
@@ -75,10 +77,27 @@
       "no_events": "Nenhum Evento"
     },
     "months": [
-      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro"
     ],
     "weekdays": [
-      "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"
+      "Dom",
+      "Seg",
+      "Ter",
+      "Qua",
+      "Qui",
+      "Sex",
+      "Sáb"
     ]
   },
   "contacts_page": {

@@ -1,4 +1,5 @@
 export interface Article {
+  id?: string; // Firestore document ID
   title: string;
   content: string;
   date: string;
