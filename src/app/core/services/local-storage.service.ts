@@ -105,10 +105,12 @@ export class LocalStorageService {
   }
 
   // Add or update an article
-  async addArticle(date: string, article: Article): Promise<void> {
+  async addArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
-        localStorage.setItem(`article-${date}`, JSON.stringify(article));
+        const articles = this.getAllArticles(); // Get existing articles
+        articles.push(article); // Add the new article
+        localStorage.setItem('articles', JSON.stringify(articles)); // Save all articles
         console.log('Article successfully saved to localStorage!');
         resolve();
       } catch (error) {
@@ -118,24 +120,19 @@ export class LocalStorageService {
     });
   }
 
-  // Retrieve an article
-  async getArticle(date: string): Promise<Article | null> {
-    return new Promise<Article | null>((resolve, reject) => {
-      try {
-        const article = localStorage.getItem(`article-${date}`);
-        resolve(article ? JSON.parse(article) : null);
-      } catch (error) {
-        console.error('Error retrieving article from localStorage:', error);
-        reject(error);
-      }
-    });
+  // Retrieve all articles
+  getAllArticles(): Article[] {
+    const articles = localStorage.getItem('articles');
+    return articles ? JSON.parse(articles) : [];
   }
 
   // Delete an article
-  async deleteArticle(date: string): Promise<void> {
+  async deleteArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
-        localStorage.removeItem(`article-${date}`);
+        const articles = this.getAllArticles(); // Get existing articles
+        const updatedArticles = articles.filter(a => a.title !== article.title || a.date !== article.date); // Remove the article to delete
+        localStorage.setItem('articles', JSON.stringify(updatedArticles)); // Save updated articles
         console.log('Article successfully deleted from localStorage!');
         resolve();
       } catch (error) {

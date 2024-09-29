@@ -5,6 +5,7 @@ import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-d
 import { ViewArticleDialogComponent } from './view-article-dialog/view-article-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
   selector: 'app-news',
@@ -14,11 +15,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class NewsComponent implements OnInit {
   sidebarVisible = true; // Default to true, will adjust based on screen size
   archive: YearArticles = {};
-
   latestArticles: Article[] = []; // For the latest 3 articles in the carousel
   recentArticles: Article[] = []; // For the next 4 articles in separate boxes
   currentIndex: number = 0; // Carousel index
-
   isAdminRoute: boolean = false; // Determine if the route is admin
 
   private monthNames: string[] = [
@@ -29,7 +28,9 @@ export class NewsComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit() {
     this.adjustSidebarVisibility();
@@ -59,17 +60,17 @@ export class NewsComponent implements OnInit {
       data: { article }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result === 'delete' && article) {
-        this.deleteArticle(article);
+        await this.deleteArticle(article); // Await the deletion
       } else if (result) {
         if (article) {
-          this.updateArticle(article, result.title, result.content);
+          await this.updateArticle(article, result.title, result.content); // Await the update
         } else {
-          this.saveArticle(result.title, result.content);
+          await this.saveArticle(result.title, result.content); // Await the saving
         }
       }
-      this.loadArticles(); // Refresh articles after edit
+      await this.loadArticles(); // Refresh articles after edit
     });
   }
 
@@ -96,31 +97,25 @@ export class NewsComponent implements OnInit {
     }
   }
 
-  saveArticle(title: string, content: string) {
+  async saveArticle(title: string, content: string) {
     const date = new Date().toISOString().split('T')[0];
     const article: Article = { title, content, date };
-    const articles = this.getArticlesFromLocalStorage();
-    articles.push(article);
-    localStorage.setItem('articles', JSON.stringify(articles));
+    await this.localStorageService.addArticle(article); // Use the service
   }
 
-  updateArticle(original: Article, title: string, content: string) {
-    const articles = this.getArticlesFromLocalStorage();
-    const index = articles.findIndex(a => a.date === original.date && a.title === original.title);
-    if (index !== -1) {
-      articles[index] = { ...original, title, content };
-      localStorage.setItem('articles', JSON.stringify(articles));
-    }
+  async updateArticle(original: Article, title: string, content: string) {
+    // Create an updated article object without altering the date
+    const updatedArticle: Article = { ...original, title, content };
+    await this.localStorageService.deleteArticle(original); // Delete the old article
+    await this.localStorageService.addArticle(updatedArticle); // Add the updated article
   }
 
-  deleteArticle(article: Article) {
-    const articles = this.getArticlesFromLocalStorage();
-    const updatedArticles = articles.filter(a => !(a.title === article.title && a.date === article.date));
-    localStorage.setItem('articles', JSON.stringify(updatedArticles));
+  async deleteArticle(article: Article) {
+    await this.localStorageService.deleteArticle(article); // Use the service
   }
 
-  loadArticles() {
-    const articles = this.getArticlesFromLocalStorage();
+  async loadArticles() {
+    const articles: Article[] = this.localStorageService.getAllArticles(); // Directly use service method
 
     // Sort articles by date descending
     articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -146,13 +141,8 @@ export class NewsComponent implements OnInit {
     }, {});
   }
 
-  getArticlesFromLocalStorage(): Article[] {
-    const articles = localStorage.getItem('articles');
-    return articles ? JSON.parse(articles) : [];
-  }
-
   clearArchive() {
-    localStorage.removeItem('articles');
+    localStorage.removeItem('articles'); // Clear articles from localStorage
     this.archive = {};
     this.loadArticles();
   }
