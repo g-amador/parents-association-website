@@ -8,6 +8,7 @@ export class AuthService {
   private sessionKey = 'userSession'; // Key for localStorage to track session
   private sessionTimeout = 3600 * 1000; // 1 hour session timeout in milliseconds
 
+  // Sample users for demonstration
   private users = [
     { email: 'sandrina.vb@gmail.com', password: '94e778367a46645e4983cd601250878cd1b52898eaf5b87931df4965499a7aa0' },
     { email: 'g.n.p.amador@gmail.com', password: 'c01e3c64bba84b237b505e601247050c5062bbb6b7bf95eb7ce83b465d32d812' },
@@ -16,27 +17,29 @@ export class AuthService {
 
   constructor(private router: Router) {}
 
+  // Login method
   async login(email: string, password: string): Promise<boolean> {
     const hashedPasswordInput = await this.hashPassword(password);
-    //console.log(`Attempting login for ${email}`);
+    // console.log(`Attempting login for ${email}`);
 
     const user = this.users.find(u => u.email === email && u.password === hashedPasswordInput);
 
     if (user) {
       const session = { email, loginTime: new Date().getTime() };
       localStorage.setItem(this.sessionKey, JSON.stringify(session));
-      //console.log('Login successful!');
+      // console.log('Login successful!');
       return true;
     } else {
-      //console.log('Login failed: Invalid credentials');
+      // console.log('Login failed: Invalid credentials');
       return false;
     }
   }
 
+  // Check if user is authenticated
   isAuthenticated(): boolean {
     const session = localStorage.getItem(this.sessionKey);
     if (!session) {
-      //console.log("User not authenticated: No session found");
+      // console.log("User not authenticated: No session found");
       return false;
     }
 
@@ -45,19 +48,21 @@ export class AuthService {
 
     if (now - sessionObj.loginTime > this.sessionTimeout) {
       this.logout();
-      ////console.log("Session has expired!");
+      // console.log("Session has expired!");
       return false;
     }
 
-    ////console.log("User is authenticated: Session is valid");
+    // console.log("User is authenticated: Session is valid");
     return true;
   }
 
+  // Logout method
   logout(): void {
     localStorage.removeItem(this.sessionKey);
-    //console.log("User logged out.");
+    // console.log("User logged out.");
   }
 
+  // Password hashing method
   private async hashPassword(password: string): Promise<string> {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);

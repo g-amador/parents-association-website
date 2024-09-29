@@ -50,6 +50,6 @@ export class EditEventFormDialogComponent implements OnInit {
   }
 
   onCancelEvent(): void {
-    this.dialogRef.close({ cancel: true, date: this.data.date, index: this.data.events.indexOf(this.data) }); // Pass information back to parent component
+    this.dialogRef.close({ cancel: true, date: this.data.date, index: this.eventIndex }); // Pass the correct index
   }
 }

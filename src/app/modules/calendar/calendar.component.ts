@@ -131,7 +131,7 @@ export class CalendarComponent implements OnInit {
         }
       });
     } else {
-      const event = eventsForDay.length > 0 ? eventsForDay[0] : { title: 'No events', description: '' };
+      const event = eventsForDay.length > 0 ? eventsForDay[0] : { title: 'calendar_page.event.no_events', description: '' };
       this.dialog.open(ViewEventDialogComponent, {
         width: '300px',
         data: event
