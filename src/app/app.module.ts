@@ -8,6 +8,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// Firebase imports
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from '../environments/environment';
+
 // Services
 import { AuthService } from './core/services/auth.service';
 
@@ -41,60 +46,69 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        SidebarComponent,
-        CalendarComponent,
-        OrganizationComponent,
-        NewsComponent,
-        NewsArchiveSidebarComponent,
-        QuillEditorComponent,
-        LanguageSwitcherComponent,
-        OrderByPipe,
-        EditEventFormDialogComponent,
-        EditContactDialogComponent,
-        EditArticleDialogComponent,
-        ViewEventDialogComponent,
-        ViewArticleDialogComponent,
-        ContactsComponent,
-        LoginComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatExpansionModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatRippleModule
-    ],
-    providers: [
-        AuthService,
-        provideHttpClient(withInterceptorsFromDi())
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SidebarComponent,
+    CalendarComponent,
+    OrganizationComponent,
+    NewsComponent,
+    NewsArchiveSidebarComponent,
+    QuillEditorComponent,
+    LanguageSwitcherComponent,
+    OrderByPipe,
+    EditEventFormDialogComponent,
+    EditContactDialogComponent,
+    EditArticleDialogComponent,
+    ViewEventDialogComponent,
+    ViewArticleDialogComponent,
+    ContactsComponent,
+    LoginComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    // Conditionally initialize Firebase based on the environment
+    ...(environment.firebaseConfig
+      ? [
+        AngularFireModule.initializeApp(environment.firebaseConfig), // Initialize Firebase
+        AngularFirestoreModule // Include Firestore
+      ]
+      : [] // Skip Firebase in development
+    )
+  ],
+  providers: [
+    AuthService,
+    provideHttpClient(withInterceptorsFromDi()), // Provide HTTP client with interceptors
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor(translate: TranslateService) {
-        translate.setDefaultLang('pt'); // Default language
-    }
+  constructor(translate: TranslateService) {
+    translate.setDefaultLang('pt'); // Set default language to Portuguese
+  }
 }
 
+// Factory function for translation loader
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-    return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http);
 }

@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { FirestoreService } from 'src/app/core/services/firestore.service'; // Import Firestore service
+import { environment } from 'src/environments/environment'; // Import environment
 
 @Component({
   selector: 'app-calendar',
@@ -24,8 +26,9 @@ export class CalendarComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private localStorageService: LocalStorageService
-  ) {}
+    private localStorageService: LocalStorageService,
+    private firestoreService: FirestoreService // Add Firestore service
+  ) { }
 
   async ngOnInit() {
     this.adjustSidebarVisibility();
@@ -141,6 +144,30 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  async loadEvents(): Promise<void> {
+    if (environment.useLocalStorage) {
+      // Use LocalStorage to load events
+      const storedEvents = await this.localStorageService.getAllEvents();
+      if (storedEvents) {
+        this.events = storedEvents;
+        this.generateCalendar();
+      }
+    } else {
+      // Use Firestore to load events
+      this.firestoreService.getEvents().subscribe((storedEvents: Event[]) => {
+        this.events = {};
+        storedEvents.forEach(event => {
+          const dateKey = event.date; // Assuming the event model has a 'date' property
+          if (!this.events[dateKey]) {
+            this.events[dateKey] = [];
+          }
+          this.events[dateKey].push(event);
+        });
+        this.generateCalendar();
+      });
+    }
+  }
+
   async addEvent(eventData: { title: string; date: string | null; description: string }): Promise<void> {
     if (eventData.title && eventData.date) {
       const newEvent: Event = {
@@ -153,7 +180,13 @@ export class CalendarComponent implements OnInit {
         this.events[eventData.date] = [];
       }
       this.events[eventData.date].push(newEvent);
-      await this.localStorageService.addEvent(eventData.date, newEvent);
+
+      if (environment.useLocalStorage) {
+        await this.localStorageService.addEvent(eventData.date, newEvent); // Use Local Storage
+      } else {
+        await this.firestoreService.setEvent(eventData.date, newEvent); // Use Firestore
+      }
+
       this.generateCalendar();
     }
   }
@@ -167,7 +200,12 @@ export class CalendarComponent implements OnInit {
       eventsCopy[eventIndex] = updatedEvent;
       this.events[date] = eventsCopy;
 
-      await this.localStorageService.addEvent(date, updatedEvent);
+      if (environment.useLocalStorage) {
+        await this.localStorageService.addEvent(date, updatedEvent); // Use Local Storage
+      } else {
+        await this.firestoreService.setEvent(date, updatedEvent); // Use Firestore
+      }
+
       this.generateCalendar();
     }
   }
@@ -181,15 +219,12 @@ export class CalendarComponent implements OnInit {
         delete this.events[date]; // Remove the date key if no events remain
       }
 
-      await this.localStorageService.deleteEvent(date);
-      this.generateCalendar();
-    }
-  }
+      if (environment.useLocalStorage) {
+        await this.localStorageService.deleteEvent(date); // Use Local Storage
+      } else {
+        await this.firestoreService.deleteEvent(date); // Use Firestore
+      }
 
-  async loadEvents(): Promise<void> {
-    const storedEvents = await this.localStorageService.getAllEvents(); // Use the LocalStorageService to load all events
-    if (storedEvents) {
-      this.events = storedEvents;
       this.generateCalendar();
     }
   }

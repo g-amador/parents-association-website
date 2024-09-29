@@ -1,12 +1,13 @@
 export const environment = {
-  production: false,
+  production: false, // Development mode
+  useLocalStorage: true, // Use local storage for development
   firebaseConfig: {
-    apiKey: "AIzaSyAqQNTjZREPKhGRWoYmVGa7wk0_RZ3elaE",
-    authDomain: "parents-association-pt-website.firebaseapp.com",
-    projectId: "parents-association-pt-website",
-    storageBucket: "parents-association-pt-website.appspot.com",
-    messagingSenderId: "47579637626",
-    appId: "1:47579637626:web:5bfd634e99e4bc745a98c3",
-    measurementId: "G-ZKTG5KHXHR"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID",
+    measurementId: "YOUR_MEASUREMENT_ID" // Optional
   }
 };
