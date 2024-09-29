@@ -31,10 +31,19 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    // Ensure the sidebar adjusts to window size
     this.adjustSidebarVisibility();
-    this.generateCalendar();
-    await this.loadEvents(); // Ensure events are loaded
 
+    // Generate the initial calendar structure without events
+    this.generateCalendar();
+
+    // Load events from storage (localStorage or Firestore)
+    await this.loadEvents(); // Make sure this waits until events are fully loaded
+
+    // Regenerate the calendar with events loaded
+    this.generateCalendar();
+
+    // Check if the user is on an admin route
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
     });
@@ -146,23 +155,30 @@ export class CalendarComponent implements OnInit {
 
   async loadEvents(): Promise<void> {
     if (environment.useLocalStorage) {
-      // Use LocalStorage to load events
+      // Load events from LocalStorage
       const storedEvents = await this.localStorageService.getAllEvents();
       if (storedEvents) {
+        // Set the fetched events to the component's `events` object
         this.events = storedEvents;
+
+        // Make sure to regenerate the calendar with the new events data
         this.generateCalendar();
       }
     } else {
-      // Use Firestore to load events
+      // Load events from Firestore if LocalStorage is not used
       this.firestoreService.getEvents().subscribe((storedEvents: Event[]) => {
         this.events = {};
+
+        // Map the events to their corresponding dates
         storedEvents.forEach(event => {
-          const dateKey = event.date; // Assuming the event model has a 'date' property
+          const dateKey = event.date;
           if (!this.events[dateKey]) {
             this.events[dateKey] = [];
           }
           this.events[dateKey].push(event);
         });
+
+        // Refresh the calendar once Firestore events are loaded
         this.generateCalendar();
       });
     }

@@ -7,7 +7,7 @@ import { Event } from '../../shared/models/event.model';
   providedIn: 'root'
 })
 export class LocalStorageService {
-  constructor() {}
+  constructor() { }
 
   // Add or update a contact
   async addContact(contactId: string, contact: Contact): Promise<void> {
@@ -90,16 +90,31 @@ export class LocalStorageService {
   async getAllEvents(): Promise<{ [key: string]: Event[] }> {
     return new Promise<{ [key: string]: Event[] }>((resolve) => {
       const events: { [key: string]: Event[] } = {};
+
+      // Loop through all items in localStorage
       Object.keys(localStorage).forEach((key) => {
         if (key.startsWith('event-')) {
-          const date = key.split('-')[1];
-          const event = JSON.parse(localStorage.getItem(key)!);
-          if (!events[date]) {
-            events[date] = [];
+          try {
+            // Extract the date part from the key
+            const date = key.substring(6); // key is in the format 'event-YYYY-MM-DD'
+
+            // Parse the event data from localStorage
+            const event: Event = JSON.parse(localStorage.getItem(key)!);
+
+            // Ensure that the event is valid and well-formed
+            if (event && event.date) {
+              if (!events[date]) {
+                events[date] = [];
+              }
+              events[date].push(event); // Add event to the corresponding date
+            }
+          } catch (error) {
+            console.error('Error parsing event from localStorage:', error);
           }
-          events[date].push(event);
         }
       });
+
+      // Resolve with the correctly structured events object
       resolve(events);
     });
   }
