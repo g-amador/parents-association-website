@@ -1,4 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { LocalStorageService } from '../../core/services/local-storage.service';
+import { Contact } from '../../shared/models/contact.model';
+import { EditContactDialogComponent } from '../contacts/edit-contact-dialog/edit-contact-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-contacts',
@@ -6,24 +11,18 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
-  sidebarVisible = true; // Default to true, will adjust based on screen size
+  sidebarVisible = true;
+  contacts: Contact[] = [];
 
-  contacts = [
-    { name: 'contacts_page.coordinator', email: 'manuel.grilo@agpm.edu.pt' },
-    { name: 'contacts_page.parents_association', email: 'apesalvadorampai@hotmail.com' },
-    { name: 'contacts_page.president_parents_association', phone: '(+351) 936 257 567', email: 'sandrina.vb@gmail.com' },
-    { name: 'contacts_page.school', phone: '(+351) 217 605 771' },
-    { name: 'contacts_page.education_office_jfb', phone: '(+351) 217 123 000', email: 'educacao@jfbenfica.pt' },
-    { name: 'contacts_page.education_manager', person: 'Tânia Lopes' },
-    { name: 'contacts_page.aec_coordination', person: 'João Batista' },
-    { name: 'contacts_page.aaaf_caf_coordination', person: 'Nuno Guimarães' },
-    { name: 'contacts_page.safe_coordination', person: 'Gonçalo Fonseca' },
-    { name: 'contacts_page.aaaf_caf', phone: '(+351) 925 977 565' },
-    { name: 'contacts_page.aaaf_caf_contact_monitors', person: 'Joaquim Pinto, Ligia Gonçalves' }
-  ];
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalStorageService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.adjustSidebarVisibility();
+    this.loadContacts();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -37,5 +36,59 @@ export class ContactsComponent implements OnInit {
 
   toggleSidebarVisibility(sidebarVisible: boolean) {
     this.sidebarVisible = sidebarVisible;
+  }
+
+  async loadContacts() {
+    try {
+      const storedContacts: Contact[] = [];
+
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('contact-')) {
+          const role = key.replace('contact-', '');
+          const contact = await this.localStorageService.getContact(role);
+          if (contact) {
+            storedContacts.push(contact);
+          }
+        }
+      }
+
+      if (storedContacts.length > 0) {
+        this.contacts = storedContacts;
+      } else {
+        this.http.get<Contact[]>('assets/data/contacts.json').subscribe(
+          async (data) => {
+            this.contacts = data;
+            for (const contact of this.contacts) {
+              await this.localStorageService.addContact(contact.role, contact);
+            }
+          },
+          (error) => {
+            console.error('Error loading contacts:', error);
+          }
+        );
+      }
+    } catch (error) {
+      console.error('Error loading contacts:', error);
+    }
+  }
+
+  // Open the dialog to edit a contact
+  openEditDialog(contact: Contact): void {
+    const dialogRef = this.dialog.open(EditContactDialogComponent, {
+      width: '300px',
+      data: { ...contact }  // Pass a copy of the contact data to the dialog
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        // Update the contact if changes were made
+        const index = this.contacts.findIndex(c => c.role === contact.role);
+        if (index > -1) {
+          this.contacts[index] = result;
+          await this.localStorageService.addContact(result.role, result); // Save the updated contact to localStorage
+        }
+      }
+    });
   }
 }

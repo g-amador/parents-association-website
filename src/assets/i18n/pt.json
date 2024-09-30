@@ -111,7 +111,8 @@
     "aaaf_caf_coordination": "Coordenação AAAF/CAF",
     "safe_coordination": "Coordenação SAFE",
     "aaaf_caf": "AAAF/CAF",
-    "aaaf_caf_contact_monitors": "Monitores de Contacto AAAF/CAF"
+    "aaaf_caf_contact_monitors": "Monitores de Contacto AAAF/CAF",
+    "edit_contact": "Editar Contacto"
   },
   "dialog": {
     "cancel": "Cancelar",

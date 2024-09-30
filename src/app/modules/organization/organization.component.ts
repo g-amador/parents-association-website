@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component';
+import { EditOrganizationContactDialogComponent } from './edit-organization-contact-dialog/edit-organization-contact-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -25,7 +25,7 @@ export class OrganizationComponent implements OnInit {
     private http: HttpClient,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private authService: AuthService) {}
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.adjustSidebarVisibility();
@@ -74,7 +74,7 @@ export class OrganizationComponent implements OnInit {
   // Open the edit dialog when a contact card is clicked
   editContact(contact: any, group: string, index: number) {
     if (this.isAdminRoute) {
-      const dialogRef = this.dialog.open(EditContactDialogComponent, {
+      const dialogRef = this.dialog.open(EditOrganizationContactDialogComponent, {
         width: '400px',
         data: { contact }
       });

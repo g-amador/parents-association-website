@@ -28,7 +28,8 @@ import { QuillEditorComponent } from './shared/quill-editor/quill-editor.compone
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
 import { OrderByPipe } from './shared/pipes/order-by.pipe';
 import { EditEventFormDialogComponent } from './modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
-import { EditContactDialogComponent } from './modules/organization/edit-contact-dialog/edit-contact-dialog.component';
+import { EditContactDialogComponent } from './modules/contacts/edit-contact-dialog/edit-contact-dialog.component';
+import { EditOrganizationContactDialogComponent } from './modules/organization/edit-organization-contact-dialog/edit-organization-contact-dialog.component';
 import { EditArticleDialogComponent } from './modules/news/edit-article-dialog/edit-article-dialog.component';
 import { ViewEventDialogComponent } from './modules/calendar/view-event-dialog/view-event-dialog.component';
 import { ViewArticleDialogComponent } from './modules/news/view-article-dialog/view-article-dialog.component';
@@ -59,6 +60,7 @@ import { MatRippleModule } from '@angular/material/core';
     OrderByPipe,
     EditEventFormDialogComponent,
     EditContactDialogComponent,
+    EditOrganizationContactDialogComponent,
     EditArticleDialogComponent,
     ViewEventDialogComponent,
     ViewArticleDialogComponent,

@@ -3,14 +3,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-contact-dialog',
-  templateUrl: './edit-contact-dialog.component.html',
-  styleUrls: ['./edit-contact-dialog.component.scss']
+  templateUrl: './edit-organization-contact-dialog.component.html',
+  styleUrls: ['./edit-organization-contact-dialog.component.scss']
 })
-export class EditContactDialogComponent {
+export class EditOrganizationContactDialogComponent {
   contact: any;
 
   constructor(
-    public dialogRef: MatDialogRef<EditContactDialogComponent>,
+    public dialogRef: MatDialogRef<EditOrganizationContactDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.contact = { ...data.contact }; // Make a copy to avoid direct binding

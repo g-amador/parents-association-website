@@ -6,10 +6,12 @@ describe('EditContactDialogComponent', () => {
   let component: EditContactDialogComponent;
   let fixture: ComponentFixture<EditContactDialogComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [EditContactDialogComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [EditContactDialogComponent]
+    })
+    .compileComponents();
+
     fixture = TestBed.createComponent(EditContactDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

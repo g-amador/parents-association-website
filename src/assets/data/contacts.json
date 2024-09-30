@@ -1,0 +1,13 @@
+[
+  { "role": "contacts_page.coordinator", "email": "manuel.grilo@agpm.edu.pt" },
+  { "role": "contacts_page.parents_association", "email": "apesalvadorampai@hotmail.com" },
+  { "role": "contacts_page.president_parents_association", "phone": "(+351) 936 257 567", "email": "sandrina.vb@gmail.com" },
+  { "role": "contacts_page.school", "phone": "(+351) 217 605 771" },
+  { "role": "contacts_page.education_office_jfb", "phone": "(+351) 217 123 000", "email": "educacao@jfbenfica.pt" },
+  { "role": "contacts_page.education_manager", "name": "Tânia Lopes" },
+  { "role": "contacts_page.aec_coordination", "name": "João Batista" },
+  { "role": "contacts_page.aaaf_caf_coordination", "name": "Nuno Guimarães" },
+  { "role": "contacts_page.safe_coordination", "name": "Gonçalo Fonseca" },
+  { "role": "contacts_page.aaaf_caf", "phone": "(+351) 925 977 565" },
+  { "role": "contacts_page.aaaf_caf_contact_monitors", "name": "Joaquim Pinto, Ligia Gonçalves" }
+]

@@ -5,9 +5,9 @@
     <app-language-switcher></app-language-switcher>
 
     <ul>
-      <li *ngFor="let contact of contacts">
-        <strong>{{ contact.name | translate }}</strong>
-        <span *ngIf="contact.person">: {{ contact.person }}</span>
+      <li *ngFor="let contact of contacts" (click)="openEditDialog(contact)" class="contact-item">
+        <strong>{{ contact.role | translate }}</strong>
+        <span *ngIf="contact.name">: {{ contact.name }}</span>
         <span *ngIf="contact.phone"> - {{ contact.phone }}</span>
         <span *ngIf="contact.email"> - <a [href]="'mailto:' + contact.email">{{ contact.email }}</a></span>
       </li>

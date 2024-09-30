@@ -9,11 +9,11 @@ import { Event } from '../../shared/models/event.model';
 export class LocalStorageService {
   constructor() { }
 
-  // Add or update a contact
-  async addContact(contactId: string, contact: Contact): Promise<void> {
+  // Add or update a contact using `role` as the key
+  async addContact(role: string, contact: Contact): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
-        localStorage.setItem(`contact-${contactId}`, JSON.stringify(contact));
+        localStorage.setItem(`contact-${role}`, JSON.stringify(contact));
         console.log('Contact successfully saved to localStorage!');
         resolve();
       } catch (error) {
@@ -23,11 +23,11 @@ export class LocalStorageService {
     });
   }
 
-  // Retrieve a contact
-  async getContact(contactId: string): Promise<Contact | null> {
+  // Retrieve a contact by `role`
+  async getContact(role: string): Promise<Contact | null> {
     return new Promise<Contact | null>((resolve, reject) => {
       try {
-        const contact = localStorage.getItem(`contact-${contactId}`);
+        const contact = localStorage.getItem(`contact-${role}`);
         resolve(contact ? JSON.parse(contact) : null);
       } catch (error) {
         console.error('Error retrieving contact from localStorage:', error);
@@ -36,11 +36,11 @@ export class LocalStorageService {
     });
   }
 
-  // Delete a contact
-  async deleteContact(contactId: string): Promise<void> {
+  // Delete a contact by `role`
+  async deleteContact(role: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
-        localStorage.removeItem(`contact-${contactId}`);
+        localStorage.removeItem(`contact-${role}`);
         console.log('Contact successfully deleted from localStorage!');
         resolve();
       } catch (error) {
