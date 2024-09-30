@@ -4,10 +4,10 @@ import { Article, YearArticles } from '../../shared/models/article.model';
 import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component';
 import { ViewArticleDialogComponent } from './view-article-dialog/view-article-dialog.component';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { FirestoreService } from 'src/app/core/services/firestore.service'; // Import Firestore service
-import { environment } from 'src/environments/environment'; // Import environment
+import { AuthService } from '../../core/services/auth.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
+import { FirestoreService } from '../../core/services/firestore.service'; // Import Firestore service
+import { environment } from '../../../environments/environment'; // Import environment
 
 @Component({
   selector: 'app-news',
