@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit {
   // Load upcoming events using LocalStorageService
   async loadUpcomingEvents() {
     const events = await this.localStorageService.getAllEvents();
-    console.log('Loaded events from local storage:', events); // Debugging line
 
     if (events && typeof events === 'object') {
       // Transform the object with event keys into a flat array of event objects
@@ -64,18 +63,12 @@ export class HomeComponent implements OnInit {
         return []; // Skip non-event keys
       });
 
-      // Debugging line to check transformed events
-      console.log('Transformed events:', transformedEvents);
-
       // Filter out past events and sort by date
       const sortedTransformedEvents = transformedEvents
         .filter(event => event.date && new Date(event.date) >= new Date()) // Filter out past events
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // Sort events by date
 
       this.upcomingEvents = sortedTransformedEvents.slice(0, 3); // Get the next 3 upcoming events
-
-      // Debugging line to check upcoming events
-      console.log('Upcoming events:', this.upcomingEvents);
     } else {
       this.upcomingEvents = [];
     }
