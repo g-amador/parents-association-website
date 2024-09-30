@@ -2,7 +2,6 @@
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher></app-language-switcher>
-    <!--h1><i class="fa fa-calendar icon-spacing"></i><span>{{ 'calendar' | translate }}</span></h1-->
 
     <div class="month-year">
       <span (click)="moveMonth(-1)" class="arrow">&#10094;</span>

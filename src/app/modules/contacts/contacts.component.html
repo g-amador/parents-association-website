@@ -3,7 +3,7 @@
 
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher></app-language-switcher>
-    <!--h1><i class="fa fa-address-book icon-spacing"></i><span>{{ 'contacts' | translate }}</span></h1-->
+
     <ul>
       <li *ngFor="let contact of contacts">
         <strong>{{ contact.name | translate }}</strong>

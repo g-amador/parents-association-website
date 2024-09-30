@@ -5,8 +5,6 @@
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher></app-language-switcher>
 
-    <!--h1><i class="fa fa-book icon-spacing"></i><span>{{ 'news' | translate }}</span></h1-->
-
     <!-- Latest News Carousel -->
     <h2 class="latest-news-title">{{ 'news_page.latest_news' | translate }}</h2>
     <div *ngIf="latestArticles.length > 0; else noLatestNews">
