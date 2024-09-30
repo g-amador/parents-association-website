@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Event } from '../../shared/models/event.model';
+import { LocalStorageService } from '../../core/services/local-storage.service'; // Import Local Storage Service
 
 @Component({
   selector: 'app-home',
@@ -16,10 +17,12 @@ export class HomeComponent implements OnInit {
   intervalId: any;
   eventIntervalId: any; // For event carousel rotation
 
-  ngOnInit() {
+  constructor(private localStorageService: LocalStorageService) { } // Inject LocalStorageService
+
+  async ngOnInit() {
     this.adjustSidebarVisibility();
-    this.loadLatestArticles();
-    this.loadUpcomingEvents();
+    await this.loadLatestArticles(); // Load latest articles asynchronously
+    await this.loadUpcomingEvents(); // Load upcoming events asynchronously
     this.startCarouselRotation();
     this.startEventCarouselRotation(); // Start event carousel rotation
   }
@@ -37,45 +40,45 @@ export class HomeComponent implements OnInit {
     this.sidebarVisible = sidebarVisible;
   }
 
-  // Load the latest articles
-  loadLatestArticles() {
-    const articles = this.getArticlesFromLocalStorage();
-    this.latestArticles = Array.isArray(articles) ? articles.slice(-3).reverse() : []; // Ensure it's an array
+  // Load the latest articles using LocalStorageService
+  async loadLatestArticles() {
+    this.latestArticles = await this.localStorageService.getAllArticles(); // Load articles from Local Storage
+    this.latestArticles = this.latestArticles.slice(-3).reverse(); // Get the last 3 articles in reverse order
   }
 
-  // Load upcoming events
-  loadUpcomingEvents() {
-    const events = this.getEventsFromLocalStorage();
+  // Load upcoming events using LocalStorageService
+  async loadUpcomingEvents() {
+    const events = await this.localStorageService.getAllEvents();
+    console.log('Loaded events from local storage:', events); // Debugging line
 
     if (events && typeof events === 'object') {
-      // Transform the object with date keys into a flat array of event objects
-      const transformedEvents = Object.keys(events).flatMap(dateKey => {
-        return (events as unknown as Record<string, Event[]>)[dateKey].map(event => ({
-          ...event,
-          date: dateKey
-        }));
+      // Transform the object with event keys into a flat array of event objects
+      const transformedEvents = Object.keys(events).flatMap(key => {
+        const eventList = events[key]; // Get events for that date
+        if (Array.isArray(eventList)) {
+          return eventList.map(event => ({
+            ...event,
+            date: key
+          }));
+        }
+        return []; // Skip non-event keys
       });
 
+      // Debugging line to check transformed events
+      console.log('Transformed events:', transformedEvents);
+
+      // Filter out past events and sort by date
       const sortedTransformedEvents = transformedEvents
         .filter(event => event.date && new Date(event.date) >= new Date()) // Filter out past events
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // Sort events by date
 
       this.upcomingEvents = sortedTransformedEvents.slice(0, 3); // Get the next 3 upcoming events
+
+      // Debugging line to check upcoming events
+      console.log('Upcoming events:', this.upcomingEvents);
     } else {
       this.upcomingEvents = [];
     }
-  }
-
-  // Retrieve articles from local storage
-  getArticlesFromLocalStorage(): Article[] {
-    const articles = localStorage.getItem('articles');
-    return articles ? JSON.parse(articles) : [];
-  }
-
-  // Retrieve events from local storage
-  getEventsFromLocalStorage(): Event[] | Record<string, Event[]> {
-    const events = localStorage.getItem('events');
-    return events ? JSON.parse(events) : {};
   }
 
   startCarouselRotation() {
