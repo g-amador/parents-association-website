@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./language-switcher.component.scss']
 })
 export class LanguageSwitcherComponent {
+  @Input() sidebarVisible: boolean = true; // Default value, can be overwritten by parent component
+
   constructor(private translate: TranslateService) {}
 
   switchLanguage(language: string) {

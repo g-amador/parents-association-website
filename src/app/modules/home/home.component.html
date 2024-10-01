@@ -1,9 +1,9 @@
 <div class="home-container">
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
-  <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
-    <app-language-switcher></app-language-switcher>
 
-    <h1>{{ 'home_page.welcome' | translate }}</h1>
+  <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
+    <app-language-switcher [sidebarVisible]="sidebarVisible"></app-language-switcher>
+    <h1 class="centered">{{ 'home_page.welcome' | translate }}</h1>
 
     <!-- Title for Latest News Section -->
     <h2 class="latest-news-title">{{ 'news_page.latest_news' | translate }}</h2>

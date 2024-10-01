@@ -2,7 +2,7 @@
   <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
 
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
-    <app-language-switcher></app-language-switcher>
+    <app-language-switcher [sidebarVisible]="sidebarVisible"></app-language-switcher>
 
     <ul>
       <li *ngFor="let contact of contacts" (click)="openEditDialog(contact)" class="contact-item">
