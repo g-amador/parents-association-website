@@ -44,6 +44,7 @@ button.mat-raised-button[color='cancel'] {
   padding: 20px;
   transition: margin-left 0.3s;
   margin-left: 160px; /* Set the initial margin to the width of the open sidebar */
+  margin-top: 5%;
 
   &.sidebar-closed {
     margin-left: 35px;
