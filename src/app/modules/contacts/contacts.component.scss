@@ -1,2 +1,29 @@
-/* Contacts container styles */
+.contacts-container {
+  display: flex; /* Maintain the flex layout */
+  position: relative; /* Establish positioning context */
 
+  .content-container {
+    position: relative; /* Change to relative for normal flow */
+    display: flex; /* Flex layout for the content */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: flex-start; /* Align items at the start */
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh; /* Full height of the viewport */
+    flex: 1; /* Allow content to fill available space */
+    margin-left: 20%;
+    margin-top: 100px;
+
+    &.sidebar-closed {
+      margin-top: 100px;
+      margin-left: 10%; /* Remove any left margin */
+    }
+
+    ul {
+      margin-top: 0;
+      max-width: 1000px; /* Set a max width */
+      width: 90%; /* Width of UL */
+      padding: 0; /* Reset padding */
+      text-align: left; /* Align text to the left */
+    }
+  }
+}

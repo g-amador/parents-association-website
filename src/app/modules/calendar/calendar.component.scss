@@ -9,8 +9,9 @@ h1 {
 }
 
 .calendar {
-  font-size: 36px;
+  font-size: 30px;
   margin-bottom: 20px;
+  margin-right: 100px;
 }
 
 table {
@@ -49,12 +50,13 @@ th {
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .month-year {
-  font-size: 48px;
+  font-size: 44px;
   margin-bottom: 10px;
+  margin-right: 100px;
   display: flex;
   align-items: center;
   justify-content: center; /* Center the content horizontally */
@@ -121,7 +123,7 @@ button {
   display: flex;
   align-items: center;
   margin: 0 15px; /* Space between items */
-  font-size: 36px;
+  font-size: 32px;
 }
 
 .color-box {
