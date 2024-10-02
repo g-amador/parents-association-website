@@ -46,19 +46,19 @@ export class OrganizationComponent implements OnInit {
     if (storedContacts) {
       this.contacts = JSON.parse(storedContacts);
     } else {
-      this.http.get<any>('assets/data/roles.json').subscribe(data => {
+      this.http.get<any>('assets/data/organizationContacts.json').subscribe(data => {
         const members = data.members;
         this.contacts.direction = members.Direction.map((contact: any) => ({
           ...contact,
-          image: `assets/images/roles/generic-user.jpg`
+          image: `assets/images/organizationContacts/generic-user.jpg`
         }));
         this.contacts.assembly = members.Assembly.map((contact: any) => ({
           ...contact,
-          image: `assets/images/roles/generic-user.jpg`
+          image: `assets/images/organizationContacts/generic-user.jpg`
         }));
         this.contacts.fiscalCouncil = members['Fiscal Council'].map((contact: any) => ({
           ...contact,
-          image: `assets/images/roles/generic-user.jpg`
+          image: `assets/images/organizationContacts/generic-user.jpg`
         }));
 
         this.saveToLocalStorage();
