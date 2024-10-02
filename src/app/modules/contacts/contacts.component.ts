@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { Contact } from '../../shared/models/contact.model';
@@ -32,11 +32,6 @@ export class ContactsComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
     });
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.adjustSidebarVisibility();
   }
 
   adjustSidebarVisibility() {

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Article, YearArticles } from '../../shared/models/article.model';
 import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component';
@@ -48,11 +48,6 @@ export class NewsComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
     });
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.adjustSidebarVisibility();
   }
 
   adjustSidebarVisibility() {

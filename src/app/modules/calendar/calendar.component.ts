@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { format, startOfMonth, endOfMonth, startOfWeek, addDays, isSameMonth, isToday, addMonths } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
 import { EditEventFormDialogComponent } from '../../modules/calendar/edit-event-form-dialog/edit-event-form-dialog.component';
@@ -56,13 +56,8 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.adjustSidebarVisibility();
-  }
-
   adjustSidebarVisibility() {
-    this.sidebarVisible = window.innerWidth > 768;
+    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
   getPublicHolidays(year: number): string[] {

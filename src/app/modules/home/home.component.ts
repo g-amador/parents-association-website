@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Event } from '../../shared/models/event.model';
 import { LocalStorageService } from '../../core/services/local-storage.service'; // Import Local Storage Service
@@ -25,11 +25,6 @@ export class HomeComponent implements OnInit {
     await this.loadUpcomingEvents(); // Load upcoming events asynchronously
     this.startCarouselRotation();
     this.startEventCarouselRotation(); // Start event carousel rotation
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.adjustSidebarVisibility();
   }
 
   adjustSidebarVisibility() {
