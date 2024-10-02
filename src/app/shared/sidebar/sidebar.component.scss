@@ -89,7 +89,7 @@
 
 .main-content {
   transition: margin-left 0.3s ease;
-  margin-left: 160px;
+  margin-left: 160px; /* Space for sidebar */
 
   .sidebar-closed & {
     margin-left: 35px; /* Adjust margin when sidebar is hidden */

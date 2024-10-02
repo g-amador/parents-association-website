@@ -1,8 +1,8 @@
 .language-switcher {
   position: fixed; /* Fixes the switcher to the top of the page */
   top: 0; /* Adjust top position as needed */
-  left: 11%; /* Align to the left side of the viewport */
-  width: 80%; /* Full width of the viewport */
+  left: calc(160px + 20px); /* Adjust left position based on sidebar width */
+  width: calc(100% - 160px - 20px); /* Full width minus sidebar width */
   display: flex; /* Enable flexbox for alignment */
   align-items: center; /* Aligns the logo and buttons vertically */
   justify-content: space-between; /* Space out items to the edges */
@@ -12,8 +12,8 @@
   padding: 0 20px; /* Add some horizontal padding for spacing */
 
   &.sidebar-closed {
-    left: 5%; /* Change left position when sidebar is closed */
-    width: 86%;
+    left: calc(35px + 20px); /* Change left position when sidebar is closed */
+    width: calc(100% - 35px - 20px); /* Adjust width based on closed sidebar */
   }
 }
 

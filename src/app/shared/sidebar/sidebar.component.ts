@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -14,8 +14,7 @@ export class SidebarComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute // Inject ActivatedRoute
+    private router: Router
   ) {
     this.router.events.subscribe(() => {
       this.selectedLink = this.router.url.split('/')[1]; // Get the current route
