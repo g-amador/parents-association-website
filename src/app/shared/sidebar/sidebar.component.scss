@@ -85,6 +85,15 @@
   color: black;
   display: block;
   margin-bottom: 10px;
+
+  user-select: none; /* Prevents text selection and caret from appearing */
+  outline: none; /* Removes any outline that may appear on focus */
+  caret-color: transparent; /* Hides the caret in case it appears */
+
+  &:focus {
+    outline: none; /* Ensure no focus outline */
+    caret-color: transparent; /* Hide the caret when focused */
+  }
 }
 
 .main-content {
