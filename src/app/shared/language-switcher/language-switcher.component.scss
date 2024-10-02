@@ -21,6 +21,7 @@
   display: flex; /* Use flexbox to keep buttons aligned */
   gap: 10px; /* Ensure no gap between buttons */
   align-items: center; /* Aligns buttons vertically */
+  padding-right: 40px;
 }
 
 .language-button {
