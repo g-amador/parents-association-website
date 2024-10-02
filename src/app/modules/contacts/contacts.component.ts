@@ -4,6 +4,8 @@ import { LocalStorageService } from '../../core/services/local-storage.service';
 import { Contact } from '../../shared/models/contact.model';
 import { EditContactDialogComponent } from '../contacts/edit-contact-dialog/edit-contact-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-contacts',
@@ -13,16 +15,23 @@ import { MatDialog } from '@angular/material/dialog';
 export class ContactsComponent implements OnInit {
   sidebarVisible = true;
   contacts: Contact[] = [];
+  isAdminRoute: boolean = false;
 
   constructor(
     private http: HttpClient,
+    private route: ActivatedRoute,
+    private authService: AuthService,
     private localStorageService: LocalStorageService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.adjustSidebarVisibility();
     this.loadContacts();
+
+    this.route.data.subscribe(data => {
+      this.isAdminRoute = this.authService.isAuthenticated();
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -60,7 +69,7 @@ export class ContactsComponent implements OnInit {
           async (data) => {
             this.contacts = data;
             for (const contact of this.contacts) {
-              await this.localStorageService.addContact(contact.role, contact);
+              await this.localStorageService.setContact(contact.role, contact);
             }
           },
           (error) => {
@@ -75,20 +84,22 @@ export class ContactsComponent implements OnInit {
 
   // Open the dialog to edit a contact
   openEditDialog(contact: Contact): void {
-    const dialogRef = this.dialog.open(EditContactDialogComponent, {
-      width: '300px',
-      data: { ...contact }  // Pass a copy of the contact data to the dialog
-    });
+    if (this.isAdminRoute) {
+      const dialogRef = this.dialog.open(EditContactDialogComponent, {
+        width: '300px',
+        data: { ...contact }  // Pass a copy of the contact data to the dialog
+      });
 
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) {
-        // Update the contact if changes were made
-        const index = this.contacts.findIndex(c => c.role === contact.role);
-        if (index > -1) {
-          this.contacts[index] = result;
-          await this.localStorageService.addContact(result.role, result); // Save the updated contact to localStorage
+      dialogRef.afterClosed().subscribe(async (result) => {
+        if (result) {
+          // Update the contact if changes were made
+          const index = this.contacts.findIndex(c => c.role === contact.role);
+          if (index > -1) {
+            this.contacts[index] = result;
+            await this.localStorageService.setContact(result.role, result); // Save the updated contact to localStorage
+          }
         }
-      }
-    });
+      });
+    }
   }
 }

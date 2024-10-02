@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Contact } from '../../shared/models/contact.model';
 import { Event } from '../../shared/models/event.model';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class LocalStorageService {
   constructor() { }
 
   // Add or update a contact using `role` as the key
-  async addContact(role: string, contact: Contact): Promise<void> {
+  async setContact(role: string, contact: Contact): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
         localStorage.setItem(`contact-${role}`, JSON.stringify(contact));
@@ -48,6 +49,28 @@ export class LocalStorageService {
         reject(error);
       }
     });
+  }
+
+  // Get all contacts
+  getAllContacts(): Observable<Contact[]> {
+    const contacts: Contact[] = [];
+
+    // Loop through all items in localStorage
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('contact-')) {
+        try {
+          const contact: Contact = JSON.parse(localStorage.getItem(key)!);
+          if (contact) {
+            contacts.push(contact); // Add contact to the array
+          }
+        } catch (error) {
+          console.error('Error parsing contact from localStorage:', error);
+        }
+      }
+    });
+
+    // Return an observable of contacts
+    return of(contacts); // Emit the contacts as an observable
   }
 
   // Add or update an event for a specific date
@@ -119,7 +142,6 @@ export class LocalStorageService {
     });
   }
 
-  // Add or update an article
   async addArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -135,10 +157,19 @@ export class LocalStorageService {
     });
   }
 
-  // Retrieve all articles
-  getAllArticles(): Article[] {
-    const articles = localStorage.getItem('articles');
-    return articles ? JSON.parse(articles) : [];
+  async updateArticle(article: Article): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      try {
+        const articles = this.getAllArticles(); // Get existing articles
+        articles.push(article); // update article
+        localStorage.setItem('articles', JSON.stringify(articles)); // Save all articles
+        console.log('Article successfully updated in localStorage!');
+        resolve();
+      } catch (error) {
+        console.error('Error updating article to localStorage:', error);
+        reject(error);
+      }
+    });
   }
 
   // Delete an article
@@ -155,5 +186,11 @@ export class LocalStorageService {
         reject(error);
       }
     });
+  }
+
+  // Retrieve all articles
+  getAllArticles(): Article[] {
+    const articles = localStorage.getItem('articles');
+    return articles ? JSON.parse(articles) : [];
   }
 }

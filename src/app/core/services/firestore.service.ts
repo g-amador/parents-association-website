@@ -11,22 +11,46 @@ import { Event } from '../../shared/models/event.model';
 export class FirestoreService {
   constructor(private firestore: AngularFirestore) { }
 
-  // Add or update a contact
-  async setContact(contactId: string, data: Contact): Promise<void> {
+  // Add or update a contact using `role` as the key
+  async setContact(role: string, contact: Contact): Promise<void> {
     try {
-      await this.firestore.collection('contacts').doc(contactId).set(data, { merge: true });
-      console.log(`Contact with ID: ${contactId} updated successfully.`);
+      await this.firestore.collection('contacts').doc(role).set(contact, { merge: true });
+      console.log(`Contact with role: ${role} updated successfully.`);
     } catch (error) {
       console.error('Error updating contact: ', error);
       throw error;
     }
   }
 
-  // Delete a contact
-  async deleteContact(contactId: string): Promise<void> {
+  // Retrieve a contact by `role`
+  async getContact(role: string): Promise<Contact | null> {
+    return new Promise<Contact | null>((resolve, reject) => {
+      this.firestore.collection('contacts').doc(role).get().toPromise()
+        .then(doc => {
+          if (doc && doc.exists) {
+            const data = doc.data();
+            if (data) {
+              // Ensure data is an object before spreading it
+              resolve({ ...data, role } as Contact); // Safe to access doc.data()
+            } else {
+              resolve(null); // If data is not an object, return null
+            }
+          } else {
+            resolve(null); // Document does not exist
+          }
+        })
+        .catch(error => {
+          console.error('Error retrieving contact from Firestore:', error);
+          reject(error);
+        });
+    });
+  }
+
+  // Delete a contact by `role`
+  async deleteContact(role: string): Promise<void> {
     try {
-      await this.firestore.collection('contacts').doc(contactId).delete();
-      console.log(`Contact with ID: ${contactId} deleted successfully.`);
+      await this.firestore.collection('contacts').doc(role).delete();
+      console.log(`Contact with role: ${role} deleted successfully.`);
     } catch (error) {
       console.error('Error deleting contact: ', error);
       throw error;
@@ -34,14 +58,14 @@ export class FirestoreService {
   }
 
   // Get all contacts
-  getContacts(): Observable<Contact[]> {
-    return this.firestore.collection<Contact>('contacts').valueChanges();
+  getAllContacts(): Observable<Contact[]> {
+    return this.firestore.collection<Contact>('contacts').valueChanges({ idField: 'id' });
   }
 
-  // Add or update an event
-  async setEvent(date: string, data: Event): Promise<void> {
+  // Add or update an event for a specific date
+  async setEvent(date: string, event: Event): Promise<void> {
     try {
-      await this.firestore.collection('events').doc(date).set(data, { merge: true });
+      await this.firestore.collection('events').doc(date).set(event, { merge: true });
       console.log(`Event for date: ${date} updated successfully.`);
     } catch (error) {
       console.error('Error updating event: ', error);
@@ -49,7 +73,7 @@ export class FirestoreService {
     }
   }
 
-  // Delete an event
+  // Delete an event for a specific date
   async deleteEvent(date: string): Promise<void> {
     try {
       await this.firestore.collection('events').doc(date).delete();
@@ -61,7 +85,7 @@ export class FirestoreService {
   }
 
   // Get all events
-  getEvents(): Observable<Event[]> {
+  getAllEvents(): Observable<Event[]> {
     return this.firestore.collection<Event>('events').valueChanges();
   }
 
@@ -69,7 +93,7 @@ export class FirestoreService {
   async addArticle(article: Article): Promise<void> {
     try {
       await this.firestore.collection('articles').add(article);
-      console.log(`Article added successfully.`);
+      console.log('Article added successfully.');
     } catch (error) {
       console.error('Error adding article: ', error);
       throw error;
@@ -101,17 +125,13 @@ export class FirestoreService {
   // Delete all articles
   async deleteAllArticles(): Promise<void> {
     const articlesSnapshot = await this.firestore.collection('articles').get().toPromise();
-
-    // Create an array of delete promises
     const deletePromises = articlesSnapshot!.docs.map(doc => this.deleteArticle(doc.id));
-
-    // Wait for all delete promises to resolve
     await Promise.all(deletePromises);
     console.log('All articles deleted successfully.');
   }
 
   // Get all articles, making sure to include the document ID as 'id'
-  getArticles(): Observable<Article[]> {
+  getAllArticles(): Observable<Article[]> {
     return this.firestore.collection<Article>('articles').valueChanges({ idField: 'id' });
   }
 }

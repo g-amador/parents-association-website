@@ -33,7 +33,7 @@ export class NewsComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private localStorageService: LocalStorageService,
-    private firestoreService: FirestoreService // Inject FirestoreService
+    private firestoreService: FirestoreService
   ) {
     // Decide which service to use based on environment
     this.articleService = environment.production && !environment.useLocalStorage
@@ -153,7 +153,7 @@ export class NewsComponent implements OnInit {
 
     // Fetch articles based on the selected service
     if (environment.production && !environment.useLocalStorage) {
-      const articlesObservable = (this.articleService as FirestoreService).getArticles();
+      const articlesObservable = (this.articleService as FirestoreService).getAllArticles();
       articlesObservable.subscribe((fetchedArticles) => {
         articles = fetchedArticles;
         this.processArticles(articles);
