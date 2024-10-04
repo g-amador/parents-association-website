@@ -4,6 +4,7 @@
   "news": "Notícias ou Informações",
   "calendar": "Calendário",
   "contacts": "Contactos Importantes",
+  "support": "Suporte",
   "auth": {
     "login": "Entrar",
     "logout": "Sair",
@@ -104,7 +105,8 @@
     "coordinator": "Coordenador de Escola",
     "parents_association": "Associação de Pais",
     "president_parents_association": "Presidente da Associação de Pais",
-    "school": "Escola",
+    "school_general_and_1st_year": "Geral/1º Ciclo",
+	  "school_ji": "Jardim de Infãncia",
     "education_office_jfb": "Gabinete de Educação JFB",
     "education_manager": "Responsável Educação",
     "aec_coordination": "Coordenação AEC",

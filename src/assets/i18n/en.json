@@ -4,6 +4,7 @@
   "news": "News or Information",
   "calendar": "Calendar",
   "contacts": "Important Contacts",
+  "support": "Support",
   "auth": {
     "login": "Login",
     "logout": "Logout",
@@ -105,6 +106,8 @@
     "parents_association": "Parents Association",
     "president_parents_association": "President of Parents Association",
     "school": "School",
+	  "school_general_and_1st_year": "General and 1st year",
+	  "school_ji": "Kindergarten",
     "education_office_jfb": "Education Office JFB",
     "education_manager": "Education Manager",
     "aec_coordination": "AEC Coordination",

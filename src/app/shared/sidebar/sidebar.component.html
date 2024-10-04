@@ -16,6 +16,10 @@
   <a routerLink="/contacts" (click)="changeColor('contacts')" [class.active]="selectedLink === 'contacts'">
     <i class="fa fa-address-book"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'contacts' | translate }}</span>
   </a>
+  <a href="mailto:g.n.p.amador@gmail.com">
+    <i class="fa fa-question-circle"></i><span class="sidebar-text" *ngIf="sidebarVisible">{{ 'support' | translate }}</span>
+  </a>
+
 
   <div class="logout-container" *ngIf="isLoggedIn()">
     <a (click)="logout()">
