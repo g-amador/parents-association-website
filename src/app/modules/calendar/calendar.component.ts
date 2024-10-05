@@ -16,14 +16,22 @@ import { environment } from '../../../environments/environment'; // Import envir
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  sidebarVisible = true;
-  currentMonthYear: Date = new Date();
-  calendar: Date[][] = [];
-  events: { [key: string]: Event[] } = {};
-  isAdminRoute: boolean = false;
+  sidebarVisible = true; // Determines the visibility of the sidebar
+  currentMonthYear: Date = new Date(); // Holds the current month and year being displayed
+  calendar: Date[][] = []; // 2D array to represent the calendar structure
+  events: { [key: string]: Event[] } = {}; // Stores events keyed by date
+  isAdminRoute: boolean = false; // Indicates if the current route is for admin
 
   private eventService: LocalStorageService | FirestoreService; // Dynamic service based on environment
 
+  /**
+   * Constructor for CalendarComponent.
+   * @param dialog - The MatDialog service to open dialogs.
+   * @param route - The ActivatedRoute to access route data.
+   * @param authService - The AuthService to check user authentication.
+   * @param localStorageService - Service to interact with Local Storage.
+   * @param firestoreService - Service to interact with Firestore.
+   */
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -37,6 +45,10 @@ export class CalendarComponent implements OnInit {
       : this.localStorageService;
   }
 
+  /**
+   * Lifecycle hook called on component initialization.
+   * Loads initial calendar data and checks the current route for admin status.
+   */
   async ngOnInit() {
     // Ensure the sidebar adjusts to window size
     this.adjustSidebarVisibility();
@@ -56,10 +68,18 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  /**
+   * Adjust sidebar visibility based on window width.
+   */
   adjustSidebarVisibility() {
     this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
+  /**
+   * Get the public holidays for a specific year.
+   * @param year - The year to get public holidays for.
+   * @returns An array of public holiday dates in YYYY-MM-DD format.
+   */
   getPublicHolidays(year: number): string[] {
     return [
       `${year}-01-01`,
@@ -75,6 +95,9 @@ export class CalendarComponent implements OnInit {
     ];
   }
 
+  /**
+   * Generate the calendar structure for the current month.
+   */
   generateCalendar(): void {
     const startOfCurrentMonth = startOfMonth(this.currentMonthYear);
     const endOfCurrentMonth = endOfMonth(this.currentMonthYear);
@@ -91,14 +114,23 @@ export class CalendarComponent implements OnInit {
       calendarRows.push(week);
     }
 
-    this.calendar = calendarRows;
+    this.calendar = calendarRows; // Update the calendar property
   }
 
+  /**
+   * Move the calendar to the next or previous month.
+   * @param offset - The number of months to move (positive or negative).
+   */
   moveMonth(offset: number): void {
     this.currentMonthYear = addMonths(this.currentMonthYear, offset);
-    this.generateCalendar();
+    this.generateCalendar(); // Regenerate the calendar for the new month
   }
 
+  /**
+   * Get the CSS classes for a specific day to apply styling.
+   * @param day - The date to check for classes.
+   * @returns An array of class names based on the date's status.
+   */
   getDayClasses(day: Date): string[] {
     const isCurrentMonth = isSameMonth(day, this.currentMonthYear);
     const today = isToday(day);
@@ -123,6 +155,11 @@ export class CalendarComponent implements OnInit {
     return classes;
   }
 
+  /**
+   * Handle the date selection and open appropriate dialog.
+   * If in admin mode, it opens the event edit dialog; otherwise, the view dialog.
+   * @param day - The date selected from the calendar.
+   */
   selectDate(day: Date): void {
     const dateStr = format(day, 'yyyy-MM-dd');
     const eventsForDay = this.events[dateStr] || [];
@@ -155,6 +192,9 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  /**
+   * Load events from local storage or Firestore.
+   */
   async loadEvents(): Promise<void> {
     if (environment.useLocalStorage) {
       // Load events from LocalStorage
@@ -186,6 +226,10 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  /**
+   * Add a new event to the calendar.
+   * @param eventData - The event details including title, date, and description.
+   */
   async addEvent(eventData: { title: string; date: string | null; description: string }): Promise<void> {
     if (eventData.title && eventData.date) {
       const newEvent: Event = {
@@ -199,16 +243,15 @@ export class CalendarComponent implements OnInit {
       }
       this.events[eventData.date].push(newEvent);
 
-      if (environment.useLocalStorage) {
-        await this.eventService.setEvent(eventData.date, newEvent); // Use Local Storage
-      } else {
-        await this.eventService.setEvent(eventData.date, newEvent); // Use Firestore
-      }
-
-      this.generateCalendar();
+      await this.eventService.setEvent(eventData.date, newEvent);
+      this.generateCalendar(); // Regenerate the calendar after adding
     }
   }
 
+  /**
+   * Update an existing event in the calendar.
+   * @param eventData - The updated event data including title, description, and index.
+   */
   async updateEvent(eventData: { title: string; date: string | null; description: string; index: number }): Promise<void> {
     const { date, title, description, index: eventIndex } = eventData;
 
@@ -218,16 +261,16 @@ export class CalendarComponent implements OnInit {
       eventsCopy[eventIndex] = updatedEvent;
       this.events[date] = eventsCopy;
 
-      if (environment.useLocalStorage) {
-        await this.eventService.setEvent(date, updatedEvent); // Use Local Storage
-      } else {
-        await this.eventService.setEvent(date, updatedEvent); // Use Firestore
-      }
-
-      this.generateCalendar();
+      await this.eventService.setEvent(date, updatedEvent);
+      this.generateCalendar(); // Regenerate the calendar after updating
     }
   }
 
+  /**
+   * Delete an event from the calendar.
+   * @param date - The date of the event.
+   * @param index - The index of the event in the list.
+   */
   async deleteEvent(date: string, index: number): Promise<void> {
     if (date && this.events[date] && index !== undefined) {
       const eventsForDate = this.events[date];
@@ -237,16 +280,15 @@ export class CalendarComponent implements OnInit {
         delete this.events[date]; // Remove the date key if no events remain
       }
 
-      if (environment.useLocalStorage) {
-        await this.eventService.deleteEvent(date); // Use Local Storage
-      } else {
-        await this.eventService.deleteEvent(date); // Use Firestore
-      }
-
-      this.generateCalendar();
+      await this.eventService.deleteEvent(date);
+      this.generateCalendar(); // Regenerate the calendar after deletion
     }
   }
 
+  /**
+   * Toggle the sidebar visibility.
+   * @param sidebarVisible - Boolean to set sidebar visibility.
+   */
   toggleSidebarVisibility(sidebarVisible: boolean): void {
     this.sidebarVisible = sidebarVisible;
   }

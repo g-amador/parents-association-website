@@ -15,12 +15,21 @@ import { environment } from '../../../environments/environment';  // Import envi
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
-  sidebarVisible = true;
-  contacts: Contact[] = [];
-  isAdminRoute: boolean = false;
+  sidebarVisible = true; // Controls the visibility of the sidebar
+  contacts: Contact[] = []; // Array to store the list of contacts
+  isAdminRoute: boolean = false; // Flag to check if the route is admin
 
   private contactService: LocalStorageService | FirestoreService; // Dynamic service based on environment
 
+  /**
+   * Constructor for the ContactsComponent.
+   * @param http - The HttpClient service for making HTTP requests.
+   * @param route - The ActivatedRoute service for accessing route data.
+   * @param authService - The AuthService to check user authentication.
+   * @param firestoreService - The FirestoreService to manage Firestore interactions.
+   * @param localStorageService - The LocalStorageService for local storage interactions.
+   * @param dialog - The MatDialog service for opening dialogs.
+   */
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -35,24 +44,40 @@ export class ContactsComponent implements OnInit {
       : this.localStorageService;
   }
 
-  ngOnInit() {
-    this.adjustSidebarVisibility();
-    this.loadContacts();
+  /**
+   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   * Initializes the sidebar visibility and loads the contacts.
+   */
+  ngOnInit(): void {
+    this.adjustSidebarVisibility(); // Adjust sidebar visibility based on window width
+    this.loadContacts(); // Load contacts from the appropriate source
 
     this.route.data.subscribe(data => {
-      this.isAdminRoute = this.authService.isAuthenticated();
+      this.isAdminRoute = this.authService.isAuthenticated(); // Check if the user is authenticated
     });
   }
 
-  adjustSidebarVisibility() {
+  /**
+   * Adjust the visibility of the sidebar based on the window width.
+   * Sidebar will be visible if the window is wider than a certain breakpoint.
+   */
+  adjustSidebarVisibility(): void {
     this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
-  toggleSidebarVisibility(sidebarVisible: boolean) {
+  /**
+   * Toggle the visibility of the sidebar.
+   * @param sidebarVisible - Boolean value to show or hide the sidebar.
+   */
+  toggleSidebarVisibility(sidebarVisible: boolean): void {
     this.sidebarVisible = sidebarVisible;
   }
 
-  async loadContacts() {
+  /**
+   * Load the contacts from the appropriate source depending on the environment.
+   * It first attempts to load from Firestore or Local Storage and falls back to JSON if no contacts are found.
+   */
+  async loadContacts(): Promise<void> {
     try {
       let loadedContacts: Contact[] = [];
 
@@ -75,7 +100,7 @@ export class ContactsComponent implements OnInit {
         console.log('No contacts found in Firestore/LocalStorage. Loading from JSON...');
         await this.loadContactsFromJSON();
       } else {
-        this.contacts = loadedContacts;
+        this.contacts = loadedContacts; // Set the loaded contacts
       }
     } catch (error) {
       console.error('Error loading contacts:', error);
@@ -84,12 +109,15 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-  // Helper method to load contacts from Firestore
+  /**
+   * Helper method to load contacts from Firestore.
+   * @returns A promise that resolves to an array of contacts loaded from Firestore.
+   */
   private async loadContactsFromFirestore(): Promise<Contact[]> {
     return new Promise<Contact[]>((resolve, reject) => {
       this.contactService.getAllContacts().subscribe(
         (data: Contact[]) => {
-          resolve(data);
+          resolve(data); // Resolve with loaded contacts
         },
         (error) => {
           console.error('Error loading contacts from Firestore:', error);
@@ -99,7 +127,10 @@ export class ContactsComponent implements OnInit {
     });
   }
 
-  // Helper method to load contacts from Local Storage
+  /**
+   * Helper method to load contacts from Local Storage.
+   * @returns A promise that resolves to an array of contacts loaded from Local Storage.
+   */
   private async loadContactsFromLocalStorage(): Promise<Contact[]> {
     const storedContacts: Contact[] = [];
     for (let i = 0; i < localStorage.length; i++) {
@@ -108,18 +139,21 @@ export class ContactsComponent implements OnInit {
         const role = key.replace('contact-', '');
         const contact = await this.contactService.getContact(role);
         if (contact) {
-          storedContacts.push(contact);
+          storedContacts.push(contact); // Add contact to the stored contacts array
         }
       }
     }
     return storedContacts;
   }
 
-  // Helper method to load contacts from JSON file
+  /**
+   * Helper method to load contacts from a JSON file.
+   * Contacts are loaded from a JSON file and saved to Firestore or Local Storage depending on the environment.
+   */
   private async loadContactsFromJSON(): Promise<void> {
     this.http.get<Contact[]>('assets/data/contacts.json').subscribe(
       async (data) => {
-        this.contacts = data;
+        this.contacts = data; // Set contacts from JSON data
         // Save the loaded contacts to Firestore or Local Storage depending on the environment
         for (const contact of this.contacts) {
           await this.contactService.setContact(contact.role, contact);
@@ -131,7 +165,10 @@ export class ContactsComponent implements OnInit {
     );
   }
 
-  // Open the dialog to edit a contact
+  /**
+   * Open the dialog to edit a contact.
+   * @param contact - The contact to be edited.
+   */
   openEditDialog(contact: Contact): void {
     if (this.isAdminRoute) {
       const dialogRef = this.dialog.open(EditContactDialogComponent, {

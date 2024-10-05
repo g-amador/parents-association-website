@@ -7,5 +7,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./view-event-dialog.component.scss']
 })
 export class ViewEventDialogComponent {
+
+  /**
+   * Constructor that injects event data from the dialog.
+   * @param data - Contains the title and description of the event.
+   */
   constructor(@Inject(MAT_DIALOG_DATA) public data: { title: string; description: string }) { }
 }
