@@ -89,15 +89,33 @@ export class ContactsComponent implements OnInit {
         }
       } else {
         // Use Local Storage in development
-        const localStorageContacts = await this.loadContactsFromLocalStorage();
-        if (localStorageContacts.length > 0) {
-          loadedContacts = localStorageContacts;
-        }
+        loadedContacts = await this.loadContactsFromLocalStorage();
       }
 
-      // If no contacts were found in Firestore or Local Storage, load from JSON
-      if (loadedContacts.length === 0) {
-        console.log('No contacts found in Firestore/LocalStorage. Loading from JSON...');
+      // Define the list of roles to check against
+      const rolesToCheck = [
+        "contacts_page.coordinator",
+        "contacts_page.parents_association",
+        "contacts_page.president_parents_association",
+        "contacts_page.school_general_and_1st_year",
+        "contacts_page.school_ji",
+        "contacts_page.education_office_jfb",
+        "contacts_page.education_manager",
+        "contacts_page.aec_coordination",
+        "contacts_page.aaaf_caf_coordination",
+        "contacts_page.safe_coordination",
+        "contacts_page.aaaf_caf",
+        "contacts_page.aaaf_caf_contact_monitors",
+      ];
+
+      // Check if none of the required roles exist in the loaded contacts
+      const hasRequiredRoles = loadedContacts.some(contact =>
+        rolesToCheck.includes(contact.role)
+      );
+
+      // If none of the required roles are filled, load from JSON
+      if (!hasRequiredRoles) {
+        console.log('None of the required contacts found in Local Storage. Loading from JSON...');
         await this.loadContactsFromJSON();
       } else {
         this.contacts = loadedContacts; // Set the loaded contacts
