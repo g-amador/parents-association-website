@@ -9,6 +9,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class EditOrganizationContactDialogComponent {
   contact: any;
 
+  /**
+   * Constructor that injects the contact data via MAT_DIALOG_DATA and creates a local copy.
+   *
+   * @param dialogRef Reference to the open dialog.
+   * @param data Data injected through MAT_DIALOG_DATA containing the contact information.
+   */
   constructor(
     public dialogRef: MatDialogRef<EditOrganizationContactDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -16,17 +22,25 @@ export class EditOrganizationContactDialogComponent {
     this.contact = { ...data.contact }; // Make a copy to avoid direct binding
   }
 
-  // Close the dialog without saving
+  /**
+   * Closes the dialog without saving the changes.
+   */
   onCancel(): void {
     this.dialogRef.close();
   }
 
-  // Save the changes and close the dialog
+  /**
+   * Saves the updated contact information and closes the dialog.
+   */
   onSave(): void {
     this.dialogRef.close(this.contact);
   }
 
-  // Handle file input change for image
+  /**
+   * Handles the image change event. Reads the selected file and updates the contact's image.
+   *
+   * @param event - The file input change event.
+   */
   onImageChange(event: any): void {
     const file = event.target.files[0];
     if (file) {

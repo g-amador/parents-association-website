@@ -188,6 +188,11 @@ export class LocalStorageService {
     });
   }
 
+  // Clear articles from localStorage
+  async deleteAllArticles(): Promise<void> {
+    localStorage.removeItem('articles');
+  }
+
   // Retrieve all articles
   getAllArticles(): Article[] {
     const articles = localStorage.getItem('articles');

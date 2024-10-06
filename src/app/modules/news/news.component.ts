@@ -278,7 +278,7 @@ export class NewsComponent implements OnInit {
    */
   clearArchive() {
     if (environment.production && !environment.useLocalStorage) {
-      this.firestoreService.deleteAllArticles()
+      this.articleService.deleteAllArticles()
         .then(() => {
           console.log("All articles cleared from Firestore");
           this.archive = {}; // Reset the archive
@@ -288,7 +288,7 @@ export class NewsComponent implements OnInit {
           console.error("Error clearing articles from Firestore: ", error);
         });
     } else {
-      localStorage.removeItem('articles'); // Clear articles from localStorage
+      this.articleService.deleteAllArticles();
       this.archive = {}; // Reset the archive
       this.loadArticles(); // Reload articles to reflect changes
     }
