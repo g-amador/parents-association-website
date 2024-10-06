@@ -14,6 +14,7 @@ export class EditEventFormDialogComponent implements OnInit {
 
   /**
    * Constructor for EditEventFormDialogComponent.
+   *
    * @param fb - The FormBuilder service used to construct the reactive form.
    * @param dialogRef - Reference to the dialog, used to control opening/closing of the dialog.
    * @param data - Data passed into the dialog, including event details and event list.

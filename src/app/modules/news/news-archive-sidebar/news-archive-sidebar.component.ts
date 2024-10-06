@@ -30,6 +30,7 @@ export class NewsArchiveSidebarComponent implements OnInit {
   /**
    * Constructor for the NewsArchiveSidebarComponent.
    * Initializes the route and authentication services.
+   *
    * @param route Inject ActivatedRoute for accessing route data.
    * @param authService Inject AuthService for user authentication.
    */
@@ -50,6 +51,7 @@ export class NewsArchiveSidebarComponent implements OnInit {
 
   /**
    * Emits the selected article along with the current admin route status.
+   *
    * @param article The article selected from the archive.
    */
   selectArticle(article: Article) {

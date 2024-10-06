@@ -58,6 +58,7 @@ export class NewsComponent implements OnInit {
    * Constructor for the NewsComponent.
    * Initializes the required services and dynamically chooses
    * between Firestore or LocalStorage based on the environment.
+   *
    * @param dialog Inject MatDialog for opening dialogs.
    * @param route Inject ActivatedRoute for accessing route data.
    * @param authService Inject AuthService for user authentication.
@@ -100,6 +101,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Toggles the visibility of the sidebar.
+   *
    * @param sidebarVisible New visibility state for the sidebar.
    */
   toggleSidebarVisibility(sidebarVisible: boolean) {
@@ -108,6 +110,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Opens the edit article dialog for admins. Otherwise, opens a view article dialog.
+   *
    * @param article The article to be edited or viewed.
    */
   handleArticleClick(article: Article) {
@@ -120,6 +123,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Handles article selection based on the user's admin status.
+   *
    * @param param0 The selected article and admin status.
    */
   handleArticleSelection({ article, isAdmin }: { article: Article; isAdmin: boolean }) {
@@ -132,6 +136,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Opens the edit article dialog for a given article.
+   *
    * @param article The article to edit, or null if creating a new article.
    */
   openEditArticleDialog(article: Article | null) {
@@ -157,6 +162,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Opens a dialog to view the article content.
+   *
    * @param article The article to view.
    */
   openViewArticleDialog(article: Article) {
@@ -168,6 +174,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Saves a new article to the appropriate service.
+   *
    * @param title The title of the article.
    * @param content The content of the article.
    */
@@ -180,6 +187,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Updates an existing article.
+   *
    * @param original The original article before the update.
    * @param title The updated title.
    * @param content The updated content.
@@ -200,6 +208,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Deletes the specified article.
+   *
    * @param article The article to delete.
    */
   async deleteArticle(article: Article) {
@@ -234,6 +243,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Sorts articles and groups them by date.
+   *
    * @param articles The array of articles to process.
    */
   processArticles(articles: Article[]) {
@@ -247,6 +257,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Groups articles by year and month.
+   *
    * @param articles The array of articles to group.
    * @returns An object where articles are grouped by year, month, and day.
    */
@@ -306,6 +317,7 @@ export class NewsComponent implements OnInit {
 
   /**
    * Handles navigation through carousel dots.
+   *
    * @param index The index of the dot clicked.
    */
   onDotClick(index: number) {

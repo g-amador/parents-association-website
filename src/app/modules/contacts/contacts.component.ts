@@ -23,6 +23,7 @@ export class ContactsComponent implements OnInit {
 
   /**
    * Constructor for the ContactsComponent.
+   *
    * @param http - The HttpClient service for making HTTP requests.
    * @param route - The ActivatedRoute service for accessing route data.
    * @param authService - The AuthService to check user authentication.
@@ -67,6 +68,7 @@ export class ContactsComponent implements OnInit {
 
   /**
    * Toggle the visibility of the sidebar.
+   *
    * @param sidebarVisible - Boolean value to show or hide the sidebar.
    */
   toggleSidebarVisibility(sidebarVisible: boolean): void {
@@ -149,6 +151,7 @@ export class ContactsComponent implements OnInit {
 
   /**
    * Helper method to load contacts from Firestore.
+   *
    * @returns A promise that resolves to an array of contacts loaded from Firestore.
    */
   private async loadContactsFromFirestore(): Promise<Contact[]> {
@@ -167,6 +170,7 @@ export class ContactsComponent implements OnInit {
 
   /**
    * Helper method to load contacts from Local Storage.
+   *
    * @returns A promise that resolves to an array of contacts loaded from Local Storage.
    */
   private async loadContactsFromLocalStorage(): Promise<Contact[]> {
@@ -205,6 +209,7 @@ export class ContactsComponent implements OnInit {
 
   /**
    * Open the dialog to edit a contact.
+   *
    * @param contact - The contact to be edited.
    */
   openEditDialog(contact: Contact): void {

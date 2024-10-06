@@ -4,10 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditOrganizationContactDialogComponent } from './edit-organization-contact-dialog/edit-organization-contact-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { LocalStorageService } from '../../core/services/local-storage.service'; // Import LocalStorageService
-import { FirestoreService } from '../../core/services/firestore.service'; // Import FirestoreService
-import { Contact } from '../../shared/models/contact.model'; // Import the Contact model
-import { environment } from '../../../environments/environment'; // Import environment config
+import { LocalStorageService } from '../../core/services/local-storage.service';
+import { FirestoreService } from '../../core/services/firestore.service';
+import { Contact } from '../../shared/models/contact.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-organization',
@@ -15,65 +15,102 @@ import { environment } from '../../../environments/environment'; // Import envir
   styleUrls: ['./organization.component.scss']
 })
 export class OrganizationComponent implements OnInit {
-  sidebarVisible = true; // Default to true, will adjust based on screen size
 
-  contacts: any = {
+  /**
+   * Controls whether the sidebar is visible.
+   * Default is set to `true`, but adjusts based on screen size.
+   */
+  public sidebarVisible = true;
+
+  /**
+   * Holds contacts data categorized into 'direction', 'assembly', and 'fiscalCouncil'.
+   */
+  public contacts: any = {
     direction: [],
     assembly: [],
     fiscalCouncil: []
   };
 
-  isAdminRoute: boolean = false;
+  /**
+   * Tracks whether the user is on an admin route.
+   * It is set based on user authentication status.
+   */
+  public isAdminRoute: boolean = false;
 
+  /**
+   * Constructor for the OrganizationComponent class.
+   * It injects services needed for making HTTP requests, handling dialogs, routing, authentication,
+   * and working with local storage or Firestore for data persistence.
+   *
+   * @param http - Service for making HTTP requests to fetch data (like the JSON backup).
+   * @param dialog - Service for opening dialogs to edit contact information.
+   * @param route - Provides access to route data and parameters.
+   * @param authService - Service to check the user's authentication status.
+   * @param localStorageService - Service to manage storing and retrieving data from local storage.
+   * @param firestoreService - Service to manage Firestore interactions for reading and writing data.
+   */
   constructor(
     private http: HttpClient,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private localStorageService: LocalStorageService, // Inject LocalStorageService
-    private firestoreService: FirestoreService // Inject FirestoreService
+    private localStorageService: LocalStorageService,
+    private firestoreService: FirestoreService
   ) { }
 
-  ngOnInit() {
+  /**
+   * Initializes the component, adjusts sidebar visibility, loads contacts,
+   * and determines whether the current route is for admin users.
+   */
+  public ngOnInit(): void {
     this.adjustSidebarVisibility();
     this.loadContacts();
 
+    // Subscribe to route data to detect if the current route is admin
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
     });
   }
 
-  adjustSidebarVisibility() {
-    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
+  /**
+   * Adjusts the visibility of the sidebar based on the window size.
+   * Sidebar is hidden for screens smaller than 768px.
+   */
+  public adjustSidebarVisibility(): void {
+    this.sidebarVisible = window.innerWidth > 768;
   }
 
-  // Load contacts from either LocalStorageService (dev) or FirestoreService (prod)
-  async loadContacts() {
+  /**
+   * Loads contacts from either local storage or Firestore depending on the environment configuration.
+   * Falls back to loading missing contacts from a JSON file if necessary.
+   */
+  public async loadContacts(): Promise<void> {
     try {
-      // Initialize empty arrays for each contact type
       this.contacts = {
         direction: [] as Contact[],
         assembly: [] as Contact[],
         fiscalCouncil: [] as Contact[]
       };
 
-      // Depending on the environment, load contacts from local storage or Firestore
+      // Load contacts from local storage or Firestore based on the environment
       if (environment.useLocalStorage) {
         await this.loadContactsFromLocalStorage();
       } else {
         await this.loadContactsFromFirestore();
       }
 
-      // If any contact category is still missing, load from JSON
+      // Load missing contacts from the JSON file if necessary
       await this.loadMissingContactsFromJSON();
-
     } catch (error) {
       console.error('Error loading contacts:', error);
     }
   }
 
-  // Helper function to load contacts from LocalStorage
-  async loadContactsFromLocalStorage() {
+  /**
+   * Loads contacts from local storage.
+   * The contacts are saved under specific keys for 'Direction', 'Assembly', and 'Fiscal Council'.
+   */
+  public async loadContactsFromLocalStorage(): Promise<void> {
     // Check for Direction contacts in local storage
     const storedDirection = localStorage.getItem('contact-Direction');
     if (storedDirection) {
@@ -93,35 +130,41 @@ export class OrganizationComponent implements OnInit {
     }
   }
 
-  // Helper function to load contacts from Firestore
-  async loadContactsFromFirestore() {
-    // Check for Direction contacts in Firestore
+  /**
+   * Loads contacts from Firestore.
+   * Retrieves the 'Direction', 'Assembly', and 'Fiscal Council' contacts.
+   */
+  public async loadContactsFromFirestore(): Promise<void> {
+    // Fetch Direction contacts from Firestore
     const storedDirection = await this.firestoreService.getContact('Direction');
     if (storedDirection) {
-      this.contacts.direction = [storedDirection]; // Assuming Firestore returns an array or object
+      this.contacts.direction = [storedDirection];
     }
 
-    // Check for Assembly contacts in Firestore
+    // Fetch Assembly contacts from Firestore
     const storedAssembly = await this.firestoreService.getContact('Assembly');
     if (storedAssembly) {
       this.contacts.assembly = [storedAssembly];
     }
 
-    // Check for Fiscal Council contacts in Firestore
+    // Fetch Fiscal Council contacts from Firestore
     const storedFiscalCouncil = await this.firestoreService.getContact('Fiscal Council');
     if (storedFiscalCouncil) {
       this.contacts.fiscalCouncil = [storedFiscalCouncil];
     }
   }
 
-  // Helper function to load missing contacts from JSON file
-  async loadMissingContactsFromJSON() {
-    // Flags to determine which contact types are missing
+  /**
+   * Loads any missing contacts from a local JSON file.
+   * Only loads data if contacts are missing for a particular group (Direction, Assembly, Fiscal Council).
+   */
+  public async loadMissingContactsFromJSON(): Promise<void> {
+    // Determine if any contact groups are missing
     const missingDirection = this.contacts.direction.length === 0;
     const missingAssembly = this.contacts.assembly.length === 0;
     const missingFiscalCouncil = this.contacts.fiscalCouncil.length === 0;
 
-    // If any of the categories are missing, load only the missing ones from JSON
+    // Load missing data from JSON if needed
     if (missingDirection || missingAssembly || missingFiscalCouncil) {
       const jsonData = await this.http.get<any>('assets/data/organizationContacts.json').toPromise();
       const members = jsonData.members;
@@ -136,7 +179,7 @@ export class OrganizationComponent implements OnInit {
           image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
         }));
 
-        // Save to local storage or Firestore
+        // Save to local storage or Firestore based on environment
         if (environment.useLocalStorage) {
           localStorage.setItem('contact-Direction', JSON.stringify(this.contacts.direction));
         } else {
@@ -182,16 +225,18 @@ export class OrganizationComponent implements OnInit {
     }
   }
 
-  // Save contacts to LocalStorage or Firestore based on the environment
-  async saveContacts() {
+  /**
+   * Saves the contacts data to either local storage or Firestore based on the environment.
+   */
+  public async saveContacts(): Promise<void> {
     try {
       if (environment.useLocalStorage) {
-        // Save to local storage
+        // Save contacts to local storage
         await this.localStorageService.setContact('Direction', this.contacts.direction);
         await this.localStorageService.setContact('Assembly', this.contacts.assembly);
         await this.localStorageService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
       } else {
-        // Save to Firestore
+        // Save contacts to Firestore
         await this.firestoreService.setContact('Direction', this.contacts.direction);
         await this.firestoreService.setContact('Assembly', this.contacts.assembly);
         await this.firestoreService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
@@ -201,8 +246,15 @@ export class OrganizationComponent implements OnInit {
     }
   }
 
-  // Open the edit dialog when a contact card is clicked
-  editContact(contact: any, group: string, index: number) {
+  /**
+   * Opens a dialog for editing the selected contact.
+   * The dialog allows the user to edit the contact details, and saves the changes if confirmed.
+   *
+   * @param contact - The contact object to be edited.
+   * @param group - The group (Direction, Assembly, Fiscal Council) the contact belongs to.
+   * @param index - The index of the contact in the group array.
+   */
+  public editContact(contact: any, group: string, index: number): void {
     if (this.isAdminRoute) {
       const dialogRef = this.dialog.open(EditOrganizationContactDialogComponent, {
         width: '400px',
@@ -211,7 +263,7 @@ export class OrganizationComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(async result => {
         if (result) {
-          // If the dialog returned a result, update the contact
+          // Update the contact with the edited result
           this.contacts[group][index] = result;
           await this.saveContacts(); // Save updated contacts
         }
@@ -219,8 +271,12 @@ export class OrganizationComponent implements OnInit {
     }
   }
 
-  // Handle sidebar visibility toggle
-  toggleSidebarVisibility(sidebarVisible: boolean) {
+  /**
+   * Toggles the sidebar's visibility.
+   *
+   * @param sidebarVisible - Boolean flag to show or hide the sidebar.
+   */
+  public toggleSidebarVisibility(sidebarVisible: boolean): void {
     this.sidebarVisible = sidebarVisible;
   }
 }

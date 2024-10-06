@@ -11,6 +11,7 @@ export class EditContactDialogComponent {
 
   /**
    * Constructor for the EditContactDialogComponent.
+   *
    * @param dialogRef - Reference to the dialog that controls its behavior (open/close).
    * @param contact - The contact data being passed in to be edited.
    */

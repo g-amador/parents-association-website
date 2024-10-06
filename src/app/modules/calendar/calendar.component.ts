@@ -26,6 +26,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Constructor for CalendarComponent.
+   *
    * @param dialog - The MatDialog service to open dialogs.
    * @param route - The ActivatedRoute to access route data.
    * @param authService - The AuthService to check user authentication.
@@ -77,6 +78,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Get the public holidays for a specific year.
+   *
    * @param year - The year to get public holidays for.
    * @returns An array of public holiday dates in YYYY-MM-DD format.
    */
@@ -119,6 +121,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Move the calendar to the next or previous month.
+   *
    * @param offset - The number of months to move (positive or negative).
    */
   moveMonth(offset: number): void {
@@ -128,6 +131,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Get the CSS classes for a specific day to apply styling.
+   *
    * @param day - The date to check for classes.
    * @returns An array of class names based on the date's status.
    */
@@ -158,6 +162,7 @@ export class CalendarComponent implements OnInit {
   /**
    * Handle the date selection and open appropriate dialog.
    * If in admin mode, it opens the event edit dialog; otherwise, the view dialog.
+   *
    * @param day - The date selected from the calendar.
    */
   selectDate(day: Date): void {
@@ -228,6 +233,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Add a new event to the calendar.
+   *
    * @param eventData - The event details including title, date, and description.
    */
   async addEvent(eventData: { title: string; date: string | null; description: string }): Promise<void> {
@@ -250,6 +256,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Update an existing event in the calendar.
+   *
    * @param eventData - The updated event data including title, description, and index.
    */
   async updateEvent(eventData: { title: string; date: string | null; description: string; index: number }): Promise<void> {
@@ -268,6 +275,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Delete an event from the calendar.
+   *
    * @param date - The date of the event.
    * @param index - The index of the event in the list.
    */
@@ -287,6 +295,7 @@ export class CalendarComponent implements OnInit {
 
   /**
    * Toggle the sidebar visibility.
+   *
    * @param sidebarVisible - Boolean to set sidebar visibility.
    */
   toggleSidebarVisibility(sidebarVisible: boolean): void {
