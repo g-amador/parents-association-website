@@ -94,7 +94,7 @@ export class OrganizationComponent implements OnInit {
             role: contact.role,
             name: contact.name,
             email: contact.email || '',
-            phone: contact.phoneNumber || '',
+            phone: contact.phone || '',
             image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
           }));
           // Save to localStorage
@@ -107,7 +107,7 @@ export class OrganizationComponent implements OnInit {
             role: contact.role,
             name: contact.name,
             email: contact.email || '',
-            phone: contact.phoneNumber || '',
+            phone: contact.phone || '',
             image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
           }));
           // Save to localStorage
@@ -120,7 +120,7 @@ export class OrganizationComponent implements OnInit {
             role: contact.role,
             name: contact.name,
             email: contact.email || '',
-            phone: contact.phoneNumber || '',
+            phone: contact.phone || '',
             image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
           }));
           // Save to localStorage

@@ -4,36 +4,36 @@
       {
       "role": "president",
       "name": "Sandrina Timóteo",
-      "email": "sandrina.vb@gmail.com",
-      "phoneNumber": "(+351) 936 257 567",
+      "email": "sandrina.vln@gmail.com",
+      "phone": "(+351) 936 257 627",
       "image": ""
       },
       {
       "role": "vice_president",
       "name": "Raquel Filipe",
       "email": "",
-      "phoneNumber": "",
+      "phone": "",
       "image": ""
       },
       {
       "role": "secretary",
       "name": "Cecília Gaspar",
       "email": "",
-      "phoneNumber": "",
+      "phone": "",
       "image": ""
       },
       {
       "role": "treasury",
       "name": "Fernando Antono",
       "email": "",
-      "phoneNumber": "",
+      "phone": "",
       "image": ""
       },
       {
       "role": "vowel",
       "name": "André Machado",
       "email": "",
-      "phoneNumber": "",
+      "phone": "",
       "image": ""
       }
     ],
@@ -42,21 +42,21 @@
         "role": "president",
         "name": "Marta Ribeiro da Silva",
         "email": "",
-        "phoneNumber": "",
+        "phone": "",
         "image": ""
       },
       {
         "role": "first_secretary",
         "name": "Marta Smith",
         "email": "",
-        "phoneNumber": "",
+        "phone": "",
         "image": ""
       },
       {
         "role": "second_secretary",
         "name": "Gonçalo Amador",
         "email": "g.n.p.amador@gmail.com",
-        "phoneNumber": "(+351) 962 816 858",
+        "phone": "(+351) 962 816 858",
         "image": ""
       }
     ],
@@ -65,21 +65,21 @@
         "role": "president",
         "name": "Soraia Lobo",
         "email": "",
-        "phoneNumber": "",
+        "phone": "",
         "image": ""
       },
       {
         "role": "vowel",
         "name": "Moisés Garcia",
         "email": "",
-        "phoneNumber": "",
+        "phone": "",
         "image": ""
       },
       {
         "role": "vowel",
         "name": "Luisa Filipe",
         "email": "",
-        "phoneNumber": "",
+        "phone": "",
         "image": ""
       }
     ]
