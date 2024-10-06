@@ -10,7 +10,12 @@ import { Observable, of } from 'rxjs';
 export class LocalStorageService {
   constructor() { }
 
-  // Add or update a contact using `role` as the key
+  /**
+   * Add or update a contact using `role` as the key.
+   *
+   * @param role - The role of the contact to be added or updated.
+   * @param contact - The contact object containing contact details.
+   */
   async setContact(role: string, contact: Contact): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -24,7 +29,12 @@ export class LocalStorageService {
     });
   }
 
-  // Retrieve a contact by `role`
+  /**
+   * Retrieve a contact by `role`.
+   *
+   * @param role - The role of the contact to be retrieved.
+   * @returns A promise that resolves to the contact or null if not found.
+   */
   async getContact(role: string): Promise<Contact | null> {
     return new Promise<Contact | null>((resolve, reject) => {
       try {
@@ -37,7 +47,11 @@ export class LocalStorageService {
     });
   }
 
-  // Delete a contact by `role`
+  /**
+   * Delete a contact by `role`.
+   *
+   * @param role - The role of the contact to be deleted.
+   */
   async deleteContact(role: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -51,7 +65,11 @@ export class LocalStorageService {
     });
   }
 
-  // Get all contacts
+  /**
+   * Get all contacts.
+   *
+   * @returns An observable of contact arrays.
+   */
   getAllContacts(): Observable<Contact[]> {
     const contacts: Contact[] = [];
 
@@ -73,7 +91,12 @@ export class LocalStorageService {
     return of(contacts); // Emit the contacts as an observable
   }
 
-  // Add or update an event for a specific date
+  /**
+   * Add or update an event for a specific date.
+   *
+   * @param date - The date of the event to be added or updated.
+   * @param event - The event object containing event details.
+   */
   async setEvent(date: string, event: Event): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -87,7 +110,12 @@ export class LocalStorageService {
     });
   }
 
-  // Retrieve the event for a specific date
+  /**
+   * Retrieve the event for a specific date.
+   *
+   * @param date - The date of the event to be retrieved.
+   * @returns A promise that resolves to the event or null if not found.
+   */
   async getEvent(date: string): Promise<Event | null> {
     return new Promise<Event | null>((resolve) => {
       const event = localStorage.getItem(`event-${date}`);
@@ -95,7 +123,11 @@ export class LocalStorageService {
     });
   }
 
-  // Delete an event for a specific date
+  /**
+   * Delete an event for a specific date.
+   *
+   * @param date - The date of the event to be deleted.
+   */
   async deleteEvent(date: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -109,7 +141,11 @@ export class LocalStorageService {
     });
   }
 
-  // Retrieve all events
+  /**
+   * Retrieve all events.
+   *
+   * @returns A promise that resolves to an object containing events indexed by date.
+   */
   async getAllEvents(): Promise<{ [key: string]: Event[] }> {
     return new Promise<{ [key: string]: Event[] }>((resolve) => {
       const events: { [key: string]: Event[] } = {};
@@ -142,6 +178,11 @@ export class LocalStorageService {
     });
   }
 
+  /**
+   * Add an article to localStorage.
+   *
+   * @param article - The article object to be added.
+   */
   async addArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -157,22 +198,31 @@ export class LocalStorageService {
     });
   }
 
+  /**
+   * Update an article in localStorage.
+   *
+   * @param article - The article object to be updated.
+   */
   async updateArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
         const articles = this.getAllArticles(); // Get existing articles
-        articles.push(article); // update article
+        articles.push(article); // Update article
         localStorage.setItem('articles', JSON.stringify(articles)); // Save all articles
         console.log('Article successfully updated in localStorage!');
         resolve();
       } catch (error) {
-        console.error('Error updating article to localStorage:', error);
+        console.error('Error updating article in localStorage:', error);
         reject(error);
       }
     });
   }
 
-  // Delete an article
+  /**
+   * Delete an article from localStorage.
+   *
+   * @param article - The article object to be deleted.
+   */
   async deleteArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -188,12 +238,18 @@ export class LocalStorageService {
     });
   }
 
-  // Clear articles from localStorage
+  /**
+   * Clear all articles from localStorage.
+   */
   async deleteAllArticles(): Promise<void> {
     localStorage.removeItem('articles');
   }
 
-  // Retrieve all articles
+  /**
+   * Retrieve all articles from localStorage.
+   *
+   * @returns An array of articles.
+   */
   getAllArticles(): Article[] {
     const articles = localStorage.getItem('articles');
     return articles ? JSON.parse(articles) : [];

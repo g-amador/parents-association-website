@@ -9,9 +9,19 @@ import { Event } from '../../shared/models/event.model';
   providedIn: 'root'
 })
 export class FirestoreService {
+  /**
+   * Constructor to initialize FirestoreService with AngularFirestore.
+   *
+   * @param firestore - AngularFirestore instance for Firestore operations.
+   */
   constructor(private firestore: AngularFirestore) { }
 
-  // Add or update a contact using `role` as the key
+  /**
+   * Add or update a contact using `role` as the key.
+   *
+   * @param role - The role of the contact to be added or updated.
+   * @param contact - The contact object containing contact details.
+   */
   async setContact(role: string, contact: Contact): Promise<void> {
     try {
       await this.firestore.collection('contacts').doc(role).set(contact, { merge: true });
@@ -22,7 +32,12 @@ export class FirestoreService {
     }
   }
 
-  // Retrieve a contact by `role`
+  /**
+   * Retrieve a contact by `role`.
+   *
+   * @param role - The role of the contact to be retrieved.
+   * @returns A promise that resolves to the contact or null if not found.
+   */
   async getContact(role: string): Promise<Contact | null> {
     return new Promise<Contact | null>((resolve, reject) => {
       this.firestore.collection('contacts').doc(role).get().toPromise()
@@ -46,7 +61,11 @@ export class FirestoreService {
     });
   }
 
-  // Delete a contact by `role`
+  /**
+   * Delete a contact by `role`.
+   *
+   * @param role - The role of the contact to be deleted.
+   */
   async deleteContact(role: string): Promise<void> {
     try {
       await this.firestore.collection('contacts').doc(role).delete();
@@ -57,12 +76,21 @@ export class FirestoreService {
     }
   }
 
-  // Get all contacts
+  /**
+   * Get all contacts.
+   *
+   * @returns An observable of contact arrays.
+   */
   getAllContacts(): Observable<Contact[]> {
     return this.firestore.collection<Contact>('contacts').valueChanges({ idField: 'id' });
   }
 
-  // Add or update an event for a specific date
+  /**
+   * Add or update an event for a specific date.
+   *
+   * @param date - The date of the event to be added or updated.
+   * @param event - The event object containing event details.
+   */
   async setEvent(date: string, event: Event): Promise<void> {
     try {
       await this.firestore.collection('events').doc(date).set(event, { merge: true });
@@ -73,7 +101,11 @@ export class FirestoreService {
     }
   }
 
-  // Delete an event for a specific date
+  /**
+   * Delete an event for a specific date.
+   *
+   * @param date - The date of the event to be deleted.
+   */
   async deleteEvent(date: string): Promise<void> {
     try {
       await this.firestore.collection('events').doc(date).delete();
@@ -84,12 +116,20 @@ export class FirestoreService {
     }
   }
 
-  // Get all events
+  /**
+   * Get all events.
+   *
+   * @returns An observable of event arrays.
+   */
   getAllEvents(): Observable<Event[]> {
     return this.firestore.collection<Event>('events').valueChanges();
   }
 
-  // Add a new article (Firestore auto-generates an ID)
+  /**
+   * Add a new article (Firestore auto-generates an ID).
+   *
+   * @param article - The article object to be added.
+   */
   async addArticle(article: Article): Promise<void> {
     try {
       await this.firestore.collection('articles').add(article);
@@ -100,7 +140,12 @@ export class FirestoreService {
     }
   }
 
-  // Update an article by document ID (use the document ID for specific updates)
+  /**
+   * Update an article by document ID (use the document ID for specific updates).
+   *
+   * @param articleId - The ID of the article to be updated.
+   * @param article - The article object containing updated details.
+   */
   async updateArticle(articleId: string, article: Article): Promise<void> {
     try {
       await this.firestore.collection('articles').doc(articleId).set(article, { merge: true });
@@ -111,7 +156,11 @@ export class FirestoreService {
     }
   }
 
-  // Delete an article by document ID
+  /**
+   * Delete an article by document ID.
+   *
+   * @param articleId - The ID of the article to be deleted.
+   */
   async deleteArticle(articleId: string): Promise<void> {
     try {
       await this.firestore.collection('articles').doc(articleId).delete();
@@ -122,7 +171,9 @@ export class FirestoreService {
     }
   }
 
-  // Delete all articles
+  /**
+   * Delete all articles.
+   */
   async deleteAllArticles(): Promise<void> {
     const articlesSnapshot = await this.firestore.collection('articles').get().toPromise();
     const deletePromises = articlesSnapshot!.docs.map(doc => this.deleteArticle(doc.id));
@@ -130,7 +181,11 @@ export class FirestoreService {
     console.log('All articles deleted successfully.');
   }
 
-  // Get all articles, making sure to include the document ID as 'id'
+  /**
+   * Get all articles, making sure to include the document ID as 'id'.
+   *
+   * @returns An observable of article arrays.
+   */
   getAllArticles(): Observable<Article[]> {
     return this.firestore.collection<Article>('articles').valueChanges({ idField: 'id' });
   }
