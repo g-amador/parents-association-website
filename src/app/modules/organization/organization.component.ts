@@ -4,8 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditOrganizationContactDialogComponent } from './edit-organization-contact-dialog/edit-organization-contact-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { LocalStorageService } from '../../core/services/local-storage.service'; // Import the service
+import { LocalStorageService } from '../../core/services/local-storage.service'; // Import LocalStorageService
+import { FirestoreService } from '../../core/services/firestore.service'; // Import FirestoreService
 import { Contact } from '../../shared/models/contact.model'; // Import the Contact model
+import { environment } from '../../../environments/environment'; // Import environment config
 
 @Component({
   selector: 'app-organization',
@@ -28,7 +30,8 @@ export class OrganizationComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private localStorageService: LocalStorageService // Inject the LocalStorageService
+    private localStorageService: LocalStorageService, // Inject LocalStorageService
+    private firestoreService: FirestoreService // Inject FirestoreService
   ) { }
 
   ngOnInit() {
@@ -44,7 +47,7 @@ export class OrganizationComponent implements OnInit {
     this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
   }
 
-  // Load contacts from LocalStorageService or the initial JSON file
+  // Load contacts from either LocalStorageService (dev) or FirestoreService (prod)
   async loadContacts() {
     try {
       // Initialize empty arrays for each contact type
@@ -54,91 +57,145 @@ export class OrganizationComponent implements OnInit {
         fiscalCouncil: [] as Contact[]
       };
 
-      // Flags to determine which contact types are missing in local storage
-      let missingDirection = false;
-      let missingAssembly = false;
-      let missingFiscalCouncil = false;
-
-      // Check for Direction contacts in local storage
-      const storedDirection = localStorage.getItem('contact-Direction');
-      if (storedDirection) {
-        this.contacts.direction = JSON.parse(storedDirection);
+      // Depending on the environment, load contacts from local storage or Firestore
+      if (environment.useLocalStorage) {
+        await this.loadContactsFromLocalStorage();
       } else {
-        missingDirection = true; // Mark to load from JSON if missing
+        await this.loadContactsFromFirestore();
       }
 
-      // Check for Assembly contacts in local storage
-      const storedAssembly = localStorage.getItem('contact-Assembly');
-      if (storedAssembly) {
-        this.contacts.assembly = JSON.parse(storedAssembly);
-      } else {
-        missingAssembly = true; // Mark to load from JSON if missing
-      }
-
-      // Check for Fiscal Council contacts in local storage
-      const storedFiscalCouncil = localStorage.getItem('contact-Fiscal Council');
-      if (storedFiscalCouncil) {
-        this.contacts.fiscalCouncil = JSON.parse(storedFiscalCouncil);
-      } else {
-        missingFiscalCouncil = true; // Mark to load from JSON if missing
-      }
-
-      // If any of the categories are missing, load only the missing ones from JSON
-      if (missingDirection || missingAssembly || missingFiscalCouncil) {
-        const jsonData = await this.http.get<any>('assets/data/organizationContacts.json').toPromise();
-        const members = jsonData.members;
-
-        // If Direction is missing, load it from JSON
-        if (missingDirection) {
-          this.contacts.direction = members.Direction.map((contact: any) => ({
-            role: contact.role,
-            name: contact.name,
-            email: contact.email || '',
-            phone: contact.phone || '',
-            image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
-          }));
-          // Save to localStorage
-          localStorage.setItem('contact-Direction', JSON.stringify(this.contacts.direction));
-        }
-
-        // If Assembly is missing, load it from JSON
-        if (missingAssembly) {
-          this.contacts.assembly = members.Assembly.map((contact: any) => ({
-            role: contact.role,
-            name: contact.name,
-            email: contact.email || '',
-            phone: contact.phone || '',
-            image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
-          }));
-          // Save to localStorage
-          localStorage.setItem('contact-Assembly', JSON.stringify(this.contacts.assembly));
-        }
-
-        // If Fiscal Council is missing, load it from JSON
-        if (missingFiscalCouncil) {
-          this.contacts.fiscalCouncil = members['Fiscal Council'].map((contact: any) => ({
-            role: contact.role,
-            name: contact.name,
-            email: contact.email || '',
-            phone: contact.phone || '',
-            image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
-          }));
-          // Save to localStorage
-          localStorage.setItem('contact-Fiscal Council', JSON.stringify(this.contacts.fiscalCouncil));
-        }
-      }
+      // If any contact category is still missing, load from JSON
+      await this.loadMissingContactsFromJSON();
 
     } catch (error) {
       console.error('Error loading contacts:', error);
     }
   }
 
-  // Save contacts to LocalStorageService
+  // Helper function to load contacts from LocalStorage
+  async loadContactsFromLocalStorage() {
+    // Check for Direction contacts in local storage
+    const storedDirection = localStorage.getItem('contact-Direction');
+    if (storedDirection) {
+      this.contacts.direction = JSON.parse(storedDirection);
+    }
+
+    // Check for Assembly contacts in local storage
+    const storedAssembly = localStorage.getItem('contact-Assembly');
+    if (storedAssembly) {
+      this.contacts.assembly = JSON.parse(storedAssembly);
+    }
+
+    // Check for Fiscal Council contacts in local storage
+    const storedFiscalCouncil = localStorage.getItem('contact-Fiscal Council');
+    if (storedFiscalCouncil) {
+      this.contacts.fiscalCouncil = JSON.parse(storedFiscalCouncil);
+    }
+  }
+
+  // Helper function to load contacts from Firestore
+  async loadContactsFromFirestore() {
+    // Check for Direction contacts in Firestore
+    const storedDirection = await this.firestoreService.getContact('Direction');
+    if (storedDirection) {
+      this.contacts.direction = [storedDirection]; // Assuming Firestore returns an array or object
+    }
+
+    // Check for Assembly contacts in Firestore
+    const storedAssembly = await this.firestoreService.getContact('Assembly');
+    if (storedAssembly) {
+      this.contacts.assembly = [storedAssembly];
+    }
+
+    // Check for Fiscal Council contacts in Firestore
+    const storedFiscalCouncil = await this.firestoreService.getContact('Fiscal Council');
+    if (storedFiscalCouncil) {
+      this.contacts.fiscalCouncil = [storedFiscalCouncil];
+    }
+  }
+
+  // Helper function to load missing contacts from JSON file
+  async loadMissingContactsFromJSON() {
+    // Flags to determine which contact types are missing
+    const missingDirection = this.contacts.direction.length === 0;
+    const missingAssembly = this.contacts.assembly.length === 0;
+    const missingFiscalCouncil = this.contacts.fiscalCouncil.length === 0;
+
+    // If any of the categories are missing, load only the missing ones from JSON
+    if (missingDirection || missingAssembly || missingFiscalCouncil) {
+      const jsonData = await this.http.get<any>('assets/data/organizationContacts.json').toPromise();
+      const members = jsonData.members;
+
+      // If Direction is missing, load it from JSON
+      if (missingDirection) {
+        this.contacts.direction = members.Direction.map((contact: any) => ({
+          role: contact.role,
+          name: contact.name,
+          email: contact.email || '',
+          phone: contact.phone || '',
+          image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
+        }));
+
+        // Save to local storage or Firestore
+        if (environment.useLocalStorage) {
+          localStorage.setItem('contact-Direction', JSON.stringify(this.contacts.direction));
+        } else {
+          await this.firestoreService.setContact('Direction', this.contacts.direction);
+        }
+      }
+
+      // If Assembly is missing, load it from JSON
+      if (missingAssembly) {
+        this.contacts.assembly = members.Assembly.map((contact: any) => ({
+          role: contact.role,
+          name: contact.name,
+          email: contact.email || '',
+          phone: contact.phone || '',
+          image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
+        }));
+
+        // Save to local storage or Firestore
+        if (environment.useLocalStorage) {
+          localStorage.setItem('contact-Assembly', JSON.stringify(this.contacts.assembly));
+        } else {
+          await this.firestoreService.setContact('Assembly', this.contacts.assembly);
+        }
+      }
+
+      // If Fiscal Council is missing, load it from JSON
+      if (missingFiscalCouncil) {
+        this.contacts.fiscalCouncil = members['Fiscal Council'].map((contact: any) => ({
+          role: contact.role,
+          name: contact.name,
+          email: contact.email || '',
+          phone: contact.phone || '',
+          image: contact.image || 'assets/images/organizationContacts/generic-user.jpg' // Default image
+        }));
+
+        // Save to local storage or Firestore
+        if (environment.useLocalStorage) {
+          localStorage.setItem('contact-Fiscal Council', JSON.stringify(this.contacts.fiscalCouncil));
+        } else {
+          await this.firestoreService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
+        }
+      }
+    }
+  }
+
+  // Save contacts to LocalStorage or Firestore based on the environment
   async saveContacts() {
     try {
-      await this.localStorageService.setContact('Direction', this.contacts.direction);
-      await this.localStorageService.setContact('Assembly', this.contacts.assembly);
-      await this.localStorageService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
+      if (environment.useLocalStorage) {
+        // Save to local storage
+        await this.localStorageService.setContact('Direction', this.contacts.direction);
+        await this.localStorageService.setContact('Assembly', this.contacts.assembly);
+        await this.localStorageService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
+      } else {
+        // Save to Firestore
+        await this.firestoreService.setContact('Direction', this.contacts.direction);
+        await this.firestoreService.setContact('Assembly', this.contacts.assembly);
+        await this.firestoreService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
+      }
     } catch (error) {
       console.error('Error saving contacts:', error);
     }
