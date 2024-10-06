@@ -110,31 +110,36 @@ export class ContactsComponent implements OnInit {
         "contacts_page.aaaf_caf_contact_monitors"
       ];
 
-      // If the number of contacts in local storage exceeds rolesToCheck, load from JSON
-      const localStorageLength = Object.keys(localStorage).filter(key => key.startsWith('contact-')).length;
-      if (localStorageLength > rolesToCheck.length) {
-        console.log('More contacts in local storage than expected. Loading from JSON...');
-        await this.loadContactsFromJSON();
-        return;
+      const contactsFromLocalStorage: Contact[] = rolesToCheck
+        .map(role => {
+          const contact = localStorage.getItem(`contact-${role}`);
+          return contact ? JSON.parse(contact) as Contact : null; // Parse and return contact if it exists
+        })
+        .filter(contact => contact !== null) as Contact[]; // Filter out null values
+
+      // Check if any required roles are missing
+      const missingRoles = rolesToCheck.filter(role => {
+        return !contactsFromLocalStorage.some(contact => contact.role === role);
+      });
+
+      if (missingRoles.length > 0) {
+        console.log('Missing contacts found. Loading from JSON...');
+        await this.loadContactsFromJSON(); // Load from JSON if any roles are missing
+      } else {
+        console.log('All required contacts found in local storage.');
       }
 
-      // Filter and retain only the contacts matching the required roles
-      const filteredContacts = loadedContacts.filter(contact =>
+      // Filter contacts to retain only those matching the required roles
+      const filteredContacts = contactsFromLocalStorage.filter(contact =>
         rolesToCheck.includes(contact.role)
       );
 
-      // Check if none of the required roles exist in the loaded contacts
-      if (filteredContacts.length === 0) {
-        console.log('None of the required contacts found. Loading from JSON...');
-        await this.loadContactsFromJSON();
-      } else {
-        // Ensure the contacts are sorted based on rolesToCheck order
-        const sortedContacts = rolesToCheck
-          .map(role => filteredContacts.find(contact => contact.role === role))
-          .filter(contact => contact !== undefined) as Contact[]; // Cast to Contact[] after filtering undefined
+      // Sort the contacts based on rolesToCheck order
+      const sortedContacts = rolesToCheck
+        .map(role => filteredContacts.find(contact => contact.role === role))
+        .filter(contact => contact !== undefined) as Contact[]; // Cast to Contact[] after filtering undefined
 
-        this.contacts = sortedContacts; // Set the loaded contacts in sorted order
-      }
+      this.contacts = sortedContacts; // Set the loaded contacts in sorted order
     } catch (error) {
       console.error('Error loading contacts:', error);
       // Optionally load from JSON in case of error
