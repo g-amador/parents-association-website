@@ -83,6 +83,7 @@ export class ContactsComponent implements OnInit {
     try {
       let loadedContacts: Contact[] = [];
 
+      // Step 1: Load from Firestore or Local Storage based on the environment
       if (environment.production) {
         // Use Firestore in production
         const firestoreContacts = await this.loadContactsFromFirestore();
@@ -94,7 +95,7 @@ export class ContactsComponent implements OnInit {
         loadedContacts = await this.loadContactsFromLocalStorage();
       }
 
-      // Define the list of roles to check against
+      // Step 2: Define the roles to check against
       const rolesToCheck = [
         "contacts_page.coordinator",
         "contacts_page.parents_association",
@@ -112,40 +113,40 @@ export class ContactsComponent implements OnInit {
         "contacts_page.aaaf_caf_contact_monitors"
       ];
 
-      const contactsFromLocalStorage: Contact[] = rolesToCheck
-        .map(role => {
-          const contact = localStorage.getItem(`contact-${role}`);
-          return contact ? JSON.parse(contact) as Contact : null; // Parse and return contact if it exists
-        })
-        .filter(contact => contact !== null) as Contact[]; // Filter out null values
+      // Step 3: Filter contacts that already exist in local storage or Firestore
+      const existingRoles = loadedContacts.map(contact => contact.role);
+      const missingRoles = rolesToCheck.filter(role => !existingRoles.includes(role));
 
-      // Check if any required roles are missing
-      const missingRoles = rolesToCheck.filter(role => {
-        return !contactsFromLocalStorage.some(contact => contact.role === role);
-      });
-
+      // Step 4: Load missing roles from JSON if needed
       if (missingRoles.length > 0) {
-        console.log('Missing contacts found. Loading from JSON...');
-        await this.loadContactsFromJSON(); // Load from JSON if any roles are missing
+        console.log('Missing contacts found. Loading from JSON...', missingRoles);
+
+        // Load missing contacts from JSON based on missing roles
+        const contactsFromJson = await this.loadContactsFromJSON(missingRoles);
+
+        // Add loaded contacts from JSON to the main contacts list and save to storage
+        for (const contact of contactsFromJson) {
+          loadedContacts.push(contact);  // Add newly loaded contact to the main list
+
+          // Save missing contact to the appropriate storage based on environment
+          if (environment.production) {
+            await this.firestoreService.setContact(contact.role, contact);  // Save to Firestore in production
+          } else {
+            await this.localStorageService.setContact(contact.role, contact);  // Save to Local Storage in development
+          }
+        }
       } else {
-        console.log('All required contacts found in local storage.');
+        console.log('All required contacts are already loaded.');
       }
 
-      // Filter contacts to retain only those matching the required roles
-      const filteredContacts = contactsFromLocalStorage.filter(contact =>
-        rolesToCheck.includes(contact.role)
-      );
-
-      // Sort the contacts based on rolesToCheck order
+      // Step 5: Sort the contacts based on rolesToCheck order
       const sortedContacts = rolesToCheck
-        .map(role => filteredContacts.find(contact => contact.role === role))
-        .filter(contact => contact !== undefined) as Contact[]; // Cast to Contact[] after filtering undefined
+        .map(role => loadedContacts.find(contact => contact.role === role))
+        .filter(contact => contact !== undefined) as Contact[]; // Ensure all contacts are defined
 
       this.contacts = sortedContacts; // Set the loaded contacts in sorted order
     } catch (error) {
       console.error('Error loading contacts:', error);
-      // Optionally load from JSON in case of error
-      await this.loadContactsFromJSON();
     }
   }
 
@@ -192,19 +193,20 @@ export class ContactsComponent implements OnInit {
    * Helper method to load contacts from a JSON file.
    * Contacts are loaded from a JSON file and saved to Firestore or Local Storage depending on the environment.
    */
-  private async loadContactsFromJSON(): Promise<void> {
-    this.http.get<Contact[]>('assets/data/contacts.json').subscribe(
-      async (data) => {
-        this.contacts = data; // Set contacts from JSON data
-        // Save the loaded contacts to Firestore or Local Storage depending on the environment
-        for (const contact of this.contacts) {
-          await this.contactService.setContact(contact.role, contact);
+  private async loadContactsFromJSON(missingRoles: string[]): Promise<Contact[]> {
+    return new Promise<Contact[]>((resolve, reject) => {
+      this.http.get<Contact[]>('assets/data/contacts.json').subscribe(
+        (data) => {
+          // Filter contacts based on the missing roles
+          const filteredContacts = data.filter(contact => missingRoles.includes(contact.role));
+          resolve(filteredContacts);
+        },
+        (error) => {
+          console.error('Error loading contacts from JSON:', error);
+          reject([]);  // Return an empty array on error
         }
-      },
-      (error) => {
-        console.error('Error loading contacts from JSON:', error);
-      }
-    );
+      );
+    });
   }
 
   /**
