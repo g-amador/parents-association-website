@@ -8,6 +8,9 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class LocalStorageService {
+  /**
+   * Constructor to initialize LocalStorageService.
+   */
   constructor() { }
 
   /**
