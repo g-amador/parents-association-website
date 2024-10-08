@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Event } from '../../shared/models/event.model';
 import { LocalStorageService } from '../../core/services/local-storage.service'; // Import Local Storage Service
+import { FirestoreService } from '../../core/services/firestore.service'; // Import Firestore Service
+import { environment } from '../../../environments/environment'; // Import environment
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +20,18 @@ export class HomeComponent implements OnInit {
   intervalId: any;
   eventIntervalId: any; // For event carousel rotation
 
-  constructor(private localStorageService: LocalStorageService) { } // Inject LocalStorageService
+  private homeService: LocalStorageService | FirestoreService; // To hold the reference to the selected service
+
+  // Inject both LocalStorageService and FirestoreService
+  constructor(
+    private localStorageService: LocalStorageService,
+    private firestoreService: FirestoreService
+  ) {
+    // Decide whether to use FirestoreService or LocalStorageService
+    this.homeService = environment.production && !environment.useLocalStorage
+      ? this.firestoreService
+      : this.localStorageService;
+  }
 
   async ngOnInit() {
     this.adjustSidebarVisibility();
@@ -35,39 +49,66 @@ export class HomeComponent implements OnInit {
     this.sidebarVisible = sidebarVisible;
   }
 
-  // Load the latest articles using LocalStorageService
+  // Load the latest articles using the selected service
   async loadLatestArticles() {
-    this.latestArticles = await this.localStorageService.getAllArticles(); // Load articles from Local Storage
-    this.latestArticles = this.latestArticles.slice(-3).reverse(); // Get the last 3 articles in reverse order
-  }
-
-  // Load upcoming events using LocalStorageService
-  async loadUpcomingEvents() {
-    const events = await this.localStorageService.getAllEvents();
-
-    if (events && typeof events === 'object') {
-      // Transform the object with event keys into a flat array of event objects
-      const transformedEvents = Object.keys(events).flatMap(key => {
-        const eventList = events[key]; // Get events for that date
-        if (Array.isArray(eventList)) {
-          return eventList.map(event => ({
-            ...event,
-            date: key
-          }));
+    if (environment.production && !environment.useLocalStorage) {
+      // FirestoreService returns an Observable, we need to subscribe
+      (this.homeService.getAllArticles() as Observable<Article[]>).subscribe(
+        articles => {
+          this.latestArticles = articles.slice(-3).reverse(); // Get the last 3 articles in reverse order
+        },
+        error => {
+          console.error('Error loading articles from Firestore:', error);
         }
-        return []; // Skip non-event keys
-      });
-
-      // Filter out past events and sort by date
-      const sortedTransformedEvents = transformedEvents
-        .filter(event => event.date && new Date(event.date) >= new Date()) // Filter out past events
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // Sort events by date
-
-      this.upcomingEvents = sortedTransformedEvents.slice(0, 3); // Get the next 3 upcoming events
+      );
     } else {
-      this.upcomingEvents = [];
+      // LocalStorageService returns data directly as an array
+      this.latestArticles = (this.homeService.getAllArticles() as Article[]).slice(-3).reverse();
     }
   }
+
+  // Load upcoming events using the selected service
+  async loadUpcomingEvents() {
+    if (environment.production && !environment.useLocalStorage) {
+      // FirestoreService returns an Observable, we need to subscribe
+      (this.homeService.getAllEvents() as Observable<Event[]>).subscribe(
+        events => {
+          this.processEvents(events); // Pass the array directly to processEvents
+        },
+        error => {
+          console.error('Error loading events from Firestore:', error);
+        }
+      );
+    } else {
+      // LocalStorageService returns data directly as an object
+      try {
+        const events = await this.localStorageService.getAllEvents(); // Await the promise
+        this.processEvents(events); // Pass the object directly to processEvents
+      } catch (error) {
+        console.error('Error loading events from Local Storage:', error);
+      }
+    }
+  }
+
+  processEvents(events: Event[] | { [key: string]: Event[] }) {
+    if (Array.isArray(events)) {
+      // Handle Firestore events
+      this.upcomingEvents = events.slice(0, 3); // Limit to next 3 events
+    } else {
+      // Handle LocalStorage events
+      const transformedEvents = Object.keys(events).flatMap(key => {
+        return events[key].map(event => ({ ...event, date: key }));
+      });
+
+      // Sort and filter events just like before
+      this.upcomingEvents = transformedEvents
+        .filter(event => new Date(event.date) >= new Date())
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .slice(0, 3); // Limit to next 3 events
+    }
+  }
+
+
 
   startCarouselRotation() {
     if (this.latestArticles.length > 0) {
