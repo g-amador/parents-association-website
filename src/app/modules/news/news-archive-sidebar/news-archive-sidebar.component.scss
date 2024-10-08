@@ -3,13 +3,19 @@
   top: 10%;
   right: 0;
   width: 20%;
-  height: 100%;
-  background-color: #f5f5f5; /* Adjust to match your theme */
+  height: 90%;
+  /* Adjust height if needed */
+  background-color: #f5f5f5;
+  /* Adjust to match your theme */
   padding: 20px;
   box-sizing: border-box;
   z-index: 1;
   display: flex;
   flex-direction: column;
+
+  /* Ensure content area takes available space */
+  overflow-y: auto;
+  /* Allow scrolling */
 }
 
 .archive-sidebar h2 {
@@ -17,7 +23,14 @@
   margin-bottom: 20px;
 }
 
+.archive-sidebar>div {
+  flex-grow: 1;
+  /* Take up remaining space */
+}
+
 .archive-sidebar button {
-  margin-top: auto; /* Push button to bottom */
-  margin-bottom: 20px; /* Add some space from the bottom */
+  margin-top: 20px;
+  /* Space above the button */
+  margin-bottom: 20px;
+  /* Space below the button (if needed) */
 }
