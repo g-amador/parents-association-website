@@ -108,8 +108,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
-
   startCarouselRotation() {
     if (this.latestArticles.length > 0) {
       this.intervalId = setInterval(() => {
