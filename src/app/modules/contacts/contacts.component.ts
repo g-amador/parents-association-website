@@ -128,12 +128,7 @@ export class ContactsComponent implements OnInit {
         for (const contact of contactsFromJson) {
           loadedContacts.push(contact);  // Add newly loaded contact to the main list
 
-          // Save missing contact to the appropriate storage based on environment
-          if (environment.production) {
-            await this.firestoreService.setContact(contact.role, contact);  // Save to Firestore in production
-          } else {
-            await this.localStorageService.setContact(contact.role, contact);  // Save to Local Storage in development
-          }
+          await this.contactService.setContact(contact.role, contact);  // Save to Firestore in production
         }
       } else {
         console.log('All required contacts are already loaded.');

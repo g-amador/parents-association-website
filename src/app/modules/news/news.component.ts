@@ -201,8 +201,8 @@ export class NewsComponent implements OnInit {
         await (this.articleService as FirestoreService).updateArticle(articleId, updatedArticle);
       }
     } else {
-      await this.localStorageService.deleteArticle(original);
-      await this.localStorageService.addArticle(updatedArticle);
+      await (this.articleService as LocalStorageService).deleteArticle(original);
+      await (this.articleService as LocalStorageService).addArticle(updatedArticle);
     }
   }
 
@@ -236,7 +236,7 @@ export class NewsComponent implements OnInit {
         this.processArticles(articles);
       });
     } else {
-      articles = this.localStorageService.getAllArticles();
+      articles = (this.articleService as LocalStorageService).getAllArticles();
       this.processArticles(articles);
     }
   }

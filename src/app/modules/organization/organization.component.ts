@@ -37,6 +37,9 @@ export class OrganizationComponent implements OnInit {
    */
   public isAdminRoute: boolean = false;
 
+  // The service used for organization contacts, chosen dynamically based on environment
+  private organizationService: LocalStorageService | FirestoreService;
+
   /**
    * Constructor for the OrganizationComponent class.
    * It injects services needed for making HTTP requests, handling dialogs, routing, authentication,
@@ -56,7 +59,12 @@ export class OrganizationComponent implements OnInit {
     private authService: AuthService,
     private localStorageService: LocalStorageService,
     private firestoreService: FirestoreService
-  ) { }
+  ) {
+    // Dynamically choose between Firestore or LocalStorage based on environment
+    this.organizationService = environment.production && !environment.useLocalStorage
+      ? this.firestoreService
+      : this.localStorageService;
+  }
 
   /**
    * Initializes the component, adjusts sidebar visibility, loads contacts,
@@ -136,19 +144,19 @@ export class OrganizationComponent implements OnInit {
    */
   public async loadContactsFromFirestore(): Promise<void> {
     // Fetch Direction contacts from Firestore
-    const storedDirection = await this.firestoreService.getContact('Direction');
+    const storedDirection = await this.organizationService.getContact('Direction');
     if (storedDirection) {
       this.contacts.direction = [storedDirection];
     }
 
     // Fetch Assembly contacts from Firestore
-    const storedAssembly = await this.firestoreService.getContact('Assembly');
+    const storedAssembly = await this.organizationService.getContact('Assembly');
     if (storedAssembly) {
       this.contacts.assembly = [storedAssembly];
     }
 
     // Fetch Fiscal Council contacts from Firestore
-    const storedFiscalCouncil = await this.firestoreService.getContact('Fiscal Council');
+    const storedFiscalCouncil = await this.organizationService.getContact('Fiscal Council');
     if (storedFiscalCouncil) {
       this.contacts.fiscalCouncil = [storedFiscalCouncil];
     }
@@ -183,7 +191,7 @@ export class OrganizationComponent implements OnInit {
         if (environment.useLocalStorage) {
           localStorage.setItem('contact-Direction', JSON.stringify(this.contacts.direction));
         } else {
-          await this.firestoreService.setContact('Direction', this.contacts.direction);
+          await this.organizationService.setContact('Direction', this.contacts.direction);
         }
       }
 
@@ -201,7 +209,7 @@ export class OrganizationComponent implements OnInit {
         if (environment.useLocalStorage) {
           localStorage.setItem('contact-Assembly', JSON.stringify(this.contacts.assembly));
         } else {
-          await this.firestoreService.setContact('Assembly', this.contacts.assembly);
+          await this.organizationService.setContact('Assembly', this.contacts.assembly);
         }
       }
 
@@ -219,7 +227,7 @@ export class OrganizationComponent implements OnInit {
         if (environment.useLocalStorage) {
           localStorage.setItem('contact-Fiscal Council', JSON.stringify(this.contacts.fiscalCouncil));
         } else {
-          await this.firestoreService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
+          await this.organizationService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
         }
       }
     }
@@ -230,17 +238,9 @@ export class OrganizationComponent implements OnInit {
    */
   public async saveContacts(): Promise<void> {
     try {
-      if (environment.useLocalStorage) {
-        // Save contacts to local storage
-        await this.localStorageService.setContact('Direction', this.contacts.direction);
-        await this.localStorageService.setContact('Assembly', this.contacts.assembly);
-        await this.localStorageService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
-      } else {
-        // Save contacts to Firestore
-        await this.firestoreService.setContact('Direction', this.contacts.direction);
-        await this.firestoreService.setContact('Assembly', this.contacts.assembly);
-        await this.firestoreService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
-      }
+      await this.organizationService.setContact('Direction', this.contacts.direction);
+      await this.organizationService.setContact('Assembly', this.contacts.assembly);
+      await this.organizationService.setContact('Fiscal Council', this.contacts.fiscalCouncil);
     } catch (error) {
       console.error('Error saving contacts:', error);
     }
