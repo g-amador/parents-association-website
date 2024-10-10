@@ -17,7 +17,7 @@
               </mat-expansion-panel-header>
               <ul>
                 <li *ngFor="let article of day.value | orderBy:'date'" (click)="selectArticle(article)">
-                  <strong>{{ article.title }}</strong> - {{ article.date }}
+                  <strong>{{ article.title }}</strong>
                 </li>
               </ul>
             </mat-expansion-panel>
