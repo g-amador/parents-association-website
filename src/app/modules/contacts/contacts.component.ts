@@ -67,15 +67,6 @@ export class ContactsComponent implements OnInit {
   }
 
   /**
-   * Toggle the visibility of the sidebar.
-   *
-   * @param sidebarVisible - Boolean value to show or hide the sidebar.
-   */
-  toggleSidebarVisibility(sidebarVisible: boolean): void {
-    this.sidebarVisible = sidebarVisible;
-  }
-
-  /**
    * Load the contacts from the appropriate source depending on the environment.
    * It first attempts to load from Firestore or Local Storage and falls back to JSON if no contacts are found.
    */
@@ -235,5 +226,14 @@ export class ContactsComponent implements OnInit {
         }
       });
     }
+  }
+
+  /**
+   * Toggle the visibility of the sidebar.
+   *
+   * @param sidebarVisible - Boolean value to show or hide the sidebar.
+   */
+  toggleSidebarVisibility(sidebarVisible: boolean): void {
+    this.sidebarVisible = sidebarVisible;
   }
 }

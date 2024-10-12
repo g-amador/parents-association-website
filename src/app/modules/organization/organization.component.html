@@ -1,14 +1,17 @@
 <div class="organization-container">
-  <app-sidebar [sidebarVisible]="sidebarVisible" (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
+  <app-sidebar [sidebarVisible]="sidebarVisible"
+    (sidebarVisibilityChange)="toggleSidebarVisibility($event)"></app-sidebar>
 
   <div class="content-container" [ngClass]="{'sidebar-closed': !sidebarVisible}">
     <app-language-switcher [sidebarVisible]="sidebarVisible"></app-language-switcher>
 
     <!-- Function to render contact groups -->
     <ng-container *ngFor="let group of ['direction', 'assembly', 'fiscalCouncil']">
-      <h2 class="group-title">{{ 'organization_page.' + (group === 'fiscalCouncil' ? 'fiscal_council' : group) | translate }}</h2>
+      <h2 class="group-title">{{ 'organization_page.' + (group === 'fiscalCouncil' ? 'fiscal_council' : group) |
+        translate }}</h2>
       <div class="contact-row">
-        <div *ngFor="let contact of contacts[group]; let i = index" class="contact-card" (click)="editContact(contact, group, i)">
+        <div *ngFor="let contact of contacts[group]; let i = index" class="contact-card"
+          (click)="openEditDialog(contact, group, i)">
           <div class="image-container">
             <img [src]="contact.image" alt="Contact Image" width="100">
           </div>

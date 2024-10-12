@@ -1,87 +1,79 @@
-{
-  "members": {
-    "Direction": [
-      {
-      "role": "president",
-      "name": "Sandrina Timóteo",
-      "email": "sandrina.vln@gmail.com",
-      "phone": "(+351) 936 257 627",
-      "image": ""
-      },
-      {
-      "role": "vice_president",
-      "name": "Raquel Filipe",
-      "email": "",
-      "phone": "",
-      "image": ""
-      },
-      {
-      "role": "secretary",
-      "name": "Cecília Gaspar",
-      "email": "",
-      "phone": "",
-      "image": ""
-      },
-      {
-      "role": "treasury",
-      "name": "Fernando Antono",
-      "email": "",
-      "phone": "",
-      "image": ""
-      },
-      {
-      "role": "vowel",
-      "name": "André Machado",
-      "email": "",
-      "phone": "",
-      "image": ""
-      }
-    ],
-    "Assembly": [
-      {
-        "role": "president",
-        "name": "Marta Ribeiro da Silva",
-        "email": "",
-        "phone": "",
-        "image": ""
-      },
-      {
-        "role": "first_secretary",
-        "name": "Marta Smith",
-        "email": "",
-        "phone": "",
-        "image": ""
-      },
-      {
-        "role": "second_secretary",
-        "name": "Gonçalo Amador",
-        "email": "g.n.p.amador@gmail.com",
-        "phone": "(+351) 962 816 858",
-        "image": ""
-      }
-    ],
-    "Fiscal Council": [
-      {
-        "role": "president",
-        "name": "Soraia Lobo",
-        "email": "",
-        "phone": "",
-        "image": ""
-      },
-      {
-        "role": "vowel",
-        "name": "Moisés Garcia",
-        "email": "",
-        "phone": "",
-        "image": ""
-      },
-      {
-        "role": "vowel",
-        "name": "Luisa Filipe",
-        "email": "",
-        "phone": "",
-        "image": ""
-      }
-    ]
+[
+  {
+    "role": "organization_page.direction.president",
+    "name": "Sandrina Timóteo",
+    "email": "sandrina.vln@gmail.com",
+    "phone": "(+351) 936 257 627",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.vice_president",
+    "name": "Raquel Filipe",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.secretary",
+    "name": "Cecília Gaspar",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.treasury",
+    "name": "Fernando Antono",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.vowel",
+    "name": "André Machado",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.assembly.president",
+    "name": "Marta Ribeiro da Silva",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.assembly.first_secretary",
+    "name": "Marta Smith",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.assembly.second_secretary",
+    "name": "Gonçalo Amador",
+    "email": "g.n.p.amador@gmail.com",
+    "phone": "(+351) 962 816 858",
+    "image": ""
+  },
+  {
+    "role": "organization_page.fiscal_council.president",
+    "name": "Soraia Lobo",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.fiscal_council.vowel",
+    "name": "Moisés Garcia",
+    "email": "",
+    "phone": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.fiscal_council.vowel",
+    "name": "Luisa Filipe",
+    "email": "",
+    "phone": "",
+    "image": ""
   }
-}
+]

@@ -18,6 +18,7 @@ export class LocalStorageService {
    *
    * @param role - The role of the contact to be added or updated.
    * @param contact - The contact object containing contact details.
+   * @return A promise that resolves when the contact is successfully saved.
    */
   async setContact(role: string, contact: Contact): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -36,7 +37,7 @@ export class LocalStorageService {
    * Retrieve a contact by `role`.
    *
    * @param role - The role of the contact to be retrieved.
-   * @returns A promise that resolves to the contact or null if not found.
+   * @return A promise that resolves to the contact or null if not found.
    */
   async getContact(role: string): Promise<Contact | null> {
     return new Promise<Contact | null>((resolve, reject) => {
@@ -54,6 +55,7 @@ export class LocalStorageService {
    * Delete a contact by `role`.
    *
    * @param role - The role of the contact to be deleted.
+   * @return A promise that resolves when the contact is successfully deleted.
    */
   async deleteContact(role: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -71,7 +73,7 @@ export class LocalStorageService {
   /**
    * Get all contacts.
    *
-   * @returns An observable of contact arrays.
+   * @return An observable of contact arrays.
    */
   getAllContacts(): Observable<Contact[]> {
     const contacts: Contact[] = [];
@@ -99,6 +101,7 @@ export class LocalStorageService {
    *
    * @param date - The date of the event to be added or updated.
    * @param event - The event object containing event details.
+   * @return A promise that resolves when the event is successfully saved.
    */
   async setEvent(date: string, event: Event): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -117,7 +120,7 @@ export class LocalStorageService {
    * Retrieve the event for a specific date.
    *
    * @param date - The date of the event to be retrieved.
-   * @returns A promise that resolves to the event or null if not found.
+   * @return A promise that resolves to the event or null if not found.
    */
   async getEvent(date: string): Promise<Event | null> {
     return new Promise<Event | null>((resolve) => {
@@ -130,6 +133,7 @@ export class LocalStorageService {
    * Delete an event for a specific date.
    *
    * @param date - The date of the event to be deleted.
+   * @return A promise that resolves when the event is successfully deleted.
    */
   async deleteEvent(date: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -147,7 +151,7 @@ export class LocalStorageService {
   /**
    * Retrieve all events.
    *
-   * @returns A promise that resolves to an object containing events indexed by date.
+   * @return A promise that resolves to an object containing events indexed by date.
    */
   async getAllEvents(): Promise<{ [key: string]: Event[] }> {
     return new Promise<{ [key: string]: Event[] }>((resolve) => {
@@ -185,6 +189,7 @@ export class LocalStorageService {
    * Add an article to localStorage.
    *
    * @param article - The article object to be added.
+   * @return A promise that resolves when the article is successfully saved.
    */
   async addArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -205,6 +210,7 @@ export class LocalStorageService {
    * Update an article in localStorage.
    *
    * @param article - The article object to be updated.
+   * @return A promise that resolves when the article is successfully updated.
    */
   async updateArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -225,6 +231,7 @@ export class LocalStorageService {
    * Delete an article from localStorage.
    *
    * @param article - The article object to be deleted.
+   * @return A promise that resolves when the article is successfully deleted.
    */
   async deleteArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -243,6 +250,8 @@ export class LocalStorageService {
 
   /**
    * Clear all articles from localStorage.
+   *
+   * @return A promise that resolves when all articles are deleted.
    */
   async deleteAllArticles(): Promise<void> {
     localStorage.removeItem('articles');
@@ -251,7 +260,7 @@ export class LocalStorageService {
   /**
    * Retrieve all articles from localStorage.
    *
-   * @returns An array of articles.
+   * @return An array of articles.
    */
   getAllArticles(): Article[] {
     const articles = localStorage.getItem('articles');

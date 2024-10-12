@@ -9,6 +9,7 @@ import { Event } from '../../shared/models/event.model';
   providedIn: 'root'
 })
 export class FirestoreService {
+
   /**
    * Constructor to initialize FirestoreService with AngularFirestore.
    *
@@ -17,54 +18,42 @@ export class FirestoreService {
   constructor(private firestore: AngularFirestore) { }
 
   /**
-   * Add or update a contact using `role` as the key.
+   * Add or update a contact by its key (e.g., 'contact-Assembly').
    *
-   * @param role - The role of the contact to be added or updated.
-   * @param contact - The contact object containing contact details.
+   * @param groupKey - The key of the contact group.
+   * @param data - The contact data to be saved or updated.
+   * @return A promise that resolves when the contact is successfully saved.
    */
-  async setContact(role: string, contact: Contact): Promise<void> {
+  async setContact(groupKey: string, data: any): Promise<void> {
     try {
-      await this.firestore.collection('contacts').doc(role).set(contact, { merge: true });
-      console.log(`Contact with role: ${role} updated successfully.`);
+      await this.firestore.collection('organizationContacts').doc(groupKey).set(data);
     } catch (error) {
-      console.error('Error updating contact: ', error);
+      console.error(`Error saving contact group ${groupKey} to Firestore:`, error);
       throw error;
     }
   }
 
   /**
-   * Retrieve a contact by `role`.
+   * Retrieve a contact by group by its key (e.g., 'contact-Assembly').
    *
-   * @param role - The role of the contact to be retrieved.
-   * @returns A promise that resolves to the contact or null if not found.
+   * @param groupKey - The key of the contact group to retrieve.
+   * @return A promise that resolves with the contact data if found, or null if not.
    */
-  async getContact(role: string): Promise<Contact | null> {
-    return new Promise<Contact | null>((resolve, reject) => {
-      this.firestore.collection('contacts').doc(role).get().toPromise()
-        .then(doc => {
-          if (doc && doc.exists) {
-            const data = doc.data();
-            if (data) {
-              // Ensure data is an object before spreading it
-              resolve({ ...data, role } as Contact); // Safe to access doc.data()
-            } else {
-              resolve(null); // If data is not an object, return null
-            }
-          } else {
-            resolve(null); // Document does not exist
-          }
-        })
-        .catch(error => {
-          console.error('Error retrieving contact from Firestore:', error);
-          reject(error);
-        });
-    });
+  async getContact(groupKey: string): Promise<any> {
+    try {
+      const doc = await this.firestore.collection('organizationContacts').doc(groupKey).get().toPromise();
+      return doc!.exists ? doc!.data() : null;
+    } catch (error) {
+      console.error(`Error fetching contact group ${groupKey} from Firestore:`, error);
+      throw error;
+    }
   }
 
   /**
    * Delete a contact by `role`.
    *
    * @param role - The role of the contact to be deleted.
+   * @return A promise that resolves when the contact is successfully deleted.
    */
   async deleteContact(role: string): Promise<void> {
     try {
@@ -79,7 +68,7 @@ export class FirestoreService {
   /**
    * Get all contacts.
    *
-   * @returns An observable of contact arrays.
+   * @return An observable of contact arrays.
    */
   getAllContacts(): Observable<Contact[]> {
     return this.firestore.collection<Contact>('contacts').valueChanges({ idField: 'id' });
@@ -90,6 +79,7 @@ export class FirestoreService {
    *
    * @param date - The date of the event to be added or updated.
    * @param event - The event object containing event details.
+   * @return A promise that resolves when the event is successfully saved.
    */
   async setEvent(date: string, event: Event): Promise<void> {
     try {
@@ -105,6 +95,7 @@ export class FirestoreService {
    * Delete an event for a specific date.
    *
    * @param date - The date of the event to be deleted.
+   * @return A promise that resolves when the event is successfully deleted.
    */
   async deleteEvent(date: string): Promise<void> {
     try {
@@ -119,7 +110,7 @@ export class FirestoreService {
   /**
    * Get all events.
    *
-   * @returns An observable of event arrays.
+   * @return An observable of event arrays.
    */
   getAllEvents(): Observable<Event[]> {
     return this.firestore.collection<Event>('events').valueChanges();
@@ -129,6 +120,7 @@ export class FirestoreService {
    * Add a new article (Firestore auto-generates an ID).
    *
    * @param article - The article object to be added.
+   * @return A promise that resolves when the article is successfully added.
    */
   async addArticle(article: Article): Promise<void> {
     try {
@@ -145,6 +137,7 @@ export class FirestoreService {
    *
    * @param articleId - The ID of the article to be updated.
    * @param article - The article object containing updated details.
+   * @return A promise that resolves when the article is successfully updated.
    */
   async updateArticle(articleId: string, article: Article): Promise<void> {
     try {
@@ -160,6 +153,7 @@ export class FirestoreService {
    * Delete an article by document ID.
    *
    * @param articleId - The ID of the article to be deleted.
+   * @return A promise that resolves when the article is successfully deleted.
    */
   async deleteArticle(articleId: string): Promise<void> {
     try {
@@ -173,6 +167,8 @@ export class FirestoreService {
 
   /**
    * Delete all articles.
+   *
+   * @return A promise that resolves when all articles are successfully deleted.
    */
   async deleteAllArticles(): Promise<void> {
     const articlesSnapshot = await this.firestore.collection('articles').get().toPromise();
@@ -184,7 +180,7 @@ export class FirestoreService {
   /**
    * Get all articles, making sure to include the document ID as 'id'.
    *
-   * @returns An observable of article arrays.
+   * @return An observable of article arrays.
    */
   getAllArticles(): Observable<Article[]> {
     return this.firestore.collection<Article>('articles').valueChanges({ idField: 'id' });
