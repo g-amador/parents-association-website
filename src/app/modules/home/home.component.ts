@@ -67,12 +67,18 @@ export class HomeComponent implements OnInit {
   /**
    * Load the latest articles using the selected service
    */
+  /**
+ * Load the latest articles using the selected service
+ */
   public async loadLatestArticles() {
     if (environment.production && !environment.useLocalStorage) {
       // FirestoreService returns an Observable; we need to subscribe
       (this.homeService.getAllArticles() as Observable<Article[]>).subscribe(
         articles => {
-          this.latestArticles = articles.slice(-3).reverse(); // Get the last 3 articles in reverse order
+          // Sort articles by date in descending order
+          this.latestArticles = articles
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .slice(0, 3); // Get the top 3 latest articles
         },
         error => {
           console.error('Error loading articles from Firestore:', error); // Log any errors encountered
@@ -80,7 +86,9 @@ export class HomeComponent implements OnInit {
       );
     } else {
       // LocalStorageService returns data directly as an array
-      this.latestArticles = (this.homeService.getAllArticles() as Article[]).slice(-3).reverse();
+      this.latestArticles = (this.homeService.getAllArticles() as Article[])
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 3); // Get the top 3 latest articles
     }
   }
 
