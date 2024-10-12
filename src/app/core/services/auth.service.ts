@@ -1,72 +1,102 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+/**
+ * AuthService is a service that handles authentication logic for the application.
+ * It provides methods for user login, logout, session management, and password hashing.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private sessionKey = 'userSession'; // Key for localStorage to track session
-  private sessionTimeout = 3600 * 1000; // 1 hour session timeout in milliseconds
+  // Key for localStorage to track session
+  private sessionKey = 'userSession';
 
-  // Sample users for demonstration
+  // Duration of session timeout in milliseconds (1 hour)
+  private sessionTimeout = 3600 * 1000;
+
+  // Sample users for demonstration purposes. In a real application, user data should be retrieved from a secure backend.
   private users = [
-    { email: 'sandrina.vb@gmail.com', password: '94e778367a46645e4983cd601250878cd1b52898eaf5b87931df4965499a7aa0' },
-    { email: 'g.n.p.amador@gmail.com', password: 'c01e3c64bba84b237b505e601247050c5062bbb6b7bf95eb7ce83b465d32d812' },
-    { email: 'temp_admin@gmail.com', password: '1219190183ef88167ca0ca987480f0bc8599628d8bb769648c429b0daffab57d' },
+    {
+      email: 'sandrina.vb@gmail.com',
+      password: '94e778367a46645e4983cd601250878cd1b52898eaf5b87931df4965499a7aa0'
+    },
+    {
+      email: 'g.n.p.amador@gmail.com',
+      password: 'c01e3c64bba84b237b505e601247050c5062bbb6b7bf95eb7ce83b465d32d812'
+    },
+    {
+      email: 'temp_admin@gmail.com',
+      password: '1219190183ef88167ca0ca987480f0bc8599628d8bb769648c429b0daffab57d'
+    },
   ];
 
-  constructor(private router: Router) {}
+  /**
+   * Creates an instance of AuthService.
+   * @param router - An instance of Router to enable navigation within the application.
+   */
+  constructor(private router: Router) { }
 
-  // Login method
+  /**
+   * Logs in the user by verifying their email and password.
+   * @param email - The user's email address.
+   * @param password - The user's password.
+   * @returns A promise that resolves to true if the login is successful, otherwise false.
+   */
   async login(email: string, password: string): Promise<boolean> {
     const hashedPasswordInput = await this.hashPassword(password);
-    // console.log(`Attempting login for ${email}`);
 
     const user = this.users.find(u => u.email === email && u.password === hashedPasswordInput);
 
     if (user) {
       const session = { email, loginTime: new Date().getTime() };
       localStorage.setItem(this.sessionKey, JSON.stringify(session));
-      // console.log('Login successful!');
-      return true;
+      return true; // Login successful
     } else {
-      // console.log('Login failed: Invalid credentials');
-      return false;
+      return false; // Login failed due to invalid credentials
     }
   }
 
-  // Check if user is authenticated
+  /**
+   * Checks if the user is currently authenticated based on the session stored in localStorage.
+   * @returns A boolean indicating whether the user is authenticated.
+   */
   isAuthenticated(): boolean {
     const session = localStorage.getItem(this.sessionKey);
     if (!session) {
-      // console.log("User not authenticated: No session found");
-      return false;
+      return false; // No session found, user not authenticated
     }
 
     const sessionObj = JSON.parse(session);
     const now = new Date().getTime();
 
+    // Check if the session has expired
     if (now - sessionObj.loginTime > this.sessionTimeout) {
-      this.logout();
-      // console.log("Session has expired!");
+      this.logout(); // Logout due to session expiry
       return false;
     }
 
-    // console.log("User is authenticated: Session is valid");
-    return true;
+    return true; // User is authenticated
   }
 
-  // Logout method
+  /**
+   * Logs out the current user by removing their session from localStorage.
+   */
   logout(): void {
     localStorage.removeItem(this.sessionKey);
-    // console.log("User logged out.");
   }
 
-  // Password hashing method
+  /**
+   * Hashes a given password using SHA-256.
+   * @param password - The password to be hashed.
+   * @returns A promise that resolves to the hashed password as a hexadecimal string.
+   */
   private async hashPassword(password: string): Promise<string> {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(hashBuffer)).map(byte => byte.toString(16).padStart(2, '0')).join('');
+    return Array.from(new Uint8Array(hashBuffer))
+      .map(byte => byte.toString(16).padStart(2, '0'))
+      .join('');
   }
 }

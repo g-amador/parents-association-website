@@ -20,15 +20,15 @@ export class FirestoreService {
   /**
    * Add or update a contact by its key (e.g., 'contact-Assembly').
    *
-   * @param groupKey - The key of the contact group.
+   * @param role - The role of the contact.
    * @param data - The contact data to be saved or updated.
    * @return A promise that resolves when the contact is successfully saved.
    */
-  async setContact(groupKey: string, data: any): Promise<void> {
+  async setContact(role: string, data: any): Promise<void> {
     try {
-      await this.firestore.collection('organizationContacts').doc(groupKey).set(data);
+      await this.firestore.collection('contacts').doc(role).set(data);
     } catch (error) {
-      console.error(`Error saving contact group ${groupKey} to Firestore:`, error);
+      console.error(`Error saving contact role ${role} to Firestore:`, error);
       throw error;
     }
   }
@@ -39,12 +39,12 @@ export class FirestoreService {
    * @param groupKey - The key of the contact group to retrieve.
    * @return A promise that resolves with the contact data if found, or null if not.
    */
-  async getContact(groupKey: string): Promise<any> {
+  async getContact(role: string): Promise<any> {
     try {
-      const doc = await this.firestore.collection('organizationContacts').doc(groupKey).get().toPromise();
+      const doc = await this.firestore.collection('contacts').doc(role).get().toPromise();
       return doc!.exists ? doc!.data() : null;
     } catch (error) {
-      console.error(`Error fetching contact group ${groupKey} from Firestore:`, error);
+      console.error(`Error fetching contact role ${role} from Firestore:`, error);
       throw error;
     }
   }
