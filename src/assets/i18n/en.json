@@ -25,22 +25,23 @@
   "organization_page": {
     "members": "Organization Members",
     "direction": "Direction",
-    "assembly": "Assembly",
+    "direction.president": "President",
+    "direction.vice_president": "Vice President",
+    "direction.secretary": "Secretary",
+    "direction.treasury": "Treasurer",
+    "direction.vowel": "Member",
+    "assembly": "Assembly Board",
+    "assembly.president": "President",
+    "assembly.first_secretary": "1st Secretary",
+    "assembly.second_secretary": "2nd Secretary",
     "fiscal_council": "Fiscal Council",
+    "fiscal_council.president": "President",
+    "fiscal_council.vowel": "Member",
     "role": "Role",
     "name": "Name",
     "phone_number": "Phone Number",
     "change_image": "Change Image",
-    "edit_member_data": "Edit Member Data",
-    "roles": {
-      "president": "President",
-      "vice_president": "Vice President",
-      "secretary": "Secretary",
-      "treasury": "Treasury",
-      "vowel": "Vowel",
-      "first_secretary": "1st Secretary",
-      "second_secretary": "2nd Secretary"
-    }
+    "edit_member_data": "Edit Member Data"
   },
   "news_page": {
     "latest_news": "Latest News/Information",

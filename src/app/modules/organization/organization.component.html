@@ -10,19 +10,22 @@
       <h2 class="group-title">{{ 'organization_page.' + (group === 'fiscalCouncil' ? 'fiscal_council' : group) |
         translate }}</h2>
       <div class="contact-row">
-        <div *ngFor="let contact of contacts[group]; let i = index" class="contact-card"
-          (click)="openEditDialog(contact, group, i)">
-          <div class="image-container">
-            <img [src]="contact.image" alt="Contact Image" width="100">
-          </div>
-          <div class="contact-details">
-            <div *ngIf="contact.role"><strong>{{ 'organization_page.roles.' + contact.role | translate }}</strong>
+        <ng-container *ngFor="let contact of contacts; let i = index">
+          <div *ngIf="isContactMemberOfGroup((group === 'fiscalCouncil' ? 'fiscal_council' : group), contact)"
+            class="contact-card" (click)="openEditDialog(contact)">
+            <div class="image-container">
+              <img [src]="contact.image" alt="Contact Image" width="100">
             </div>
-            <div *ngIf="contact.name">{{ contact.name }}</div>
-            <div *ngIf="contact.email">{{ contact.email }}</div>
-            <div *ngIf="contact.phone">{{ contact.phone }}</div>
+            <div class="contact-details">
+              <div *ngIf="contact.role">
+                <strong>{{ contact.role | translate }}</strong>
+              </div>
+              <div *ngIf="contact.name">{{ contact.name }}</div>
+              <div *ngIf="contact.email">{{ contact.email }}</div>
+              <div *ngIf="contact.phone">{{ contact.phone }}</div>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </ng-container>
   </div>

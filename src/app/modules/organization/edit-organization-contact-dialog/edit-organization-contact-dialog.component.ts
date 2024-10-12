@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Contact } from '../../../shared/models/contact.model';
 
 @Component({
   selector: 'app-edit-contact-dialog',
@@ -7,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./edit-organization-contact-dialog.component.scss']
 })
 export class EditOrganizationContactDialogComponent {
-  contact: any;
+  contact: Contact; // Use the Contact type for better type safety
 
   /**
    * Constructor that injects the contact data via MAT_DIALOG_DATA and creates a local copy.
@@ -17,9 +18,9 @@ export class EditOrganizationContactDialogComponent {
    */
   constructor(
     public dialogRef: MatDialogRef<EditOrganizationContactDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: Contact // Use the Contact type for data
   ) {
-    this.contact = { ...data.contact }; // Make a copy to avoid direct binding
+    this.contact = { ...data }; // Make a copy to avoid direct binding
   }
 
   /**

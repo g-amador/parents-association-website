@@ -231,9 +231,9 @@ export class ContactsComponent implements OnInit {
   /**
    * Toggle the visibility of the sidebar.
    *
-   * @param sidebarVisible - Boolean value to show or hide the sidebar.
+   * @param sidebarVisible - Boolean flag to show or hide the sidebar.
    */
-  toggleSidebarVisibility(sidebarVisible: boolean): void {
+  public toggleSidebarVisibility(sidebarVisible: boolean): void {
     this.sidebarVisible = sidebarVisible;
   }
 }
