@@ -18,16 +18,12 @@ export class AuthService {
   // Sample users for demonstration purposes. In a real application, user data should be retrieved from a secure backend.
   private users = [
     {
-      email: 'sandrina.vb@gmail.com',
+      email: 'sandrina.vln@gmail.com ',
       password: '94e778367a46645e4983cd601250878cd1b52898eaf5b87931df4965499a7aa0'
     },
     {
       email: 'g.n.p.amador@gmail.com',
       password: 'c01e3c64bba84b237b505e601247050c5062bbb6b7bf95eb7ce83b465d32d812'
-    },
-    {
-      email: 'temp_admin@gmail.com',
-      password: '1219190183ef88167ca0ca987480f0bc8599628d8bb769648c429b0daffab57d'
     },
   ];
 
