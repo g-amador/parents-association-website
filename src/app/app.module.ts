@@ -17,7 +17,7 @@ import { environment } from '../environments/environment';
 import { AuthService } from './core/services/auth.service';
 
 // Components
-import { LoginComponent } from './modules/auth/login.component';
+import { LoginComponent } from './modules/auth/login/login.component';
 import { HomeComponent } from './modules/home/home.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CalendarComponent } from './modules/calendar/calendar.component';
@@ -45,6 +45,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
+import { PasswordRecoveryComponent } from './modules/auth/password-recovery/password-recovery.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { MatRippleModule } from '@angular/material/core';
     ViewEventDialogComponent,
     ViewArticleDialogComponent,
     ContactsComponent,
-    LoginComponent
+    LoginComponent,
+    PasswordRecoveryComponent
   ],
   imports: [
     BrowserModule,

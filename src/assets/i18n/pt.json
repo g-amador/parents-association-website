@@ -10,11 +10,18 @@
     "logout": "Sair",
     "email": "E-mail",
     "password": "Senha",
+    "password_recovery": "Recuperação de Senha",
+    "forgot_password": "Esqueceu a Senha?",
     "access_account": "Acesse sua conta",
+    "enter_email_reset": "Por favor, insira o seu email para redefinir a senha",
+    "send_reset_link": "Enviar Link de Redefinição",
+    "reset_link_sent": "Um link de rescuperação foi enviado para o seu e-mail.",
+    "back_to_login": "Voltar para o login",
     "error": {
       "valid_email": "Por favor, insira um e-mail válido.",
       "enter_password": "Por favor, insira sua senha.",
-      "invalid_email_password": "E-mail ou senha inválidos. Por favor, tente novamente."
+      "invalid_email_password": "E-mail ou senha inválidos. Por favor, tente novamente.",
+      "email_not_found": "Email não encontrado"
     }
   },
   "home_page": {
@@ -107,7 +114,7 @@
     "parents_association": "Associação de Pais",
     "president_parents_association": "Presidente da Associação de Pais",
     "school_general_and_1st_year": "Geral/1º Ciclo",
-	  "school_ji": "Jardim de Infãncia",
+    "school_ji": "Jardim de Infãncia",
     "marrocos_farm": "Quinta de Marrocos",
     "marrocos_farm_secretary": "Quinta de Marrocos Secretaria",
     "education_office_jfb": "Gabinete de Educação JFB",

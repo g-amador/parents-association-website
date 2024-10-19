@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /**
@@ -21,7 +21,7 @@ export class LoginComponent {
    * @param router - An instance of Router to enable navigation within the application.
    * @param route - An instance of ActivatedRoute to access the current route information.
    */
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   /**
    * Handles the submission of the login form.
