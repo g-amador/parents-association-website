@@ -8,20 +8,24 @@
   "auth": {
     "login": "Entrar",
     "logout": "Sair",
-    "email": "E-mail",
+    "email": "Email",
     "password": "Senha",
+    "new_password": "Nova Senha",
+    "recovery_password": "Senha de Recuperação",
     "password_recovery": "Recuperação de Senha",
     "forgot_password": "Esqueceu a Senha?",
     "access_account": "Acesse sua conta",
-    "enter_email_reset": "Por favor, insira o seu email para redefinir a senha",
-    "send_reset_link": "Enviar Link de Redefinição",
-    "reset_link_sent": "Um link de rescuperação foi enviado para o seu e-mail.",
-    "back_to_login": "Voltar para o login",
+    "enter_recovery_password": "Insira sua senha de recuperação",
+    "verify_recovery_password": "Verificar Senha de Recuperação",
+    "set_new_password": "Definir Nova Senha",
+    "password_updated": "Senha atualizada com sucesso",
+    "back_to_login": "Voltar para entrar",
     "error": {
-      "valid_email": "Por favor, insira um e-mail válido.",
+      "valid_email": "Por favor, insira um email válido.",
       "enter_password": "Por favor, insira sua senha.",
-      "invalid_email_password": "E-mail ou senha inválidos. Por favor, tente novamente.",
-      "email_not_found": "Email não encontrado"
+      "invalid_email_password": "Email ou senha inválidos. Por favor, tente novamente.",
+      "invalid_recovery_password": "Senha de recuperação inválida. Por favor, tente novamente.",
+      "email_not_found": "Email não encontrado. Por favor, verifique e tente novamente."
     }
   },
   "home_page": {
