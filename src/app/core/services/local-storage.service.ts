@@ -4,21 +4,57 @@ import { Contact } from '../../shared/models/contact.model';
 import { Event } from '../../shared/models/event.model';
 import { Observable, of } from 'rxjs';
 
+/**
+ * LocalStorageService provides methods to interact with the browser's local storage,
+ * allowing for the storage, retrieval, and deletion of various data types, including
+ * contacts, events, and articles.
+ *
+ * @class LocalStorageService
+ * @example
+ * const localStorageService = new LocalStorageService();
+ * await localStorageService.setContact('admin', contact);
+ * const allContacts = await localStorageService.getAllContacts().toPromise();
+ *
+ * @module LocalStorageModule
+ */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
-  /**
-   * Constructor to initialize LocalStorageService.
-   */
   constructor() { }
 
   /**
-   * Add or update a contact using `role` as the key.
-   *
-   * @param role - The role of the contact to be added or updated.
-   * @param contact - The contact object containing contact details.
-   * @return A promise that resolves when the contact is successfully saved.
+   * Sets an item in local storage.
+   * @param {string} key - The key under which the item is stored.
+   * @param {any} value - The value to be stored, will be serialized to JSON.
+   */
+  setItem(key: string, value: any): void {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  /**
+   * Retrieves an item from local storage.
+   * @param {string} key - The key of the item to retrieve.
+   * @returns {any} - The parsed value from local storage, or null if not found.
+   */
+  getItem(key: string): any {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  }
+
+  /**
+   * Deletes an item from local storage.
+   * @param {string} key - The key of the item to delete.
+   */
+  deleteItem(key: string): void {
+    localStorage.removeItem(key);
+  }
+
+  /**
+   * Sets a contact in local storage.
+   * @param {string} role - The role associated with the contact.
+   * @param {Contact} contact - The contact object to save.
+   * @returns {Promise<void>} - A promise that resolves when the contact is saved.
    */
   async setContact(role: string, contact: Contact): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -34,10 +70,9 @@ export class LocalStorageService {
   }
 
   /**
-   * Retrieve a contact by `role`.
-   *
-   * @param role - The role of the contact to be retrieved.
-   * @return A promise that resolves to the contact or null if not found.
+   * Retrieves a contact from local storage by role.
+   * @param {string} role - The role of the contact to retrieve.
+   * @returns {Promise<Contact | null>} - A promise that resolves with the contact or null if not found.
    */
   async getContact(role: string): Promise<Contact | null> {
     return new Promise<Contact | null>((resolve, reject) => {
@@ -52,10 +87,9 @@ export class LocalStorageService {
   }
 
   /**
-   * Delete a contact by `role`.
-   *
-   * @param role - The role of the contact to be deleted.
-   * @return A promise that resolves when the contact is successfully deleted.
+   * Deletes a contact from local storage by role.
+   * @param {string} role - The role of the contact to delete.
+   * @returns {Promise<void>} - A promise that resolves when the contact is deleted.
    */
   async deleteContact(role: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -71,37 +105,31 @@ export class LocalStorageService {
   }
 
   /**
-   * Get all contacts.
-   *
-   * @return An observable of contact arrays.
+   * Retrieves all contacts from local storage.
+   * @returns {Observable<Contact[]>} - An observable of all contacts found in local storage.
    */
   getAllContacts(): Observable<Contact[]> {
     const contacts: Contact[] = [];
-
-    // Loop through all items in localStorage
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith('contact-')) {
         try {
           const contact: Contact = JSON.parse(localStorage.getItem(key)!);
           if (contact) {
-            contacts.push(contact); // Add contact to the array
+            contacts.push(contact);
           }
         } catch (error) {
           console.error('Error parsing contact from localStorage:', error);
         }
       }
     });
-
-    // Return an observable of contacts
-    return of(contacts); // Emit the contacts as an observable
+    return of(contacts);
   }
 
   /**
-   * Add or update an event for a specific date.
-   *
-   * @param date - The date of the event to be added or updated.
-   * @param event - The event object containing event details.
-   * @return A promise that resolves when the event is successfully saved.
+   * Sets an event in local storage.
+   * @param {string} date - The date associated with the event.
+   * @param {Event} event - The event object to save.
+   * @returns {Promise<void>} - A promise that resolves when the event is saved.
    */
   async setEvent(date: string, event: Event): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -117,10 +145,9 @@ export class LocalStorageService {
   }
 
   /**
-   * Retrieve the event for a specific date.
-   *
-   * @param date - The date of the event to be retrieved.
-   * @return A promise that resolves to the event or null if not found.
+   * Retrieves an event from local storage by date.
+   * @param {string} date - The date of the event to retrieve.
+   * @returns {Promise<Event | null>} - A promise that resolves with the event or null if not found.
    */
   async getEvent(date: string): Promise<Event | null> {
     return new Promise<Event | null>((resolve) => {
@@ -130,10 +157,9 @@ export class LocalStorageService {
   }
 
   /**
-   * Delete an event for a specific date.
-   *
-   * @param date - The date of the event to be deleted.
-   * @return A promise that resolves when the event is successfully deleted.
+   * Deletes an event from local storage by date.
+   * @param {string} date - The date of the event to delete.
+   * @returns {Promise<void>} - A promise that resolves when the event is deleted.
    */
   async deleteEvent(date: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -149,38 +175,28 @@ export class LocalStorageService {
   }
 
   /**
-   * Retrieve all events.
-   *
-   * @return A promise that resolves to an object containing events indexed by date.
+   * Retrieves all events from local storage.
+   * @returns {Promise<{ [key: string]: Event[] }>} - A promise that resolves with an object containing arrays of events, grouped by date.
    */
   async getAllEvents(): Promise<{ [key: string]: Event[] }> {
     return new Promise<{ [key: string]: Event[] }>((resolve) => {
       const events: { [key: string]: Event[] } = {};
-
-      // Loop through all items in localStorage
       Object.keys(localStorage).forEach((key) => {
         if (key.startsWith('event-')) {
           try {
-            // Extract the date part from the key
-            const date = key.substring(6); // key is in the format 'event-YYYY-MM-DD'
-
-            // Parse the event data from localStorage
+            const date = key.substring(6);
             const event: Event = JSON.parse(localStorage.getItem(key)!);
-
-            // Ensure that the event is valid and well-formed
             if (event && event.date) {
               if (!events[date]) {
                 events[date] = [];
               }
-              events[date].push(event); // Add event to the corresponding date
+              events[date].push(event);
             }
           } catch (error) {
             console.error('Error parsing event from localStorage:', error);
           }
         }
       });
-
-      // Resolve with the correctly structured events object
       resolve(events);
     });
   }
@@ -228,17 +244,16 @@ export class LocalStorageService {
   }
 
   /**
-   * Delete an article from localStorage.
-   *
-   * @param article - The article object to be deleted.
-   * @return A promise that resolves when the article is successfully deleted.
+   * Deletes an article from local storage.
+   * @param {Article} article - The article object to delete.
+   * @returns {Promise<void>} - A promise that resolves when the article is deleted.
    */
   async deleteArticle(article: Article): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
-        const articles = this.getAllArticles(); // Get existing articles
-        const updatedArticles = articles.filter(a => a.title !== article.title || a.date !== article.date); // Remove the article to delete
-        localStorage.setItem('articles', JSON.stringify(updatedArticles)); // Save updated articles
+        const articles = this.getAllArticles();
+        const filteredArticles = articles.filter(a => a.title !== article.title && a.date !== article.date);
+        localStorage.setItem('articles', JSON.stringify(filteredArticles));
         console.log('Article successfully deleted from localStorage!');
         resolve();
       } catch (error) {
@@ -258,12 +273,11 @@ export class LocalStorageService {
   }
 
   /**
-   * Retrieve all articles from localStorage.
-   *
-   * @return An array of articles.
+   * Retrieves all articles from local storage.
+   * @returns {Article[]} - An array of articles found in local storage.
    */
   getAllArticles(): Article[] {
-    const articles = localStorage.getItem('articles');
-    return articles ? JSON.parse(articles) : [];
+    const articlesJson = localStorage.getItem('articles');
+    return articlesJson ? JSON.parse(articlesJson) : [];
   }
 }
