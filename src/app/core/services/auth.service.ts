@@ -93,6 +93,7 @@ export class AuthService {
     if (!session) return false;
 
     const now = new Date().getTime();
+
     // Check if session has expired
     if (now - session.loginTime > this.sessionTimeout) {
       this.logout();
@@ -104,12 +105,12 @@ export class AuthService {
 
   /**
    * Logs out the user and clears the session data.
-   * Redirects to the login page after logout.
+   * Redirects to the home page after logout.
    * @returns {Promise<void>} - A promise that resolves when the logout is complete.
    */
   async logout(): Promise<void> {
     await this.storageService.deleteItem(this.sessionKey);
-    this.router.navigate(['/login']); // Redirect to login page after logout
+    this.router.navigate(['/home']); // Redirect to home page after logout
   }
 
   /**

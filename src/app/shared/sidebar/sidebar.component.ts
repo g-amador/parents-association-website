@@ -34,7 +34,6 @@ export class SidebarComponent {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/home']); // Redirect to home after logout
   }
 
   isLoggedIn(): boolean {
