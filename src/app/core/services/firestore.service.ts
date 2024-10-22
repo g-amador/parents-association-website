@@ -17,26 +17,6 @@ export class FirestoreService {
    */
   constructor(private firestore: AngularFirestore) { }
 
-  // Set an item in Firestore
-  setItem(key: string, value: any): Promise<void> {
-    return this.firestore.collection('items').doc(key).set(value);
-  }
-
-  // Get an item from Firestore
-  getItem(key: string): Observable<any> {
-    return this.firestore.collection('items').doc(key).valueChanges();
-  }
-
-  // Delete an item from Firestore
-  deleteItem(key: string): Promise<void> {
-    return this.firestore.collection('items').doc(key).delete();
-  }
-
-  // Get all items from Firestore
-  getAllItems(): Observable<any[]> {
-    return this.firestore.collection('items').valueChanges();
-  }
-
   /**
    * Add or update a contact by its key (e.g., 'contact-Assembly').
    *

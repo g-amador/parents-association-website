@@ -24,7 +24,7 @@ import { FirestoreService } from './firestore.service';
   providedIn: 'root',
 })
 export class AuthService {
-  // Key to store session data in LocalStorage or Firestore
+  // Key to store session data in LocalStorage
   private sessionKey = 'session';
 
   // Duration for session timeout in milliseconds (1 hour)
@@ -44,8 +44,8 @@ export class AuthService {
     },
   ];
 
-  // Storage service which points to either LocalStorage or Firestore based on environment
-  private storageService: LocalStorageService | FirestoreService;
+  // Storage service which points to LocalStorage
+  private storageService: LocalStorageService;
 
   /**
    * Constructs an instance of AuthService.
@@ -59,8 +59,7 @@ export class AuthService {
     private localStorageService: LocalStorageService
   ) {
     // Choose the appropriate storage service based on environment
-    this.storageService =
-      environment.production ? new FirestoreService(firestore) : localStorageService;
+    this.storageService = localStorageService;
   }
 
   /**
@@ -78,7 +77,7 @@ export class AuthService {
     if (user) {
       // Store user session with login time
       const session = { email, loginTime: new Date().getTime() };
-      await this.storageService.setItem(this.sessionKey, session);
+      this.storageService.setItem(this.sessionKey, session);
       return true;
     }
     return false;
@@ -89,18 +88,21 @@ export class AuthService {
    * @returns {boolean} - Returns true if the user is authenticated, otherwise false.
    */
   isAuthenticated(): boolean {
+    // Retrieve the session data using the current storage service
     const session = this.storageService.getItem(this.sessionKey);
+
+    // If no session exists, the user is not authenticated
     if (!session) return false;
 
     const now = new Date().getTime();
 
     // Check if session has expired
     if (now - session.loginTime > this.sessionTimeout) {
-      this.logout();
+      this.logout(); // Logout the user if the session has expired
       return false;
     }
 
-    return true;
+    return true; // User is authenticated if session is valid
   }
 
   /**
