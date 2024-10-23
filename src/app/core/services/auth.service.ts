@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { HttpClient } from '@angular/common/http';
+
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from './local-storage.service';
 import { FirestoreService } from './firestore.service';
+import { User } from '../../shared/models/user.model';
 
 /**
  * AuthService is responsible for managing user authentication, including login, logout,
@@ -30,66 +32,87 @@ export class AuthService {
   // Duration for session timeout in milliseconds (1 hour)
   private sessionTimeout = 3600 * 1000;
 
-  // Hardcoded users for demonstration (email, hashed password, recovery password)
-  private users = [
-    {
-      email: 'sandrina.vln@gmail.com',
-      password: '94e778367a46645e4983cd601250878cd1b52898eaf5b87931df4965499a7aa0',
-      recoveryPassword: 'cfcca858254bb077157938180bbe7c778386377f208778528cbacf45e4e392bb',
-    },
-    {
-      email: 'g.n.p.amador@gmail.com',
-      password: 'c01e3c64bba84b237b505e601247050c5062bbb6b7bf95eb7ce83b465d32d812',
-      recoveryPassword: 'cfcca858254bb077157938180bbe7c778386377f208778528cbacf45e4e392bb',
-    },
-  ];
-
-  // Storage service which points to LocalStorage
-  private storageService: LocalStorageService;
+  // Hardcoded users (email, hashed password, recovery password)
+  private users: any[] = []; // Initialize as an empty array
 
   /**
    * Constructs an instance of AuthService.
+   *
+   * @param {HttpClient} http - The HttpClient service for making HTTP requests.
    * @param {Router} router - Angular Router to handle navigation.
-   * @param {AngularFirestore} firestore - Firestore instance for database operations.
+   * @param {FirestoreService} firestoreService - Service to handle Firestore operations.
    * @param {LocalStorageService} localStorageService - Service to handle LocalStorage operations.
    */
   constructor(
+    private http: HttpClient,
     private router: Router,
-    private firestore: AngularFirestore,
+    private firestoreService: FirestoreService,
     private localStorageService: LocalStorageService
   ) {
-    // Choose the appropriate storage service based on environment
-    this.storageService = localStorageService;
+    this.loadUsers(); // Load users on service initialization
+  }
+
+  /**
+   * Load users from the `users.json` file.
+   */
+  private loadUsers(): void {
+    this.http.get<User[]>('/assets/data/users.json').subscribe(
+      (data) => {
+        this.users = data;
+      },
+      (error) => {
+        console.error('Error loading users:', error);
+      }
+    );
   }
 
   /**
    * Logs in a user with the provided email and password.
+   * If the user is hardcoded and not in Firestore, save the user in Firestore (production only).
+   *
    * @param {string} email - The user's email address.
    * @param {string} password - The user's password.
    * @returns {Promise<boolean>} - Returns true if login is successful, otherwise false.
    */
   async login(email: string, password: string): Promise<boolean> {
     const hashedPasswordInput = await this.hashPassword(password);
-    const user = this.users.find(
-      (u) => u.email === email && u.password === hashedPasswordInput
-    );
+    let storedPassword: string | null = null;
 
-    if (user) {
-      // Store user session with login time
+    if (environment.production) {
+      storedPassword = await this.firestoreService.getUserPassword(email);
+
+      // If not found in Firestore, check the hardcoded users
+      if (!storedPassword) {
+        const user = this.findUserByEmail(email);
+        if (user && user.password === hashedPasswordInput) {
+          // Store the user in Firestore
+          await this.firestoreService.updateUserPassword(email, user.password);
+          storedPassword = user.password;
+        }
+      }
+    } else {
+      const user = this.findUserByEmail(email);
+      storedPassword = user ? user.password : null;
+    }
+
+    // Login logic
+    if (storedPassword && storedPassword === hashedPasswordInput) {
       const session = { email, loginTime: new Date().getTime() };
-      this.storageService.setItem(this.sessionKey, session);
+      this.localStorageService.setItem(this.sessionKey, session);
       return true;
     }
+
     return false;
   }
 
   /**
    * Checks if the user is authenticated based on the session data.
+   *
    * @returns {boolean} - Returns true if the user is authenticated, otherwise false.
    */
   isAuthenticated(): boolean {
-    // Retrieve the session data using the current storage service
-    const session = this.storageService.getItem(this.sessionKey);
+    // Retrieve the session data using the local storage service
+    const session = this.localStorageService.getItem(this.sessionKey);
 
     // If no session exists, the user is not authenticated
     if (!session) return false;
@@ -108,10 +131,11 @@ export class AuthService {
   /**
    * Logs out the user and clears the session data.
    * Redirects to the home page after logout.
-   * @returns {Promise<void>} - A promise that resolves when the logout is complete.
+   *
+   * @returns {void}
    */
-  async logout(): Promise<void> {
-    await this.storageService.deleteItem(this.sessionKey);
+  logout(): void {
+    this.localStorageService.deleteItem(this.sessionKey);
     this.router.navigate(['/home']); // Redirect to home page after logout
   }
 
@@ -130,9 +154,10 @@ export class AuthService {
   }
 
   /**
-   * Finds a user by their email address for recovery.
+   * Helper function to find a user by email in hardcoded users.
+   *
    * @param {string} email - The user's email address.
-   * @returns {any} - Returns the user object if found, otherwise undefined.
+   * @returns {any} - The user object if found, otherwise null.
    */
   findUserByEmail(email: string): any {
     return this.users.find((user) => user.email === email);
@@ -140,6 +165,8 @@ export class AuthService {
 
   /**
    * Verifies the recovery password for a given email.
+   * Recovery password is hardcoded and always valid.
+   *
    * @param {string} email - The user's email address.
    * @param {string} recoveryPassword - The recovery password to verify.
    * @returns {Promise<boolean>} - Returns true if the recovery password is valid, otherwise false.
@@ -154,6 +181,8 @@ export class AuthService {
 
   /**
    * Sets a new password for the user using their recovery information.
+   * Updates the password in Firestore if in production.
+   *
    * @param {string} email - The user's email address.
    * @param {string} newPassword - The new password to set.
    * @returns {Promise<boolean>} - Returns true if the password was successfully updated, otherwise false.
@@ -163,7 +192,12 @@ export class AuthService {
     if (!user) return false;
 
     const hashedPassword = await this.hashPassword(newPassword);
-    user.password = hashedPassword; // Update the user's password with the new hashed password
+    user.password = hashedPassword; // Update hardcoded user
+
+    // If in production, update Firestore
+    if (environment.production) {
+      await this.firestoreService.updateUserPassword(email, hashedPassword);
+    }
 
     return true;
   }
