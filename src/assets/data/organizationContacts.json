@@ -1,0 +1,57 @@
+[
+  {
+    "role": "organization_page.direction.president",
+    "name": "Sandrina Timóteo",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.vice_president",
+    "name": "Raquel Filipe",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.secretary",
+    "name": "Cecília Gaspar",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.treasury",
+    "name": "Fernando Antono",
+    "image": ""
+  },
+  {
+    "role": "organization_page.direction.vowel",
+    "name": "André Machado",
+    "image": ""
+  },
+  {
+    "role": "organization_page.assembly.president",
+    "name": "Marta Ribeiro da Silva",
+    "image": ""
+  },
+  {
+    "role": "organization_page.assembly.first_secretary",
+    "name": "",
+    "image": ""
+  },
+  {
+    "role": "organization_page.assembly.second_secretary",
+    "name": "Gonçalo Amador",
+    "image": ""
+  },
+  {
+    "role": "organization_page.fiscal_council.president",
+    "name": "Soraia Lobo",
+    "image": ""
+  },
+  {
+    "role": "organization_page.fiscal_council.vowel",
+    "name": "Moisés Garcia",
+    "image": ""
+  },
+  {
+    "role": "organization_page.fiscal_council.vowel",
+    "name": "Luisa Filipe",
+    "image": ""
+  }
+]

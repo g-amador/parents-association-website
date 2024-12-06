@@ -1,0 +1,130 @@
+{
+  "home": "Início",
+  "organization": "Organização",
+  "news": "Notícias ou Informações",
+  "calendar": "Calendário",
+  "contacts": "Contactos Importantes",
+  "support": "Suporte",
+  "auth": {
+    "login": "Entrar",
+    "logout": "Sair",
+    "email": "Email",
+    "password": "Senha",
+    "new_password": "Nova Senha",
+    "recovery_password": "Senha de Recuperação",
+    "password_recovery": "Recuperação de Senha",
+    "forgot_password": "Esqueceu a Senha?",
+    "access_account": "Acesse sua conta",
+    "enter_recovery_password": "Insira sua senha de recuperação",
+    "verify_recovery_password": "Verificar Senha de Recuperação",
+    "set_new_password": "Definir Nova Senha",
+    "password_updated": "Senha atualizada com sucesso",
+    "back_to_login": "Voltar para entrar",
+    "error": {
+      "valid_email": "Por favor, insira um email válido.",
+      "enter_password": "Por favor, insira sua senha.",
+      "invalid_email_password": "Email ou senha inválidos. Por favor, tente novamente.",
+      "invalid_recovery_password": "Senha de recuperação inválida. Por favor, tente novamente.",
+      "email_not_found": "Email não encontrado. Por favor, verifique e tente novamente."
+    }
+  },
+  "home_page": {
+    "welcome": "Bem-vindo à página inicial!",
+    "upcoming_events": "Próximos Eventos",
+    "no_upcoming_events": "Nenhum evento futuro disponível no momento"
+  },
+  "organization_page": {
+    "members": "Membros da Organização",
+    "direction": "Direção",
+    "direction.president": "Presidente",
+    "direction.vice_president": "Vice Presidente",
+    "direction.secretary": "Secretário(a)",
+    "direction.treasury": "Tesoureiro(a)",
+    "direction.vowel": "Vogal",
+    "assembly": "Mesa da Assembleia",
+    "assembly.president": "Presidente",
+    "assembly.first_secretary": "1º Secretário(a)",
+    "assembly.second_secretary": "2º Secretário(a)",
+    "fiscal_council": "Conselho Fiscal",
+    "fiscal_council.president": "Presidente",
+    "fiscal_council.vowel": "Vogal",
+    "role": "Cargo",
+    "name": "Nome",
+    "phone_number": "Número de Telefone",
+    "change_image": "Alterar Imagem",
+    "edit_member_data": "Editar Dados do Membro"
+  },
+  "news_page": {
+    "latest_news": "Últimas Notícias/Informações",
+    "recent_news": "Notícias/Informações Recentes",
+    "no_latest_news": "Nenhunas Notícias/Informações",
+    "no_recent_news": "Nenhunas Notícias/Informações Recentes",
+    "archive": {
+      "title": "Arquivo",
+      "clear": "Limpar Arquivo"
+    },
+    "article": {
+      "title": "Título do Artigo",
+      "content": "Conteúdo",
+      "add": "Adicionar Artigo",
+      "edit": "Editar Artigo",
+      "delete": "Apagar Artigo",
+      "error_title": "Título é campo obrigatório!"
+    }
+  },
+  "calendar_page": {
+    "legend": "Legenda",
+    "today": "Hoje",
+    "holiday": "Feriado",
+    "event": {
+      "event": "Evento",
+      "title": "Título do Evento",
+      "add": "Adicionar Evento",
+      "edit": "Editar Evento",
+      "cancel": "Cancelar Evento",
+      "date": "Data do Evento",
+      "description": "Descrição",
+      "enter_title": "Introduza o Título do Evento",
+      "choose_date": "Escolha a data",
+      "enter_description": "Introduza a Descrição do Evento",
+      "no_events": "Nenhum Evento"
+    },
+    "months": [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro"
+    ],
+    "weekdays": [
+      "Dom",
+      "Seg",
+      "Ter",
+      "Qua",
+      "Qui",
+      "Sex",
+      "Sáb"
+    ]
+  },
+  "contacts_page": {
+    "parents_association": "Associação de Pais",
+    "president_parents_association": "Presidente da Associação de Pais",
+    "school_general_and_1st_year": "Geral/1º Ciclo",
+    "school_ji": "Jardim de Infãncia",
+    "marrocos_farm": "Quinta de Marrocos",
+    "marrocos_farm_secretary": "Quinta de Marrocos Secretaria",
+    "education_office_jfb": "Gabinete de Educação JFB",    
+    "edit_contact": "Editar Contacto"
+  },
+  "dialog": {
+    "cancel": "Cancelar",
+    "save": "Salvar"
+  }
+}
