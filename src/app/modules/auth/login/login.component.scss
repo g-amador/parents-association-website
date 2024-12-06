@@ -1,0 +1,31 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // Full height for centering
+  background-color: #f5f5f5; // Light background color
+}
+
+mat-card {
+  width: 300px; // Card width
+  padding: 20px; // Inner padding
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); // Card shadow
+  border-radius: 8px; // Slightly rounded corners
+}
+
+mat-card-title {
+  font-size: 24px; // Title size
+  font-weight: 600; // Bold title
+}
+
+mat-card-subtitle {
+  font-size: 14px; // Subtitle size
+  color: #666; // Lighter color
+}
+
+button {
+  width: 40%; // Full width button
+  margin-top: 20px; // Space above button
+  padding: 10px; // Button padding
+  font-size: 16px; // Larger font size for button
+}
