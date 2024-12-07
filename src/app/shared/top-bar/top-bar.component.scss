@@ -1,0 +1,48 @@
+.top-bar {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+
+  .menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    .menu-item {
+      position: relative;
+      margin-right: 20px;
+
+      a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        display: block;
+      }
+
+      .dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #444;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        a {
+          display: block;
+          padding: 10px;
+          text-decoration: none;
+          color: white;
+
+          &:hover {
+            background-color: #555;
+          }
+        }
+      }
+
+      &:hover .dropdown {
+        display: block;
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'activity/news-and-information', component: NewsAndInformationComponent },
   { path: 'activity/protocols', component: ProtocolsComponent },
   { path: 'legislation', component: LegislationComponent },
-  { path: 'contacts', component: LegislationComponent },
+  { path: 'contacts', component: ContactsComponent },
 
   // Admin hidden route redirects to login
   { path: 'admin', redirectTo: 'auth/login', pathMatch: 'full' }, // Redirect /admin to /auth/login
