@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ 'contacts_page.edit_contact' | translate }}</h2>
+
+<mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="contact.name" [ngModelOptions]="{standalone: true}"> <!-- Nullable -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="contact.email" type="email" [ngModelOptions]="{standalone: true}"> <!-- Nullable -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Phone</mat-label>
+      <input matInput [(ngModel)]="contact.phone" type="tel" [ngModelOptions]="{standalone: true}"> <!-- Nullable -->
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="cancel" (click)="cancel()">{{ 'dialog.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="save()">{{ 'dialog.save' | translate }}</button>
+</mat-dialog-actions>

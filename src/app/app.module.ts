@@ -27,6 +27,7 @@ import { NewsAndInformationComponent } from './modules/activity/news-and-informa
 import { ProtocolsComponent } from './modules/activity/protocols/protocols.component';
 import { LegislationComponent } from './modules/legislation/legislation.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
+import { EditContactDialogComponent } from './modules/contacts/edit-contact-dialog/edit-contact-dialog.component';
 import { PasswordRecoveryComponent } from './modules/auth/password-recovery/password-recovery.component';
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
@@ -55,6 +56,7 @@ import { MatRippleModule } from '@angular/material/core';
     ProtocolsComponent,
     LegislationComponent,
     ContactsComponent,
+    EditContactDialogComponent,
     QuillEditorComponent,
     LanguageSwitcherComponent,
     OrderByPipe,

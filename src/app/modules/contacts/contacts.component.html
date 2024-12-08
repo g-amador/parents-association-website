@@ -1,2 +1,13 @@
 <app-top-bar></app-top-bar>
-<p>contacts works!</p>
+<div class="contacts-container">
+  <div class="content-container">
+    <ul>
+      <li *ngFor="let contact of contacts" (click)="openEditDialog(contact)" class="contact-item">
+        <strong>{{ contact.role | translate }}</strong>
+        <span *ngIf="contact.name">: {{ contact.name }}</span>
+        <span *ngIf="contact.phone"> - {{ contact.phone }}</span>
+        <span *ngIf="contact.email"> - <a [href]="'mailto:' + contact.email">{{ contact.email }}</a></span>
+      </li>
+    </ul>
+  </div>
+</div>
