@@ -1,11 +1,34 @@
 <nav class="top-bar">
   <ul class="menu">
     <li class="menu-item">
-      <a href="#">Menu</a>
+      <a routerLink="/" [class.active]="selectedLink === 'home'">
+        <i class="fa fa-home"></i><span class="sidebar-text">{{ 'home' | translate }}</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#">Who are we?</a>
       <div class="dropdown">
-        <a routerLink="/page-one">Page One</a>
-        <a routerLink="/page-two">Page Two</a>
+        <a routerLink="/who-are-we/governing-bodies">{{ 'governing-bodies' | translate }}</a>
+        <a routerLink="/who-are-we/statutes">{{ 'statutes' | translate }}</a>
       </div>
+    </li>
+    <li class="menu-item">
+      <a href="#">Activity</a>
+      <div class="dropdown">
+        <a routerLink="/activity/events">{{ 'events' | translate }}</a>
+        <a routerLink="/activity/news-and-information">{{ 'news-and-information' | translate }}</a>
+        <a routerLink="/activity/protocols">{{ 'protocols' | translate }}</a>
+      </div>
+    </li>
+    <li class="menu-item">
+      <a routerLink="/legislation" [class.active]="selectedLink === 'legislation'">
+        <i class="fa fa-address-book"></i><span class="sidebar-text">{{ 'legislation' | translate }}</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a routerLink="/contacts" [class.active]="selectedLink === 'contacts'">
+        <i class="fa fa-address-book"></i><span class="sidebar-text">{{ 'contacts' | translate }}</span>
+      </a>
     </li>
   </ul>
 </nav>
