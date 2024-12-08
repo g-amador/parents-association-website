@@ -1,27 +1,23 @@
 .language-switcher {
   position: fixed; /* Fixes the switcher to the top of the page */
-  top: 0; /* Adjust top position as needed */
-  left: calc(160px + 20px); /* Adjust left position based on sidebar width */
-  width: calc(100% - 160px - 20px); /* Full width minus sidebar width */
+  top: 10px; /* Keeps close to the top */
+  left: 0; /* Start from the far left of the screen */
+  width: 100%; /* Take the full width of the viewport */
   display: flex; /* Enable flexbox for alignment */
-  align-items: center; /* Aligns the logo and buttons vertically */
-  justify-content: space-between; /* Space out items to the edges */
+  align-items: center; /* Aligns logo and buttons vertically */
+  justify-content: space-between; /* Space out items to edges */
   z-index: 1000; /* Ensure it appears above other components */
-  height: 120px; /* Set a height for the top bar */
-  background-color: rgba(255, 255, 255, 0); /* Set transparent background color */
-  padding: 0 20px; /* Add some horizontal padding for spacing */
-
-  &.sidebar-closed {
-    left: calc(35px + 20px); /* Change left position when sidebar is closed */
-    width: calc(100% - 35px - 20px); /* Adjust width based on closed sidebar */
-  }
+  height: 120px; /* Set height for the top bar */
+  background-color: rgba(255, 255, 255, 0); /* Transparent background */
+  padding: 0 20px; /* Horizontal padding for spacing */
 }
 
 .language-buttons {
+  position: relative; /* Allows fine-tuning of button positions */
+  margin-left: auto; /* Push the buttons to the far right */
   display: flex; /* Use flexbox to keep buttons aligned */
-  gap: 10px; /* Ensure no gap between buttons */
-  align-items: center; /* Aligns buttons vertically */
-  padding-right: 40px;
+  gap: 1px; /* Space between the buttons */
+  padding-right: 50px; /* Add some padding from the edge of the viewport */
 }
 
 .language-button {
@@ -33,9 +29,9 @@
 }
 
 .fi {
-  font-size: 30px; /* Adjust size as needed */
+  font-size: 25px; /* Icon size */
   vertical-align: middle;
-  transition: transform 0.3s ease; /* Add transition for smooth scaling */
+  transition: transform 0.3s ease; /* Smooth scaling on hover */
 }
 
 /* Hover effect for the icons */
@@ -44,5 +40,14 @@
 }
 
 .logo {
-  height: 90px; /* Adjust height as needed */
+  height: 70px; /* Adjust logo height */
+}
+
+/* Fine-tune the position of specific language buttons */
+.language-button:nth-child(1) {
+  margin-right: 10px; /* Additional spacing for the first button */
+}
+
+.language-button:nth-child(2) {
+  margin-left: 5px; /* Adjust spacing for the second button */
 }
