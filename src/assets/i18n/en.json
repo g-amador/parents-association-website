@@ -37,31 +37,8 @@
       "email_not_found": "Email not found. Please check and try again."
     }
   },
-
-  "contacts_page": {
-    "parents_association": "Parents Association",
-    "president_parents_association": "President of Parents Association",
-    "school_general_and_1st_year": "General and 1st year",
-    "school_ji": "Kindergarten",
-    "marrocos_farm": "Marrocos Farm",
-    "marrocos_farm_secretary": "Marrocos Farm Secretary",
-    "education_office_jfb": "Education Office JFB",
-    "edit_contact": "Edit Contact"
-  },
-  "dialog": {
-    "cancel": "Cancel",
-    "save": "Save"
-  },
-
-  "organization": "Organization",
-  "calendar": "Calendar",
-  "home_page": {
-    "welcome": "Welcome to the Home Page!",
-    "upcoming_events": "Upcoming Events",
-    "no_upcoming_events": "No upcoming events available at the moment."
-  },
-  "organization_page": {
-    "members": "Organization Members",
+  "governing-bodies_page": {
+    "members": "Governing Bodies Members",
     "direction": "Direction",
     "direction.president": "President",
     "direction.vice_president": "Vice President",
@@ -80,6 +57,27 @@
     "phone_number": "Phone Number",
     "change_image": "Change Image",
     "edit_member_data": "Edit Member Data"
+  },
+  "contacts_page": {
+    "parents_association": "Parents Association",
+    "president_parents_association": "President of Parents Association",
+    "school_general_and_1st_year": "General and 1st year",
+    "school_ji": "Kindergarten",
+    "marrocos_farm": "Marrocos Farm",
+    "marrocos_farm_secretary": "Marrocos Farm Secretary",
+    "education_office_jfb": "Education Office JFB",
+    "edit_contact": "Edit Contact"
+  },
+  "dialog": {
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+
+  "calendar": "Calendar",
+  "home_page": {
+    "welcome": "Welcome to the Home Page!",
+    "upcoming_events": "Upcoming Events",
+    "no_upcoming_events": "No upcoming events available at the moment."
   },
   "news_page": {
     "latest_news": "Latest News/Information",

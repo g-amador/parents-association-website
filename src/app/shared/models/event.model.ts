@@ -1,5 +1,5 @@
 /**
- * Represents an event in the organization.
+ * Represents an event.
  *
  * @interface Event
  */

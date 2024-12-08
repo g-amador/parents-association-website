@@ -1,0 +1,57 @@
+[
+  {
+    "role": "governing-bodies_page.direction.president",
+    "name": "Sandrina Timóteo",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.direction.vice_president",
+    "name": "Raquel Filipe",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.direction.secretary",
+    "name": "Cecília Gaspar",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.direction.treasury",
+    "name": "Fernando Antono",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.direction.vowel",
+    "name": "André Machado",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.assembly.president",
+    "name": "Marta Ribeiro da Silva",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.assembly.first_secretary",
+    "name": "",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.assembly.second_secretary",
+    "name": "Gonçalo Amador",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.fiscal_council.president",
+    "name": "Soraia Lobo",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.fiscal_council.vowel",
+    "name": "Moisés Garcia",
+    "image": ""
+  },
+  {
+    "role": "governing-bodies_page.fiscal_council.vowel",
+    "name": "Luisa Filipe",
+    "image": ""
+  }
+]

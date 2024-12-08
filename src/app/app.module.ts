@@ -21,6 +21,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { HomeComponent } from './modules/home/home.component';
 import { GoverningBodiesComponent } from './modules/who-are-we/governing-bodies/governing-bodies.component';
+import { EditGoverningBodiesContactDialogComponent } from './modules/who-are-we/governing-bodies/edit-governing-bodies-contact-dialog/edit-governing-bodies-contact-dialog.component';
 import { StatutesComponent } from './modules/who-are-we/statutes/statutes.component';
 import { EventsComponent } from './modules/activity/events/events.component';
 import { NewsAndInformationComponent } from './modules/activity/news-and-information/news-and-information.component';
@@ -50,6 +51,7 @@ import { MatRippleModule } from '@angular/material/core';
     TopBarComponent,
     HomeComponent,
     GoverningBodiesComponent,
+    EditGoverningBodiesContactDialogComponent,
     StatutesComponent,
     EventsComponent,
     NewsAndInformationComponent,

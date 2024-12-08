@@ -37,29 +37,7 @@
       "email_not_found": "Email não encontrado. Por favor, verifique e tente novamente."
     }
   },
-  "contacts_page": {
-    "parents_association": "Associação de Pais",
-    "president_parents_association": "Presidente da Associação de Pais",
-    "school_general_and_1st_year": "Geral/1º Ciclo",
-    "school_ji": "Jardim de Infãncia",
-    "marrocos_farm": "Quinta de Marrocos",
-    "marrocos_farm_secretary": "Quinta de Marrocos Secretaria",
-    "education_office_jfb": "Gabinete de Educação JFB",
-    "edit_contact": "Editar Contacto"
-  },
-  "dialog": {
-    "cancel": "Cancelar",
-    "save": "Salvar"
-  },
-
-  "organization": "Organização",
-  "calendar": "Calendário",
-  "home_page": {
-    "welcome": "Bem-vindo à página inicial!",
-    "upcoming_events": "Próximos Eventos",
-    "no_upcoming_events": "Nenhum evento futuro disponível no momento"
-  },
-  "organization_page": {
+  "governing-bodies_page": {
     "members": "Membros da Organização",
     "direction": "Direção",
     "direction.president": "Presidente",
@@ -79,6 +57,27 @@
     "phone_number": "Número de Telefone",
     "change_image": "Alterar Imagem",
     "edit_member_data": "Editar Dados do Membro"
+  },
+  "contacts_page": {
+    "parents_association": "Associação de Pais",
+    "president_parents_association": "Presidente da Associação de Pais",
+    "school_general_and_1st_year": "Geral/1º Ciclo",
+    "school_ji": "Jardim de Infãncia",
+    "marrocos_farm": "Quinta de Marrocos",
+    "marrocos_farm_secretary": "Quinta de Marrocos Secretaria",
+    "education_office_jfb": "Gabinete de Educação JFB",
+    "edit_contact": "Editar Contacto"
+  },
+  "dialog": {
+    "cancel": "Cancelar",
+    "save": "Salvar"
+  },
+
+  "calendar": "Calendário",
+  "home_page": {
+    "welcome": "Bem-vindo à página inicial!",
+    "upcoming_events": "Próximos Eventos",
+    "no_upcoming_events": "Nenhum evento futuro disponível no momento"
   },
   "news_page": {
     "latest_news": "Últimas Notícias/Informações",

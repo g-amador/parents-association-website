@@ -1,6 +1,10 @@
 .top-bar-container {
   display: flex;
   flex-direction: column;
+  position: sticky; /* Makes the container stick to the viewport */
+  top: 0; /* Ensures it stays at the top of the viewport */
+  z-index: 1000; /* Ensures it appears above other content */
+  width: 100%; /* Full width for the sticky element */
 }
 
 .top-bar {

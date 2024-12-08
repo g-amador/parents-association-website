@@ -1,11 +1,11 @@
 /**
- * Represents a contact in the organization.
+ * Represents a contact in the governing bodies.
  *
  * @interface Contact
  */
 export interface Contact {
   /**
-   * The role of the contact within the organization.
+   * The role of the contact within the governing bodies.
    * @type {string}
    */
   role: string;
