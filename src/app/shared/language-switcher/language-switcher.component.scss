@@ -6,7 +6,7 @@
   display: flex; /* Enable flexbox for alignment */
   align-items: center; /* Aligns logo and buttons vertically */
   justify-content: space-between; /* Space out items to edges */
-  z-index: 1000; /* Ensure it appears above other components */
+  //z-index: 1000; /* Ensure it appears above other components */
   height: 120px; /* Set height for the top bar */
   background-color: rgba(255, 255, 255, 0); /* Transparent background */
   padding: 0 20px; /* Horizontal padding for spacing */
@@ -34,16 +34,22 @@
   transition: transform 0.3s ease; /* Smooth scaling on hover */
 }
 
-/* Hover effect for the icons */
 .language-button:hover .fi {
   transform: scale(1.3); /* Enlarge the icon slightly */
 }
 
 .logo {
   height: 70px; /* Adjust logo height */
+  /* Adjust vertical position using Flexbox properties */
+  margin-top: -45px; /* Move the logo slightly up */
 }
 
-/* Fine-tune the position of specific language buttons */
+.language-buttons {
+  /* Adjust vertical spacing using Flexbox alignment */
+  align-items: flex-start; /* Align buttons closer to the top */
+  margin-top: -45px; /* Move the logo slightly up */
+}
+
 .language-button:nth-child(1) {
   margin-right: 10px; /* Additional spacing for the first button */
 }

@@ -1,10 +1,22 @@
 {
   "home": "Home",
+  "who-are-we": "Who are we?",
+  "activity": "Activity",
+  "legislation": "Legislation",
+  "contacts": "Contacts",
+  "be_a_member": "Be a Member",
+  "who-are-we_dropdown": {
+    "governing_bodies": "Governing Bodies",
+    "statutes": "Statutes"
+  },
+  "activity_dropdown": {
+    "events": "Events",
+    "news-and-information": "News and Information",
+    "protocols": "Protocolos"
+  },
+
   "organization": "Organization",
-  "news": "News or Information",
   "calendar": "Calendar",
-  "contacts": "Important Contacts",
-  "support": "Support",
   "auth": {
     "login": "Login",
     "logout": "Logout",
@@ -113,14 +125,14 @@
       "Sat"
     ]
   },
-  "contacts_page": {    
+  "contacts_page": {
     "parents_association": "Parents Association",
     "president_parents_association": "President of Parents Association",
     "school_general_and_1st_year": "General and 1st year",
     "school_ji": "Kindergarten",
     "marrocos_farm": "Marrocos Farm",
     "marrocos_farm_secretary": "Marrocos Farm Secretary",
-    "education_office_jfb": "Education Office JFB",    
+    "education_office_jfb": "Education Office JFB",
     "edit_contact": "Edit Contact"
   },
   "dialog": {

@@ -1,10 +1,22 @@
 {
   "home": "Início",
+  "who-are-we": "Quem somos?",
+  "activity": "Atividade",
+  "legislation": "Legislação",
+  "contacts": "Contactos",
+  "be_a_member": "Ser Associado",
+  "who-are-we_dropdown": {
+    "governing_bodies": "Orgãos Sociais",
+    "statutes": "Estatutos"
+  },
+  "activity_dropdown": {
+    "events": "Eventos",
+    "news-and-information": "Notícias e Informações",
+    "protocols": "Protocolos"
+  },
+
   "organization": "Organização",
-  "news": "Notícias ou Informações",
   "calendar": "Calendário",
-  "contacts": "Contactos Importantes",
-  "support": "Suporte",
   "auth": {
     "login": "Entrar",
     "logout": "Sair",
@@ -120,7 +132,7 @@
     "school_ji": "Jardim de Infãncia",
     "marrocos_farm": "Quinta de Marrocos",
     "marrocos_farm_secretary": "Quinta de Marrocos Secretaria",
-    "education_office_jfb": "Gabinete de Educação JFB",    
+    "education_office_jfb": "Gabinete de Educação JFB",
     "edit_contact": "Editar Contacto"
   },
   "dialog": {

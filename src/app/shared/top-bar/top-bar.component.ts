@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-bar',
@@ -7,16 +8,20 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./top-bar.component.scss']
 })
 export class TopBarComponent {
-  selectedLink: string | null = 'home'; // Default to 'home'
+  selectedLink: string | null = null;
+  selectedSubLink: string | null = null;
 
-  constructor(private authService: AuthService) { }
-
-  setSelectedLink(link: string): void {
-    console.log(link)
-    this.selectedLink = link;
-    // Optionally, trigger change detection if needed
-    // e.g., using ChangeDetectorRef or Angular's change detection system
-    // this.changeDetectorRef.detectChanges();  // Uncomment if using ChangeDetectorRef
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.router.events.subscribe(() => {
+      var url_split = this.router.url.split('/');
+      this.selectedLink = url_split[1];
+      if (url_split.length > 2) {
+        this.selectedSubLink = url_split[2];
+      }
+    });
   }
 
   logout() {

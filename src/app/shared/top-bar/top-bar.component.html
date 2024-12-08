@@ -3,8 +3,14 @@
     <ul class="menu">
       <li class="menu-item">
         <a href="mailto:g.n.p.amador@gmail.com">
-          <i class="fa fa-question-circle"></i>
-          <span class="sidebar-text">{{ 'support' | translate }}</span>
+          <i class="fa fa-handshake"></i>
+          <span class="sidebar-text">{{ 'be_a_member' | translate }}</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="mailto:apesalvadorampai@hotmail.com">
+          <i class="fa fa-envelope"></i>
+          <span class="sidebar-text">apesalvadorampai&#64;hotmail.com</span>
         </a>
       </li>
     </ul>
@@ -12,36 +18,59 @@
   <nav class="top-bar top-bar-2">
     <ul class="menu">
       <li class="menu-item">
-        <a routerLink="/" [ngClass]="{ 'active': selectedLink === 'home' }" (click)="setSelectedLink('home')">
+        <a routerLink="/" [ngClass]="{ 'active': selectedLink === 'home' }">
           <i class="fa fa-home"></i>
           <span class="sidebar-text">{{ 'home' | translate }}</span>
         </a>
       </li>
       <li class="menu-item">
-        <a routerLink="/who-are-we" [ngClass]="{ 'active': selectedLink === 'who-are-we' }" (click)="setSelectedLink('who-are-we')">
+        <a [ngClass]="{ 'active': selectedLink === 'who-are-we' }">
           <i class="fa fa-building"></i>
           <span class="sidebar-text">{{ 'who-are-we' | translate }}</span>
         </a>
         <div class="dropdown">
-          <a routerLink="/who-are-we/governing-bodies" [ngClass]="{ 'active': selectedLink === 'governing-bodies' }" (click)="setSelectedLink('governing-bodies')">{{ 'governing-bodies' | translate }}</a>
-          <a routerLink="/who-are-we/statutes" [ngClass]="{ 'active': selectedLink === 'statutes' }" (click)="setSelectedLink('statutes')">{{ 'statutes' | translate }}</a>
+          <a routerLink="/who-are-we/governing-bodies"
+            [ngClass]="{ 'active': selectedSubLink === 'governing-bodies' }">{{
+            'who-are-we_dropdown.governing_bodies' | translate }}</a>
+          <a routerLink="/who-are-we/statutes" [ngClass]="{ 'active': selectedSubLink === 'statutes' }">{{
+            'who-are-we_dropdown.statutes' |
+            translate }}</a>
         </div>
       </li>
       <li class="menu-item">
-        <a href="#">
+        <a [ngClass]="{ 'active': selectedLink === 'activity' }">
           <i class="fa fa-calendar"></i>
           <span class="sidebar-text">{{ 'activity' | translate }}</span>
         </a>
         <div class="dropdown">
-          <a routerLink="/activity/events" [ngClass]="{ 'active': selectedLink === 'events' }" (click)="setSelectedLink('events')">{{ 'events' | translate }}</a>
-          <a routerLink="/activity/news-and-information" [ngClass]="{ 'active': selectedLink === 'news-and-information' }" (click)="setSelectedLink('news-and-information')">{{ 'news-and-information' | translate }}</a>
-          <a routerLink="/activity/protocols" [ngClass]="{ 'active': selectedLink === 'protocols' }" (click)="setSelectedLink('protocols')">{{ 'protocols' | translate }}</a>
+          <a routerLink="/activity/events" [ngClass]="{ 'active': selectedSubLink === 'events' }">{{
+            'activity_dropdown.events' |
+            translate }}</a>
+          <a routerLink="/activity/news-and-information"
+            [ngClass]="{ 'active': selectedSubLink === 'news-and-information' }">{{
+            'activity_dropdown.news-and-information' | translate
+            }}</a>
+          <a routerLink="/activity/protocols" [ngClass]="{ 'active': selectedSubLink === 'protocols' }">{{
+            'activity_dropdown.protocols' |
+            translate }}</a>
         </div>
       </li>
       <li class="menu-item">
-        <a routerLink="/contacts" [ngClass]="{ 'active': selectedLink === 'contacts' }" (click)="setSelectedLink('contacts')">
+        <a routerLink="/legislation" [ngClass]="{ 'active': selectedLink === 'legislation' }">
+          <i class="fa fa-university"></i><span class="sidebar-text">{{ 'legislation' | translate }}</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a routerLink="/contacts" [ngClass]="{ 'active': selectedLink === 'contacts' }">
           <i class="fa fa-address-book"></i><span class="sidebar-text">{{ 'contacts' | translate }}</span>
         </a>
+      </li>
+      <li class="menu-item">
+        <div class="logout-container" *ngIf="isLoggedIn()">
+          <a (click)="logout()">
+            <i class="fa fa-sign-out"></i><span class="sidebar-text">{{ 'auth.logout' | translate }}</span>
+          </a>
+        </div>
       </li>
     </ul>
   </nav>
