@@ -1,48 +1,80 @@
+.top-bar-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .top-bar {
-  background-color: #333;
+  display: flex;
+  align-items: center;
   color: white;
+}
+
+.top-bar-1 {
+  background-color: #333;
+  padding-left: 50%;
+}
+
+.top-bar-2 {
+  background-color: #333;
+  padding-left: 30%;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-item {
+  position: relative;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.menu-item a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item i {
+  margin-right: 10px;
+}
+
+.menu-item .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #444;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item .dropdown a {
+  color: white;
+  text-decoration: none;
   padding: 10px;
+  display: block;
+}
 
-  .menu {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
+.menu-item .dropdown a:hover {
+  background-color: #555;
+}
 
-    .menu-item {
-      position: relative;
-      margin-right: 20px;
+.menu-item:hover {
+  background-color: #666; /* Lighter gray background color on hover */
+}
 
-      a {
-        color: white;
-        text-decoration: none;
-        padding: 10px 15px;
-        display: block;
-      }
+.menu-item:hover .dropdown {
+  display: block; /* Show dropdown on hover */
+}
 
-      .dropdown {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #444;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-        a {
-          display: block;
-          padding: 10px;
-          text-decoration: none;
-          color: white;
-
-          &:hover {
-            background-color: #555;
-          }
-        }
-      }
-
-      &:hover .dropdown {
-        display: block;
-      }
-    }
-  }
+.active {
+  background-color: #666; /* Gray background for active link */
+  color: white;
 }
