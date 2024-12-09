@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class TopBarComponent {
   selectedSubLink: string | null = null;
 
   constructor(
+    private translate: TranslateService,
     private authService: AuthService,
     private router: Router
   ) {
@@ -22,6 +24,10 @@ export class TopBarComponent {
         this.selectedSubLink = url_split[2];
       }
     });
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
   }
 
   logout() {

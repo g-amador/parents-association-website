@@ -1,3 +1,6 @@
+<div>
+  <img src="../../../assets/images/Logo/Logo-APJSS-Retangular-Reduz-Transp.png" alt="APJSS Logo" class="logo">
+</div>
 <div class="top-bar-container">
   <nav class="top-bar top-bar-1">
     <ul class="menu">
@@ -74,4 +77,12 @@
       </li>
     </ul>
   </nav>
+  <div class="language-buttons"> <!-- Wrap buttons in this div -->
+    <button (click)="switchLanguage('en')" class="language-button">
+      <span class="fi fi-gb" aria-label="English"></span>
+    </button>
+    <button (click)="switchLanguage('pt')" class="language-button">
+      <span class="fi fi-pt" aria-label="Portuguese"></span>
+    </button>
+  </div>
 </div>

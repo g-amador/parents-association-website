@@ -18,7 +18,6 @@ import { AuthService } from './core/services/auth.service';
 
 // Components
 import { LoginComponent } from './modules/auth/login/login.component';
-import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { HomeComponent } from './modules/home/home.component';
 import { GoverningBodiesComponent } from './modules/who-are-we/governing-bodies/governing-bodies.component';
 import { EditGoverningBodiesContactDialogComponent } from './modules/who-are-we/governing-bodies/edit-governing-bodies-contact-dialog/edit-governing-bodies-contact-dialog.component';
@@ -31,7 +30,9 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
 import { EditContactDialogComponent } from './modules/contacts/edit-contact-dialog/edit-contact-dialog.component';
 import { PasswordRecoveryComponent } from './modules/auth/password-recovery/password-recovery.component';
 import { QuillEditorComponent } from './shared/quill-editor/quill-editor.component';
+import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { LanguageSwitcherComponent } from './shared/language-switcher/language-switcher.component';
+import { UnderConstructionComponent } from './shared/under-construction/under-construction.component';
 import { OrderByPipe } from './shared/pipes/order-by.pipe';
 
 // Angular Material Modules
@@ -48,7 +49,6 @@ import { MatRippleModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
-    TopBarComponent,
     HomeComponent,
     GoverningBodiesComponent,
     EditGoverningBodiesContactDialogComponent,
@@ -57,13 +57,15 @@ import { MatRippleModule } from '@angular/material/core';
     NewsAndInformationComponent,
     ProtocolsComponent,
     LegislationComponent,
+    LoginComponent,
+    PasswordRecoveryComponent,
     ContactsComponent,
     EditContactDialogComponent,
     QuillEditorComponent,
+    TopBarComponent,
     LanguageSwitcherComponent,
-    OrderByPipe,
-    LoginComponent,
-    PasswordRecoveryComponent
+    UnderConstructionComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,
