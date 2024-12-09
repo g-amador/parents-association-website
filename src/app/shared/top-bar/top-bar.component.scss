@@ -16,18 +16,18 @@
   display: flex; // Flexbox layout
   align-items: center; // Vertically center the content
   color: white; // Text color
-  background-color: #333; // Dark background
+  background-color: #f1f1f1; // Dark background
   margin-left: -10px; // Ensure no margin is applied
 
   // First version of the top bar
   &.top-bar-1 {
-    background-color: #333; // Dark background
+    background-color: #f1f1f1; // Dark background
     padding-left: 46%; // Center content, adjusted for alignment
   }
 
   // Second version of the top bar
   &.top-bar-2 {
-    background-color: #333; // Dark background
+    background-color: #f1f1f1; // Dark background
     padding-left: 30%; // Center content, adjusted for alignment
   }
 }
@@ -49,7 +49,7 @@
 
     // Anchor links inside menu items
     a {
-      color: white; // Text color
+      color: black; // Text color
       text-decoration: none; // Remove underline
       padding: 10px 15px; // Add padding around the link
       display: flex; // Flexbox for alignment
@@ -66,25 +66,25 @@
       position: absolute; // Positioned relative to the menu item
       top: 100%; // Place below the menu item
       left: 0; // Align to the left edge
-      background-color: #444; // Dark background
+      background-color: #e1e0e0; // Dark background
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Add a shadow
 
       // Links inside the dropdown
       a {
-        color: white; // Text color
+        color: black; // Text color
         text-decoration: none; // Remove underline
         padding: 10px; // Padding around each dropdown link
         display: block; // Block layout for full clickable area
 
         &:hover {
-          background-color: #555; // Slightly lighter background on hover
+          background-color: lightblue; // Slightly lighter background on hover
         }
       }
     }
 
     // Hover effects for menu items
     &:hover {
-      background-color: #666; // Change background color on hover
+      background-color: lightblue; // Change background color on hover
 
       // Show the dropdown on hover
       .dropdown {
@@ -95,7 +95,7 @@
 
   // Active menu item
   .active {
-    background-color: #666; // Highlighted background
+    background-color: lightblue; // Highlighted background
     color: white; // Text color
   }
 }

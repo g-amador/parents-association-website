@@ -1,39 +1,53 @@
 /* Governing bodies component Styles */
-
-.title, .group-title {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.group-title {
-  margin-top: 20px;
-}
-
-.contact-row {
+.governing-bodies-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center; /* Center items horizontally */
-}
+  /* Maintain the flex layout */
+  margin: 0px; // Ensure no default margin for the body
+  padding-top: 10px; // Adjust this value to the height of the top-bar-container
+  padding-right: 100px; // Adjust this value to the height of the top-bar-container
+  //position: relative; /* Establish positioning context */
 
-.contact-card {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions for background color and scaling */
-
-  .image-container {
-    display: flex;
-    justify-content: center; /* Center image horizontally */
-    margin-bottom: 10px;
-  }
-
-  .contact-details {
+  .title,
+  .group-title {
     text-align: center;
+    margin-bottom: 40px;
   }
 
-  &:hover {
-    background-color: #e0f7fa; /* Light blue color */
-    transform: scale(1.02); /* Slightly scale up the card */
+  .group-title {
+    margin-top: 20px;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    /* Center items horizontally */
+  }
+
+  .contact-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.3s;
+    /* Smooth transitions for background color and scaling */
+
+    .image-container {
+      display: flex;
+      justify-content: center;
+      /* Center image horizontally */
+      margin-bottom: 10px;
+    }
+
+    .contact-details {
+      text-align: center;
+    }
+
+    &:hover {
+      background-color: #e0f7fa;
+      /* Light blue color */
+      transform: scale(1.02);
+      /* Slightly scale up the card */
+    }
   }
 }
