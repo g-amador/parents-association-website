@@ -3,14 +3,16 @@
   <div class="content-container">
     <h1 class="centered">{{ 'home_page.welcome' | translate }}</h1>
 
-    <!-- Title for Latest News Section -->
-    <h2 class="latest-news-title">{{ 'news-and-information_page.latest_news' | translate }}</h2>
+    <!-- Title for Latest News and Information Section -->
+    <h2 class="latest-news-and-information-title">{{ 'news-and-information_page.latest_news-and-information' | translate
+      }}</h2>
 
-    <div *ngIf="latestArticles.length > 0; else noLatestNews">
-      <!-- Carousel Container for Latest News -->
+    <div *ngIf="latestArticles.length > 0; else noLatestNewsAndInformation">
+      <!-- Carousel Container for Latest News and Information -->
       <div class="carousel-container">
         <div class="carousel">
-          <div class="carousel-item" *ngFor="let article of latestArticles; let i = index" [ngClass]="{'active': i === currentIndex}">
+          <div class="carousel-item" *ngFor="let article of latestArticles; let i = index"
+            [ngClass]="{'active': i === currentIndex}">
             <h3>{{ article.title }}</h3>
             <div [innerHTML]="article.content"></div>
             <small>{{ article.date }}</small>
@@ -23,13 +25,14 @@
 
         <!-- Dot Indicators -->
         <div class="carousel-indicators">
-          <span *ngFor="let article of latestArticles; let i = index" [ngClass]="{'active': i === currentIndex}" (click)="selectArticle(i)"></span>
+          <span *ngFor="let article of latestArticles; let i = index" [ngClass]="{'active': i === currentIndex}"
+            (click)="selectArticle(i)"></span>
         </div>
       </div>
     </div>
-    <ng-template #noLatestNews>
+    <ng-template #noLatestNewsAndInformation>
       <div class="no-content-message">
-        <p>{{ 'news-and-information_page.no_latest_news' | translate }}</p>
+        <p>{{ 'news-and-information_page.no_latest_news-and-information' | translate }}</p>
       </div>
     </ng-template>
 
@@ -39,7 +42,8 @@
     <!-- Carousel Container for Upcoming Events -->
     <div class="carousel-container" *ngIf="upcomingEvents.length > 0; else noEvents">
       <div class="carousel">
-        <div class="carousel-item" *ngFor="let event of upcomingEvents; let i = index" [ngClass]="{'active': i === currentEventIndex}">
+        <div class="carousel-item" *ngFor="let event of upcomingEvents; let i = index"
+          [ngClass]="{'active': i === currentEventIndex}">
           <h3>{{ event.title }}</h3>
           <div [innerHTML]="event.description"></div>
           <small>{{ event.date }}</small>
@@ -52,7 +56,8 @@
 
       <!-- Dot Indicators for Events -->
       <div class="carousel-indicators">
-        <span *ngFor="let event of upcomingEvents; let i = index" [ngClass]="{'active': i === currentEventIndex}" (click)="selectEvent(i)"></span>
+        <span *ngFor="let event of upcomingEvents; let i = index" [ngClass]="{'active': i === currentEventIndex}"
+          (click)="selectEvent(i)"></span>
       </div>
     </div>
 

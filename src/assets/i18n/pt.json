@@ -58,6 +58,24 @@
     "change_image": "Alterar Imagem",
     "edit_member_data": "Editar Dados do Membro"
   },
+  "news-and-information_page": {
+    "latest_news-and-information": "Últimas Notícias/Informações",
+    "recent_news-and-information": "Notícias/Informações Recentes",
+    "no_latest_news-and-information": "Nenhunas Notícias/Informações",
+    "no_recent_news-and-information": "Nenhunas Notícias/Informações Recentes",
+    "archive": {
+      "title": "Arquivo",
+      "clear": "Limpar Arquivo"
+    },
+    "article": {
+      "title": "Título do Artigo",
+      "content": "Conteúdo",
+      "add": "Adicionar Artigo",
+      "edit": "Editar Artigo",
+      "delete": "Apagar Artigo",
+      "error_title": "Título é campo obrigatório!"
+    }
+  },
   "contacts_page": {
     "parents_association": "Associação de Pais",
     "president_parents_association": "Presidente da Associação de Pais",
@@ -72,30 +90,11 @@
     "cancel": "Cancelar",
     "save": "Salvar"
   },
-
   "calendar": "Calendário",
   "home_page": {
     "welcome": "Bem-vindo à página inicial!",
     "upcoming_events": "Próximos Eventos",
     "no_upcoming_events": "Nenhum evento futuro disponível no momento"
-  },
-  "news_page": {
-    "latest_news": "Últimas Notícias/Informações",
-    "recent_news": "Notícias/Informações Recentes",
-    "no_latest_news": "Nenhunas Notícias/Informações",
-    "no_recent_news": "Nenhunas Notícias/Informações Recentes",
-    "archive": {
-      "title": "Arquivo",
-      "clear": "Limpar Arquivo"
-    },
-    "article": {
-      "title": "Título do Artigo",
-      "content": "Conteúdo",
-      "add": "Adicionar Artigo",
-      "edit": "Editar Artigo",
-      "delete": "Apagar Artigo",
-      "error_title": "Título é campo obrigatório!"
-    }
   },
   "calendar_page": {
     "legend": "Legenda",

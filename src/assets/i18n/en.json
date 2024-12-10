@@ -58,6 +58,24 @@
     "change_image": "Change Image",
     "edit_member_data": "Edit Member Data"
   },
+  "news-and-information_page": {
+    "latest_news-and-information": "Latest News/Information",
+    "recent_news-and-information": "Recent News/Information",
+    "no_latest_news-and-information": "No Latest News/Information",
+    "no_recent_news-and-information": "No Recent News/Information",
+    "archive": {
+      "title": "Archive",
+      "clear": "Clear Archive"
+    },
+    "article": {
+      "title": "Article Title",
+      "content": "Content",
+      "add": "Add Article",
+      "edit": "Edit Article",
+      "delete": "Delete Article",
+      "error_title": "Title is required!"
+    }
+  },
   "contacts_page": {
     "parents_association": "Parents Association",
     "president_parents_association": "President of Parents Association",
@@ -72,30 +90,11 @@
     "cancel": "Cancel",
     "save": "Save"
   },
-
   "calendar": "Calendar",
   "home_page": {
     "welcome": "Welcome to the Home Page!",
     "upcoming_events": "Upcoming Events",
     "no_upcoming_events": "No upcoming events available at the moment."
-  },
-  "news_page": {
-    "latest_news": "Latest News/Information",
-    "recent_news": "Recent News/Information",
-    "no_latest_news": "No Latest News/Information",
-    "no_recent_news": "No Recent News/Information",
-    "archive": {
-      "title": "Archive",
-      "clear": "Clear Archive"
-    },
-    "article": {
-      "title": "Article Title",
-      "content": "Content",
-      "add": "Add Article",
-      "edit": "Edit Article",
-      "delete": "Delete Article",
-      "error_title": "Title is required!"
-    }
   },
   "calendar_page": {
     "legend": "Legend",
