@@ -1,0 +1,30 @@
+<div class="archive-sidebar">
+  <h2>{{ 'news-and-information_page.archive.title' | translate }}</h2>
+  <div *ngFor="let year of archive | keyvalue">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ year.key }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let month of year.value | keyvalue">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ month.key }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let day of month.value | keyvalue">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ day.key }}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <ul>
+                <li *ngFor="let article of day.value | orderBy:'date'" (click)="selectArticle(article)">
+                  <strong>{{ article.title }}</strong>
+                </li>
+              </ul>
+            </mat-expansion-panel>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <button mat-raised-button color="warn" (click)="clearArchive()" *ngIf="isAdminRoute">{{ 'news-and-information_page.archive.clear' | translate }}</button>
+</div>
