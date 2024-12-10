@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  sidebarVisible = true; // Default to true, will adjust based on screen size
   latestArticles: Article[] = []; // Array to hold the latest articles
   upcomingEvents: Event[] = []; // Array to hold upcoming events
   currentIndex = 0; // Current index for the articles carousel
@@ -42,26 +41,10 @@ export class HomeComponent implements OnInit {
    * Lifecycle hook that is called after data-bound properties are initialized
    */
   public async ngOnInit() {
-    this.adjustSidebarVisibility(); // Adjust sidebar visibility based on screen width
     await this.loadLatestArticles(); // Load latest articles asynchronously
     await this.loadUpcomingEvents(); // Load upcoming events asynchronously
     this.startCarouselRotation(); // Start the article carousel rotation
     this.startEventCarouselRotation(); // Start the event carousel rotation
-  }
-
-  /**
-   * Adjusts the visibility of the sidebar based on the window width
-   */
-  public adjustSidebarVisibility() {
-    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
-  }
-
-  /**
-   * Toggles the visibility of the sidebar
-   * @param sidebarVisible Boolean indicating the desired visibility state
-   */
-  public toggleSidebarVisibility(sidebarVisible: boolean) {
-    this.sidebarVisible = sidebarVisible; // Set the sidebar visibility state
   }
 
   /**

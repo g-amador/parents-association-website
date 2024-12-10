@@ -47,12 +47,6 @@ describe('NewsAndInformationComponent', () => {
     expect(component.loadArticles).toHaveBeenCalled();
   });
 
-  it('should toggle sidebar visibility', () => {
-    component.sidebarVisible = false;
-    component.toggleSidebarVisibility(true);
-    expect(component.sidebarVisible).toBeTrue();
-  });
-
   it('should open edit article dialog for admins', () => {
     spyOn(component, 'openEditArticleDialog').and.callThrough();
     component.isAdminRoute = true;

@@ -34,16 +34,6 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should adjust sidebar visibility based on window size', () => {
-    spyOnProperty(window, 'innerWidth').and.returnValue(800);
-    component.adjustSidebarVisibility();
-    expect(component.sidebarVisible).toBeTrue();
-
-    spyOnProperty(window, 'innerWidth').and.returnValue(500);
-    component.adjustSidebarVisibility();
-    expect(component.sidebarVisible).toBeFalse();
-  });
-
   it('should load latest articles from local storage', async () => {
     const mockArticles: Article[] = [
       { id: '1', title: 'Article 1', content: 'Content 1', date: '2024-10-01' },

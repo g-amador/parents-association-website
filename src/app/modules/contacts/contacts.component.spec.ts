@@ -55,17 +55,6 @@ describe('ContactsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should adjust sidebar visibility based on window width', () => {
-    // Type assertion to 'any' allows us to manipulate window.innerWidth
-    (window as any).innerWidth = 800;
-    component.adjustSidebarVisibility();
-    expect(component.sidebarVisible).toBeTrue();
-
-    (window as any).innerWidth = 500;
-    component.adjustSidebarVisibility();
-    expect(component.sidebarVisible).toBeFalse();
-  });
-
   it('should load contacts from Firestore in production', async () => {
     spyOnProperty(environment, 'production').and.returnValue(true);
     mockFirestoreService.getAllContacts.and.returnValue(of(mockContacts));

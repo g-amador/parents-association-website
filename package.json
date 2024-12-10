@@ -23,6 +23,7 @@
     "@angular/router": "^18.2.13",
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.0",
+    "date-fns": "^4.1.0",
     "firebase": "^10.14.1",
     "flag-icons": "^7.2.3",
     "font-awesome": "^4.7.0",

@@ -37,6 +37,11 @@
       "email_not_found": "Email not found. Please check and try again."
     }
   },
+  "home_page": {
+    "welcome": "Welcome to the Home Page!",
+    "upcoming_events": "Upcoming Events",
+    "no_upcoming_events": "No upcoming events available at the moment."
+  },
   "governing-bodies_page": {
     "members": "Governing Bodies Members",
     "direction": "Direction",
@@ -58,45 +63,7 @@
     "change_image": "Change Image",
     "edit_member_data": "Edit Member Data"
   },
-  "news-and-information_page": {
-    "latest_news-and-information": "Latest News/Information",
-    "recent_news-and-information": "Recent News/Information",
-    "no_latest_news-and-information": "No Latest News/Information",
-    "no_recent_news-and-information": "No Recent News/Information",
-    "archive": {
-      "title": "Archive",
-      "clear": "Clear Archive"
-    },
-    "article": {
-      "title": "Article Title",
-      "content": "Content",
-      "add": "Add Article",
-      "edit": "Edit Article",
-      "delete": "Delete Article",
-      "error_title": "Title is required!"
-    }
-  },
-  "contacts_page": {
-    "parents_association": "Parents Association",
-    "president_parents_association": "President of Parents Association",
-    "school_general_and_1st_year": "General and 1st year",
-    "school_ji": "Kindergarten",
-    "marrocos_farm": "Marrocos Farm",
-    "marrocos_farm_secretary": "Marrocos Farm Secretary",
-    "education_office_jfb": "Education Office JFB",
-    "edit_contact": "Edit Contact"
-  },
-  "dialog": {
-    "cancel": "Cancel",
-    "save": "Save"
-  },
-  "calendar": "Calendar",
-  "home_page": {
-    "welcome": "Welcome to the Home Page!",
-    "upcoming_events": "Upcoming Events",
-    "no_upcoming_events": "No upcoming events available at the moment."
-  },
-  "calendar_page": {
+  "events_page": {
     "legend": "Legend",
     "today": "Today",
     "holiday": "Holiday",
@@ -136,5 +103,37 @@
       "Fri",
       "Sat"
     ]
+  },
+  "news-and-information_page": {
+    "latest_news-and-information": "Latest News/Information",
+    "recent_news-and-information": "Recent News/Information",
+    "no_latest_news-and-information": "No Latest News/Information",
+    "no_recent_news-and-information": "No Recent News/Information",
+    "archive": {
+      "title": "Archive",
+      "clear": "Clear Archive"
+    },
+    "article": {
+      "title": "Article Title",
+      "content": "Content",
+      "add": "Add Article",
+      "edit": "Edit Article",
+      "delete": "Delete Article",
+      "error_title": "Title is required!"
+    }
+  },
+  "contacts_page": {
+    "parents_association": "Parents Association",
+    "president_parents_association": "President of Parents Association",
+    "school_general_and_1st_year": "General and 1st year",
+    "school_ji": "Kindergarten",
+    "marrocos_farm": "Marrocos Farm",
+    "marrocos_farm_secretary": "Marrocos Farm Secretary",
+    "education_office_jfb": "Education Office JFB",
+    "edit_contact": "Edit Contact"
+  },
+  "dialog": {
+    "cancel": "Cancel",
+    "save": "Save"
   }
 }

@@ -23,6 +23,8 @@ import { GoverningBodiesComponent } from './modules/who-are-we/governing-bodies/
 import { EditGoverningBodiesContactDialogComponent } from './modules/who-are-we/governing-bodies/edit-governing-bodies-contact-dialog/edit-governing-bodies-contact-dialog.component';
 import { StatutesComponent } from './modules/who-are-we/statutes/statutes.component';
 import { EventsComponent } from './modules/activity/events/events.component';
+import { EditEventFormDialogComponent } from './modules/activity/events/edit-event-form-dialog/edit-event-form-dialog.component';
+import { ViewEventDialogComponent } from './modules/activity/events/view-event-dialog/view-event-dialog.component';
 import { NewsAndInformationComponent } from './modules/activity/news-and-information/news-and-information.component';
 import { EditArticleDialogComponent } from './modules/activity/news-and-information/edit-article-dialog/edit-article-dialog.component';
 import { NewsAndInformationArchiveSidebarComponent } from './modules/activity/news-and-information/news-and-information-archive-sidebar/news-and-information-archive-sidebar.component';
@@ -57,6 +59,8 @@ import { MatRippleModule } from '@angular/material/core';
     EditGoverningBodiesContactDialogComponent,
     StatutesComponent,
     EventsComponent,
+    EditEventFormDialogComponent,
+    ViewEventDialogComponent,
     NewsAndInformationComponent,
     EditArticleDialogComponent,
     NewsAndInformationArchiveSidebarComponent,

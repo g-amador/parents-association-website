@@ -1,0 +1,27 @@
+<h1 mat-dialog-title *ngIf="editMode">{{ 'events_page.event.edit' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="!editMode">{{ 'events_page.event.add' | translate }}</h1>
+
+<div mat-dialog-content [formGroup]="eventForm">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'events_page.event.title' | translate }}</mat-label>
+    <input matInput formControlName="title" placeholder="{{ 'events_page.event.enter_title' | translate }}">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'events_page.event.date' | translate }}</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date"
+      placeholder="{{ 'events.choose_a_date' | translate }}" [disabled]="editMode">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Use Reactive Forms Control for Quill Editor -->
+  <app-quill-editor formControlName="description"></app-quill-editor>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="cancel" (click)="onCancel()">{{ 'dialog.cancel' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="onCancelEvent()" *ngIf="data.events.length > 0">{{
+    'events_page.event.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSave()">{{ 'dialog.save' | translate }}</button>
+</div>

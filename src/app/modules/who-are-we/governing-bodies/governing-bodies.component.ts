@@ -15,8 +15,6 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./governing-bodies.component.scss']
 })
 export class GoverningBodiesComponent implements OnInit {
-
-  sidebarVisible = true; // Controls the visibility of the sidebar
   contacts: Contact[] = []; // Array to store the list of contacts
   isAdminRoute: boolean = false; // Flag to check if the route is admin
 
@@ -56,23 +54,12 @@ export class GoverningBodiesComponent implements OnInit {
    * @return void
    */
   public ngOnInit(): void {
-    this.adjustSidebarVisibility(); // Adjust sidebar visibility based on window size
     this.loadContacts(); // Load governing bodies contacts from storage or Firestore
 
     // Subscribe to route data to detect if the current route is admin
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
     });
-  }
-
-  /**
-   * Adjusts the visibility of the sidebar based on the window size.
-   * The sidebar is hidden for screens smaller than 768px.
-   *
-   * @return void
-   */
-  public adjustSidebarVisibility(): void {
-    this.sidebarVisible = window.innerWidth > 768;
   }
 
   /**

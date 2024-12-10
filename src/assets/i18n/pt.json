@@ -37,6 +37,11 @@
       "email_not_found": "Email não encontrado. Por favor, verifique e tente novamente."
     }
   },
+  "home_page": {
+    "welcome": "Bem-vindo à página inicial!",
+    "upcoming_events": "Próximos Eventos",
+    "no_upcoming_events": "Nenhum evento futuro disponível no momento"
+  },
   "governing-bodies_page": {
     "members": "Membros da Organização",
     "direction": "Direção",
@@ -58,45 +63,7 @@
     "change_image": "Alterar Imagem",
     "edit_member_data": "Editar Dados do Membro"
   },
-  "news-and-information_page": {
-    "latest_news-and-information": "Últimas Notícias/Informações",
-    "recent_news-and-information": "Notícias/Informações Recentes",
-    "no_latest_news-and-information": "Nenhunas Notícias/Informações",
-    "no_recent_news-and-information": "Nenhunas Notícias/Informações Recentes",
-    "archive": {
-      "title": "Arquivo",
-      "clear": "Limpar Arquivo"
-    },
-    "article": {
-      "title": "Título do Artigo",
-      "content": "Conteúdo",
-      "add": "Adicionar Artigo",
-      "edit": "Editar Artigo",
-      "delete": "Apagar Artigo",
-      "error_title": "Título é campo obrigatório!"
-    }
-  },
-  "contacts_page": {
-    "parents_association": "Associação de Pais",
-    "president_parents_association": "Presidente da Associação de Pais",
-    "school_general_and_1st_year": "Geral/1º Ciclo",
-    "school_ji": "Jardim de Infãncia",
-    "marrocos_farm": "Quinta de Marrocos",
-    "marrocos_farm_secretary": "Quinta de Marrocos Secretaria",
-    "education_office_jfb": "Gabinete de Educação JFB",
-    "edit_contact": "Editar Contacto"
-  },
-  "dialog": {
-    "cancel": "Cancelar",
-    "save": "Salvar"
-  },
-  "calendar": "Calendário",
-  "home_page": {
-    "welcome": "Bem-vindo à página inicial!",
-    "upcoming_events": "Próximos Eventos",
-    "no_upcoming_events": "Nenhum evento futuro disponível no momento"
-  },
-  "calendar_page": {
+  "events_page": {
     "legend": "Legenda",
     "today": "Hoje",
     "holiday": "Feriado",
@@ -136,5 +103,37 @@
       "Sex",
       "Sáb"
     ]
+  },
+  "news-and-information_page": {
+    "latest_news-and-information": "Últimas Notícias/Informações",
+    "recent_news-and-information": "Notícias/Informações Recentes",
+    "no_latest_news-and-information": "Nenhunas Notícias/Informações",
+    "no_recent_news-and-information": "Nenhunas Notícias/Informações Recentes",
+    "archive": {
+      "title": "Arquivo",
+      "clear": "Limpar Arquivo"
+    },
+    "article": {
+      "title": "Título do Artigo",
+      "content": "Conteúdo",
+      "add": "Adicionar Artigo",
+      "edit": "Editar Artigo",
+      "delete": "Apagar Artigo",
+      "error_title": "Título é campo obrigatório!"
+    }
+  },
+  "contacts_page": {
+    "parents_association": "Associação de Pais",
+    "president_parents_association": "Presidente da Associação de Pais",
+    "school_general_and_1st_year": "Geral/1º Ciclo",
+    "school_ji": "Jardim de Infãncia",
+    "marrocos_farm": "Quinta de Marrocos",
+    "marrocos_farm_secretary": "Quinta de Marrocos Secretaria",
+    "education_office_jfb": "Gabinete de Educação JFB",
+    "edit_contact": "Editar Contacto"
+  },
+  "dialog": {
+    "cancel": "Cancelar",
+    "save": "Salvar"
   }
 }

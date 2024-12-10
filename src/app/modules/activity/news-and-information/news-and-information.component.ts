@@ -16,11 +16,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class NewsAndInformationComponent implements OnInit {
   /**
-   * Determines whether the sidebar is visible.
-   */
-  sidebarVisible = true;
-
-  /**
    * Stores articles grouped by year and month.
    */
   archive: YearArticles = {};
@@ -83,29 +78,12 @@ export class NewsAndInformationComponent implements OnInit {
    * and loading articles. Also determines if the user is on an admin route.
    */
   ngOnInit() {
-    this.adjustSidebarVisibility();
     this.loadArticles();
 
     // Determine if the current route is for admins
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
     });
-  }
-
-  /**
-   * Adjusts sidebar visibility based on window width.
-   */
-  adjustSidebarVisibility() {
-    this.sidebarVisible = window.innerWidth > 768; // Adjust the breakpoint as needed
-  }
-
-  /**
-   * Toggles the visibility of the sidebar.
-   *
-   * @param sidebarVisible New visibility state for the sidebar.
-   */
-  toggleSidebarVisibility(sidebarVisible: boolean) {
-    this.sidebarVisible = sidebarVisible;
   }
 
   /**
