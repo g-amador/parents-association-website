@@ -7,7 +7,7 @@
     <!-- Latest news-and-information Carousel -->
     <h2 class="latest-news-and-information-title">{{ 'news-and-information_page.latest_news-and-information' | translate
       }}</h2>
-    <div *ngIf="latestArticles.length > 0; else noLatestNewsAndInformationAndInformation">
+    <div *ngIf="latestArticles.length > 0; else noLatestNewsAndInformation">
       <div class="carousel-wrapper">
         <div class="carousel-container">
           <div class="carousel">
@@ -58,7 +58,6 @@
   <!-- Button for adding new article -->
   <div class="add-article-container" *ngIf="isAdminRoute">
     <button mat-raised-button color="primary" (click)="openEditArticleDialog(null)">{{
-      'news-and-information_page.article.add' |
-      translate }}</button>
+      'news-and-information_page.article.add' | translate }}</button>
   </div>
 </div>

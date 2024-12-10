@@ -73,10 +73,8 @@
   /* Ensure 4 articles in a single row */
   gap: 20px;
   width: 75%;
-  /* Full width of the wrapper */
-  max-width: 75%;
-  /* Ensure it doesn’t exceed the width of the wrapper */
-  padding-left: 1%;
+  max-width: 75%; /* Full width of the wrapper */
+  padding-left: 1%; /* Ensure it doesn’t exceed the width of the wrapper */
 }
 
 .news-and-information-box {
