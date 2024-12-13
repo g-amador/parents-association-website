@@ -32,6 +32,8 @@
             "styles": [
               "src/styles.scss",
               "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css", // or 'quill.bubble.css'
               "@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": [],
