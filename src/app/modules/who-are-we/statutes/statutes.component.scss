@@ -1,0 +1,15 @@
+.statutes-container {
+  display: flex;
+  height: 80vh;
+  margin: 0px; // Ensure no default margin for the body
+  padding-top: 80px; // Adjust this value to the height of the top-bar-container
+  text-align: center;
+
+  // Styles for the iframe
+  .pdf-viewer {
+    width: 100%;
+    height: 600px;
+    border: none;
+    background-color: #f0f0f0; // Background color of the iframe
+  }
+}
