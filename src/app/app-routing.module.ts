@@ -10,6 +10,7 @@ import { NewsAndInformationComponent } from './modules/activity/news-and-informa
 import { ProtocolsComponent } from './modules/activity/protocols/protocols.component';
 import { LegislationComponent } from './modules/legislation/legislation.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
+import { BeAMemberComponent } from './modules/be-a-member/be-a-member.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'activity/protocols', component: ProtocolsComponent },
   { path: 'legislation', component: LegislationComponent },
   { path: 'contacts', component: ContactsComponent },
+  { path: 'be-a-member', component: BeAMemberComponent },
 
   // Admin hidden route redirects to login
   { path: 'admin', redirectTo: 'auth/login', pathMatch: 'full' }, // Redirect /admin to /auth/login
