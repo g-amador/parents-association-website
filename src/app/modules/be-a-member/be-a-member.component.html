@@ -1,0 +1,168 @@
+<app-top-bar></app-top-bar>
+<div class="be-a-member_page-container">
+  <div class="content-container">
+    <h1 class="centered">{{ 'be-a-member_page.registration-title' | translate }}</h1>
+    <h3 class="centered">{{ 'be-a-member_page.association-title' | translate }}</h3>
+
+    <form [formGroup]="membershipForm" (ngSubmit)="onSubmit()">
+      <!-- Personal Details -->
+      <div class="form-group">
+        <label for="name">{{ 'be-a-member_page.name-label' | translate }}</label>
+        <input id="name" formControlName="name" class="form-control"
+          placeholder="{{ 'be-a-member_page.name-placeholder' | translate }}" />
+        <div *ngIf="membershipForm.get('name')?.invalid && membershipForm.get('name')?.touched">
+          <small class="error-text">{{ 'be-a-member_page.name-error' | translate }}</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" id="father" formControlName="father"
+          [ngClass]="{'error': !membershipForm.get('father')?.valid && membershipForm.get('father')?.touched}" />
+        <label for="father">{{ 'be-a-member_page.father' | translate }} </label>
+        <input type="checkbox" id="father_in_law" formControlName="father_in_law"
+          [ngClass]="{'error': !membershipForm.get('father_in_law')?.valid && membershipForm.get('father_in_law')?.touched}" />
+        <label for="father_in_law">{{ 'be-a-member_page.father-in-law' | translate }} </label>
+        <input type="checkbox" id="mother" formControlName="mother"
+          [ngClass]="{'error': !membershipForm.get('mother')?.valid && membershipForm.get('mother')?.touched}" />
+        <label for="mother">{{ 'be-a-member_page.mother' | translate }} </label>
+        <input type="checkbox" id="mother_in_law" formControlName="mother_in_law"
+          [ngClass]="{'error': !membershipForm.get('mother_in_law')?.valid && membershipForm.get('mother_in_law')?.touched}" />
+        <label for="mother_in_law">{{ 'be-a-member_page.mother-in-law' | translate }} </label>
+        <input type="checkbox" id="legal_guardian" formControlName="legal_guardian"
+          [ngClass]="{'error': !membershipForm.get('legal_guardian')?.valid && membershipForm.get('legal_guardian')?.touched}" />
+        <label for="legal_guardian">{{ 'be-a-member_page.legal-guardian' | translate }}</label>
+        <div *ngIf="membershipForm.hasError('atLeastOneRequired') && membershipForm.get('father')?.touched">
+          <small class="error-text">{{ 'be-a-member_page.select-one' | translate }}</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">{{ 'be-a-member_page.phone-label' | translate }}</label>
+        <div class="phone-container">
+          <div class="phone-code">
+            <div class="phone-code-selected-option" (click)="toggleDropdown()">
+              <span [ngClass]="selectedFlagClass"></span> {{ selectedOption }}
+            </div>
+            <div class="phone-code-dropdown-options" *ngIf="dropdownOpen">
+              <div *ngFor="let option of options" (click)="selectOption(option)">
+                <span [ngClass]="option.flagClass"></span> {{ option.value }}
+              </div>
+            </div>
+          </div>
+          <input id="phone" formControlName="phone" class="form-control phone-input" type="tel" pattern="\d*"
+            placeholder="{{ 'be-a-member_page.phone-placeholder' | translate }}" />
+        </div>
+        <div *ngIf="membershipForm.get('phone')?.invalid && membershipForm.get('phone')?.touched">
+          <small class="error-text">{{ 'be-a-member_page.phone-error' | translate }}</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ 'be-a-member_page.email-label' | translate }}</label>
+        <input id="email" formControlName="email" class="form-control"
+          placeholder="{{ 'be-a-member_page.email-placeholder' | translate }}" />
+        <div *ngIf="membershipForm.get('email')?.invalid && membershipForm.get('email')?.touched">
+          <small class="error-text">{{ 'be-a-member_page.email-error' | translate }}</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">{{ 'be-a-member_page.address-label' | translate }}</label>
+        <textarea id="address" formControlName="address" class="form-control"
+          placeholder="{{ 'be-a-member_page.address-placeholder' | translate }}"></textarea>
+        <div *ngIf="membershipForm.get('address')?.invalid && membershipForm.get('address')?.touched">
+          <small class="error-text">{{ 'be-a-member_page.address-error' | translate }}</small>
+        </div>
+      </div>
+
+      <!-- Child Information -->
+      <h4>{{ 'be-a-member_page.student' | translate }}</h4>
+      <div class="form-group">
+        <label for="childName1">{{ 'be-a-member_page.child-name-label' | translate }}</label>
+        <input id="childName1" formControlName="childName1" class="form-control"
+          placeholder="{{ 'be-a-member_page.child-name-placeholder' | translate }}" />
+        <div *ngIf="membershipForm.get('childName1')?.invalid && membershipForm.get('childName1')?.touched">
+          <small class="error-text">{{ 'be-a-member_page.child-name-error' | translate }}</small>
+        </div>
+      </div>
+
+      <div class="form-group flex-group">
+        <div class="input-container">
+          <label for="year">{{ 'be-a-member_page.year-label' | translate }}</label>
+          <input id="year" formControlName="year1" class="form-control" type="text"
+            placeholder="{{ 'be-a-member_page.year-placeholder' | translate }}" />
+          <div *ngIf="membershipForm.get('year1')?.invalid && membershipForm.get('year1')?.touched">
+            <small class="error-text">{{ 'be-a-member_page.year-error' | translate }}</small>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <label for="class">{{ 'be-a-member_page.class-label' | translate }}</label>
+          <input id="class" formControlName="class1" class="form-control" type="text" maxlength="1"
+            placeholder="{{ 'be-a-member_page.class-placeholder' | translate }}" />
+          <div *ngIf="membershipForm.get('class1')?.invalid && membershipForm.get('class1')?.touched">
+            <small class="error-text">{{ 'be-a-member_page.class-error' | translate }}</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Authorizations -->
+      <h4>{{ 'be-a-member_page.authorizations' | translate }}</h4>
+      <div class="form-group">
+        <input type="checkbox" id="dataPolicy" formControlName="dataPolicy" />
+        <label for="dataPolicy">{{ 'be-a-member_page.data-policy' | translate }}</label>
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" id="thirdParty" formControlName="thirdParty" />
+        <label for="thirdParty">{{ 'be-a-member_page.third-party' | translate }}</label>
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" id="emailNotices" formControlName="emailNotices" />
+        <label for="emailNotices">{{ 'be-a-member_page.email-notices' | translate }}</label>
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" id="collaboration" formControlName="collaboration" />
+        <label for="collaboration">{{ 'be-a-member_page.collaboration' | translate }}</label>
+      </div>
+
+      <!-- Submission -->
+      <div class="form-group centered">
+        <div class="date-container">
+          <label for="date">{{ 'be-a-member_page.date-label' | translate }}</label>
+          <input id="date" formControlName="date" class="form-control" type="date" />
+          <div *ngIf="membershipForm.get('date')?.invalid && membershipForm.get('date')?.touched">
+            <small class="error-text">{{ 'be-a-member_page.date-error' | translate }}</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="additional-info">
+        <p>
+          {{ 'be-a-member_page.membership-fee-info' | translate }}
+        </p>
+
+        <p>{{ 'be-a-member_page.thank-you' | translate }}</p>
+
+        <h4>{{ 'be-a-member_page.privacy-policy' | translate }}</h4>
+        <p>{{ 'be-a-member_page.privacy-policy-text' | translate }}</p>
+
+        <p>{{ 'be-a-member_page.data-rights' | translate }}</p>
+        <ul>
+          <li>{{ 'be-a-member_page.data-rights-item1' | translate }}</li>
+          <li>{{ 'be-a-member_page.data-rights-item2' | translate }}</li>
+          <li>{{ 'be-a-member_page.data-rights-item3' | translate }}</li>
+        </ul>
+
+        <p>{{ 'be-a-member_page.data-rights-contact' | translate }}</p>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="membershipForm.invalid">{{
+        'be-a-member_page.submit' | translate }}</button>
+
+    </form>
+  </div>
+</div>

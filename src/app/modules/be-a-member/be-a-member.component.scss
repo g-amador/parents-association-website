@@ -1,0 +1,158 @@
+.be-a-member-container {
+  display: flex;
+  //height: 100vh;
+  margin: 0px; // Ensure no default margin for the body
+  padding-top: 100px; // Adjust this value to the height of the top-bar-container
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  box-sizing: border-box;
+}
+
+.content-container {
+  text-align: center;
+  width: 75%;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+h1,
+h3,
+h4 {
+  margin-bottom: 20px;
+}
+
+.phone-container {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  gap: 5px;
+}
+
+.phone-code {
+  position: relative;
+  display: inline-block;
+}
+
+.phone-code-selected-option {
+  padding: 10px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.phone-code-dropdown-options {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-height: 200px;
+  /* Set the maximum height */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.phone-code-dropdown-options div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.phone-code-dropdown-options div:hover {
+  background: #f0f0f0;
+}
+
+.phone-input {
+  max-width: 38%;
+}
+
+.input-container {
+  width: 48%;
+  /* Set both containers to take up almost equal space */
+}
+
+.input-container input {
+  width: 25%;
+  /* Ensure the inputs fill their containers */
+}
+
+.input-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.date-container {
+  flex: 1;
+  /* Make the input containers share equal space */
+  max-width: 18%;
+  /* Optional: Limit width to ensure they fit nicely side by side */
+}
+
+.date-container label {
+  display: block;
+  /* Ensure the label is on its own line */
+  margin-bottom: 5px;
+  /* Add spacing below the label */
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-group.flex-group {
+  display: flex;
+  justify-content: flex-start;
+  /* Align them to the start of the container */
+  gap: 5px;
+  /* Reduce the gap between the fields */
+}
+
+.additional-info {
+  margin-top: 20px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.additional-info h4 {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.additional-info p {
+  margin-bottom: 10px;
+}
+
+.additional-info ul {
+  margin: 10px 0 10px 20px;
+  padding: 0;
+  list-style-type: disc;
+}
+
+.additional-info a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.additional-info a:hover {
+  text-decoration: underline;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+}

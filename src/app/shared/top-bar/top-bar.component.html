@@ -5,7 +5,7 @@
   <nav class="top-bar top-bar-1">
     <ul class="menu">
       <li class="menu-item">
-        <a href="mailto:g.n.p.amador@gmail.com">
+        <a routerLink="/be-a-member" [ngClass]="{ 'active': selectedLink === 'be-a-member' }">
           <i class="fa fa-handshake"></i>
           <span class="sidebar-text">{{ 'be_a_member' | translate }}</span>
         </a>
