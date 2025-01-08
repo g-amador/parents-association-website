@@ -170,7 +170,7 @@
     "collaboration": "I am available to collaborate with the association.",
     "date-label": "Date",
     "date-error": "This field is required.",
-    "membership-fee-info": "The A.P.E.E.EB1/JI PJSS fee is annual (September to June) and is 5 euros. Membership is valid upon payment by cash, cheque, or bank transfer to NIB <strong>xxxxxxxxxxxxxxxxxxx</strong>. If paid by bank transfer, please send the proof of transfer to <a href=\"mailto:apesalvadorampai@hotmail.com\">apesalvadorampai&#64;hotmail.com</a>.",
+    "membership-fee-info": "The A.P.E.E.EB1/JI PJSS fee is annual (September to June) and is 5 euros. Membership is valid upon payment by cash, cheque, or bank transfer to NIB <strong>xxxxxxxxxxxxxxxxxxx</strong>. If paid by bank transfer, please send the proof of transfer to apesalvadorampai@hotmail.com</a>.",
     "thank-you": "Thank you for becoming a member!",
     "privacy-policy": "Privacy Policy and Personal Data Protection",
     "privacy-policy-text": "A.P.E.E.EB1/JI PJSS collects data only for the purpose of verifying the conditions for acquiring or maintaining membership and complying with legal obligations. We will keep your personal data only as long as necessary, according to our internal regulations.",
@@ -178,7 +178,7 @@
     "data-rights-item1": "Know and access the collected data and its usage;",
     "data-rights-item2": "Rectify their data by requesting updates or corrections;",
     "data-rights-item3": "Request their data be deleted.",
-    "data-rights-contact": "You can exercise your rights by contacting us at the above address or by email at <a href=\"mailto:apesalvadorampai@hotmail.com\">apesalvadorampai&#64;hotmail.com</a>.",
+    "data-rights-contact": "You can exercise your rights by contacting us at the above address or by email at apesalvadorampai@hotmail.com.",
     "submit": "Submit"
   },
   "dialog": {
