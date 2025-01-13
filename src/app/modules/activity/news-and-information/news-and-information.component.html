@@ -3,61 +3,37 @@
   <app-news-and-information-archive-sidebar [archive]="archive" (archiveCleared)="handleArchiveCleared()"
     (articleSelected)="handleArticleSelection($event)"></app-news-and-information-archive-sidebar>
   <div class="content-container">
-
-    <!-- Latest news-and-information Carousel -->
-    <h2 class="latest-news-and-information-title">{{ 'news-and-information_page.latest_news-and-information' | translate
-      }}</h2>
-    <div *ngIf="latestArticles.length > 0; else noLatestNewsAndInformation">
-      <div class="carousel-wrapper">
-        <div class="carousel-container">
-          <div class="carousel">
-            <div class="carousel-item" *ngFor="let article of latestArticles; let i = index"
-              (click)="handleArticleClick(article)" [ngClass]="{'active': i === currentIndex}">
-              <h3>{{ article.title }}</h3>
-              <div [innerHTML]="article.content"></div>
-              <small>{{ article.date }}</small>
-            </div>
-          </div>
-          <!-- Navigation Arrows -->
-          <button class="carousel-control prev" (click)="prevArticle()">&#10094;</button>
-          <button class="carousel-control next" (click)="nextArticle()">&#10095;</button>
-          <!-- Dot Indicators -->
-          <div class="carousel-indicators">
-            <span *ngFor="let article of latestArticles; let i = index" [ngClass]="{'active': i === currentIndex}"
-              (click)="onDotClick(i)"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <ng-template #noLatestNewsAndInformation>
-      <div class="no-content-message">
-        <p>{{ 'news-and-information_page.no_latest_news-and-information' | translate }}</p>
-      </div>
-    </ng-template>
-
-    <!-- Next 4 Articles in Boxes -->
+    <!-- Current and last 2 months Articles in Boxes -->
     <h2 class="recent-news-and-information-title">{{ 'news-and-information_page.recent_news-and-information' | translate
       }}</h2>
+
     <div *ngIf="recentArticles.length > 0; else noRecentNewsAndInformation">
       <div class="recent-news-and-information-grid">
-        <div class="news-and-information-box" *ngFor="let article of recentArticles"
+        <div class="news-and-information-box" *ngFor="let article of displayedArticles"
           (click)="handleArticleClick(article)">
           <h3>{{ article.title }}</h3>
           <div [innerHTML]="article.content"></div>
           <small>{{ article.date }}</small>
         </div>
       </div>
+
+      <!-- Pagination -->
+      <mat-paginator [length]="recentArticles.length" [pageSize]="pageSize" [pageIndex]="currentPage"
+        (page)="onPageChange($event)">
+      </mat-paginator>
     </div>
+
     <ng-template #noRecentNewsAndInformation>
       <div class="no-content-message">
         <p>{{ 'news-and-information_page.no_recent_news-and-information' | translate }}</p>
       </div>
     </ng-template>
-  </div>
 
-  <!-- Button for adding new article -->
-  <div class="add-article-container" *ngIf="isAdminRoute">
-    <button mat-raised-button color="primary" (click)="openEditArticleDialog(null)">{{
-      'news-and-information_page.article.add' | translate }}</button>
+    <!-- Button for adding new article -->
+    <div class="add-article-container" *ngIf="isAdminRoute">
+      <button mat-raised-button color="primary" (click)="openEditArticleDialog(null)">
+        {{ 'news-and-information_page.article.add' | translate }}
+      </button>
+    </div>
   </div>
 </div>

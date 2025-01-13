@@ -113,6 +113,10 @@
       "title": "Archive",
       "clear": "Clear Archive"
     },
+    "items_per_page": "Items per page",
+    "next_page": "Next page",
+    "previous_page": "Previous page",
+    "range_label": "of",
     "article": {
       "title": "Article Title",
       "content": "Content",

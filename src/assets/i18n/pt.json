@@ -113,6 +113,10 @@
       "title": "Arquivo",
       "clear": "Limpar Arquivo"
     },
+    "items_per_page": "Itens por página",
+    "next_page": "Próxima página",
+    "previous_page": "Página anterior",
+    "range_label": "de",
     "article": {
       "title": "Título do Artigo",
       "content": "Conteúdo",

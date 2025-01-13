@@ -252,7 +252,7 @@ export class LocalStorageService {
     return new Promise<void>((resolve, reject) => {
       try {
         const articles = this.getAllArticles();
-        const filteredArticles = articles.filter(a => a.title !== article.title && a.date !== article.date);
+        const filteredArticles = articles.filter(a => a.title !== article.title || a.date !== article.date);
         localStorage.setItem('articles', JSON.stringify(filteredArticles));
         console.log('Article successfully deleted from localStorage!');
         resolve();

@@ -49,6 +49,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
 
@@ -99,6 +100,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatDialogModule,
     MatExpansionModule,
     MatDatepickerModule,
+    MatPaginatorModule,
     MatNativeDateModule,
     MatRippleModule,
     // Conditionally initialize Firebase based on the environment

@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Article, YearArticles } from '../../../shared/models/article.model';
 import { EditArticleDialogComponent } from './edit-article-dialog/edit-article-dialog.component';
 import { ViewArticleDialogComponent } from './view-article-dialog/view-article-dialog.component';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
 import { FirestoreService } from '../../../core/services/firestore.service';
 import { environment } from '../../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-news-and-information',
@@ -15,15 +19,12 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./news-and-information.component.scss']
 })
 export class NewsAndInformationComponent implements OnInit {
+  @ViewChild(MatPaginator) matPaginator!: MatPaginator;
+
   /**
    * Stores articles grouped by year and month.
    */
   archive: YearArticles = {};
-
-  /**
-   * Holds the latest articles.
-   */
-  latestArticles: Article[] = [];
 
   /**
    * Holds recent articles, excluding the latest ones.
@@ -31,14 +32,24 @@ export class NewsAndInformationComponent implements OnInit {
   recentArticles: Article[] = [];
 
   /**
-   * Tracks the index of the current article in the carousel.
+   * Holds articles to display per page articles, excluding the latest ones.
    */
-  currentIndex: number = 0;
+  displayedArticles: Article[] = [];
 
   /**
    * Indicates whether the current route is for admin users.
    */
   isAdminRoute: boolean = false;
+
+  /**
+   * Current page.
+   */
+  currentPage: number = 0;
+
+  /**
+   * Number of articles per page.
+   */
+  pageSize: number = 8;
 
   // The service used for storing articles, chosen dynamically based on environment
   private articleService: LocalStorageService | FirestoreService;
@@ -65,7 +76,10 @@ export class NewsAndInformationComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private localStorageService: LocalStorageService,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private http: HttpClient,
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef,
   ) {
     // Dynamically choose between Firestore or LocalStorage based on environment
     this.articleService = environment.production && !environment.useLocalStorage
@@ -80,10 +94,53 @@ export class NewsAndInformationComponent implements OnInit {
   ngOnInit() {
     this.loadArticles();
 
+    // Set first translation to 'pt' and subscribe to language changes
+    this.translate.use('pt');
+    this.translate.onLangChange.subscribe(() => {
+      this.setPaginatorLabels();
+    });
+
     // Determine if the current route is for admins
     this.route.data.subscribe(data => {
       this.isAdminRoute = this.authService.isAuthenticated();
     });
+  }
+
+  // Function to update paginator labels based on selected language
+  private setPaginatorLabels() {
+    console.log("setPaginatorLabels")
+    console.log(this.translate);
+    console.log(this.matPaginator);
+
+    // Update the paginator labels using translations
+    this.translate.get('news-and-information_page.items_per_page').subscribe((translation: string) => {
+      this.matPaginator._intl.itemsPerPageLabel = translation;
+    });
+
+    this.translate.get('news-and-information_page.next_page').subscribe((translation: string) => {
+      this.matPaginator._intl.nextPageLabel = translation;
+    });
+
+    this.translate.get('news-and-information_page.previous_page').subscribe((translation: string) => {
+      this.matPaginator._intl.previousPageLabel = translation;
+    });
+
+    // Custom range label logic
+    this.translate.get('news-and-information_page.range_label').subscribe((translation: string) => {
+      this.matPaginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+        if (length === 0 || pageSize === 0) {
+          return `0 ${translation} ${length}`;
+        }
+        const startIndex = page * pageSize;
+        const endIndex = Math.min(startIndex + pageSize, length);
+        return `${startIndex + 1} – ${endIndex} ${translation} ${length}`;
+      };
+    });
+
+    // Notify Angular Material paginator to re-render the UI
+    this.matPaginator._intl.changes.next();
+
+    console.log(this.matPaginator);
   }
 
   /**
@@ -110,6 +167,13 @@ export class NewsAndInformationComponent implements OnInit {
     } else {
       this.openViewArticleDialog(article);
     }
+  }
+
+  /**
+   * Handles the action to clear the article archive.
+   */
+  handleArchiveCleared() {
+    this.clearArchive();
   }
 
   /**
@@ -179,8 +243,9 @@ export class NewsAndInformationComponent implements OnInit {
         await (this.articleService as FirestoreService).updateArticle(articleId, updatedArticle);
       }
     } else {
+      const { id, ...rest } = updatedArticle; // Remove `id`
       await (this.articleService as LocalStorageService).deleteArticle(original);
-      await (this.articleService as LocalStorageService).addArticle(updatedArticle);
+      await (this.articleService as LocalStorageService).addArticle(rest);
     }
   }
 
@@ -209,36 +274,111 @@ export class NewsAndInformationComponent implements OnInit {
 
     if (environment.production && !environment.useLocalStorage) {
       const articlesObservable = (this.articleService as FirestoreService).getAllArticles();
-      articlesObservable.subscribe((fetchedArticles) => {
-        articles = fetchedArticles;
+      articlesObservable.subscribe(async (fetchedArticles) => {
+        if (fetchedArticles.length === 0) {
+          articles = await this.loadArticlesFromJson();
+          this.saveArticlesToService(articles);
+        } else {
+          articles = fetchedArticles;
+        }
         this.processArticles(articles);
       });
     } else {
       articles = (this.articleService as LocalStorageService).getAllArticles();
+      if (articles.length === 0) {
+        articles = await this.loadArticlesFromJson();
+        this.saveArticlesToService(articles);
+      }
       this.processArticles(articles);
     }
   }
 
   /**
-   * Sorts articles and groups them by date.
+   * Loads articles from the `news.json` file.
+   *
+   * @returns A promise resolving to an array of articles.
+   */
+  private async loadArticlesFromJson(): Promise<Article[]> {
+    try {
+      const articles = await this.http.get<Article[]>('/assets/data/news.json').toPromise();
+      return articles || []; // Return an empty array if articles is undefined
+    } catch (error) {
+      console.error('Failed to load articles from JSON:', error);
+      return []; // Return an empty array on error
+    }
+  }
+
+  /**
+   * Saves articles to the chosen service (Firestore or LocalStorage).
+   *
+   * @param articles The articles to save.
+   */
+  private async saveArticlesToService(articles: Article[]) {
+    const existingArticles = (this.articleService as LocalStorageService).getAllArticles();
+    articles.forEach(async article => {
+      const isDuplicate = existingArticles.some(a => a.title === article.title && a.content === article.content);
+      if (!isDuplicate) {
+        const { id, ...rest } = article; // Remove `id`
+        await this.articleService.addArticle(rest);
+      }
+    });
+  }
+
+  /**
+   * Filters articles from the past two months and groups them by date.
    *
    * @param articles The array of articles to process.
    */
   processArticles(articles: Article[]) {
-    // Sort articles by date descending
-    articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const now = new Date();
+    const twoMonthsAgo = new Date(now);
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
-    this.latestArticles = articles.slice(0, 3);
-    this.recentArticles = articles.slice(3, 7);
+    // Filter articles for the last two months
+    const pastTwoMonthsArticles = articles.filter(article => {
+      const articleDate = new Date(article.date);
+      return articleDate >= twoMonthsAgo && articleDate <= now;
+    });
+
+    pastTwoMonthsArticles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    // Assign recent articles for the "News and Information" section
+    this.recentArticles = pastTwoMonthsArticles;
+
+    // Update displayed articles after sorting and filtering
+    this.updateDisplayedArticles();
+
+    // Group all articles (not just recent ones) for the archive
     this.archive = this.groupArticlesByDate(articles);
   }
 
   /**
-   * Groups articles by year and month.
-   *
-   * @param articles The array of articles to group.
-   * @returns An object where articles are grouped by year, month, and day.
+   * Updates the articles that should be displayed on the current page.
    */
+  updateDisplayedArticles() {
+    // Paginate the articles by slicing the `recentArticles` array
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedArticles = this.recentArticles.slice(startIndex, endIndex);
+  }
+
+  /**
+   * Handles the change in the paginator's page.
+   * Updates the displayed articles based on the selected page.
+   *
+   * @param event The paginator's page change event, containing the pageIndex.
+   */
+  onPageChange(event: { pageIndex: number; }) {
+    this.currentPage = event.pageIndex;
+    this.updateDisplayedArticles();
+  }
+
+  /**
+  * Groups articles by year, month, and day.
+  *
+  * @param articles The array of articles to group.
+  * @returns A YearArticles object where articles are grouped by year, month, and day.
+  */
   groupArticlesByDate(articles: Article[]): YearArticles {
     return articles.reduce((acc: YearArticles, article: Article) => {
       const [year, monthNumber, day] = article.date.split('-');
@@ -270,35 +410,5 @@ export class NewsAndInformationComponent implements OnInit {
       this.archive = {}; // Reset the archive
       this.loadArticles(); // Reload articles to reflect changes
     }
-  }
-
-  /**
-   * Handles the action to clear the article archive.
-   */
-  handleArchiveCleared() {
-    this.clearArchive();
-  }
-
-  /**
-   * Shows the previous article in the carousel.
-   */
-  prevArticle() {
-    this.currentIndex = (this.currentIndex === 0) ? this.latestArticles.length - 1 : this.currentIndex - 1;
-  }
-
-  /**
-   * Shows the next article in the carousel.
-   */
-  nextArticle() {
-    this.currentIndex = (this.currentIndex === this.latestArticles.length - 1) ? 0 : this.currentIndex + 1;
-  }
-
-  /**
-   * Handles navigation through carousel dots.
-   *
-   * @param index The index of the dot clicked.
-   */
-  onDotClick(index: number) {
-    this.currentIndex = index;
   }
 }

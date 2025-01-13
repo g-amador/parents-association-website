@@ -28,83 +28,58 @@
   margin-top: 20px;
 }
 
-/* Wrapper for centering content within 75% of the page */
-.carousel-wrapper {
-  width: 60%;
-  /* Container occupies 60% of the page width */
-  margin: 0 auto;
-  /* Center the wrapper horizontally */
-  padding-right: 25%;
-  box-sizing: border-box;
-  /* Include padding in width calculations */
-}
-
-/* Carousel Container for Latest news-and-information */
-.carousel-container {
-  position: relative;
-  max-width: 100%;
-  /* Ensure carousel fits within its container */
-  margin: 0 auto;
-  /* Center the carousel within its wrapper */
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* Title for Latest news-and-information */
-.latest-news-and-information-title {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 15px;
-  padding-right: 25%;
-  text-align: center;
-  font-weight: bold;
-}
-
 /* Recent news-and-information Grid for displaying 4 articles in a single row */
 .recent-news-and-information-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  /* Ensure 4 articles in a single row */
+  grid-template-columns: repeat(4, 1fr); // Ensure 4 articles in a single row
   gap: 20px;
   width: 75%;
-  max-width: 75%; /* Full width of the wrapper */
-  padding-left: 1%; /* Ensure it doesn’t exceed the width of the wrapper */
+  max-width: 75%; // Full width of the wrapper
+  padding-left: 1%; // Ensure it doesn’t exceed the width of the wrapper
 }
 
 .news-and-information-box {
-  padding: 15px;
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  text-align: center;
-  /* Center text inside each news-and-information box */
-  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
-  /* Add transition for hover effect */
+  padding: 15px;
+  text-align: center; // Center text inside each news-and-information box
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease; // Add transition for hover effect
 }
 
 /* Hover effect for news-and-information boxes */
 .news-and-information-box:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  /* Enhanced shadow on hover */
-  transform: scale(1.02);
-  /* Slightly scale up on hover */
   background-color: #d0eaff;
-  /* Light blue background color on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+.no-content-message {
+  padding-right: 25%;
+  text-align: center;
 }
 
 /* Title for Recent news-and-information */
 .recent-news-and-information-title {
-  font-size: 1.8rem;
   color: #333;
+  font-size: 1.8rem;
+  font-weight: bold;
   margin-bottom: 15px;
   padding-right: 25%;
   text-align: center;
-  font-weight: bold;
+}
+
+/* Centering the mat-paginator below the grid */
+mat-paginator {
+  margin-top: 20px;
+  padding-left: 350px;
+  /* Remove any unnecessary padding */
+  display: flex;
+  justify-content: left;
+  /* Center the paginator horizontally */
+  width: 70%;
+  /* Adjust width to be slightly smaller */
+  margin: 0 auto;
+  /* Center the paginator horizontally */
 }
