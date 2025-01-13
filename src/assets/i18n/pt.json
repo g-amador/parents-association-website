@@ -77,8 +77,7 @@
       "description": "Descrição",
       "enter_title": "Introduza o Título do Evento",
       "choose_date": "Escolha a data",
-      "enter_description": "Introduza a Descrição do Evento",
-      "no_events": "Nenhum Evento"
+      "enter_description": "Introduza a Descrição do Evento"
     },
     "months": [
       "Janeiro",

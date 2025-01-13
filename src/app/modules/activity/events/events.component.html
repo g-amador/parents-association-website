@@ -21,7 +21,7 @@
           <th>{{ 'events_page.weekdays.6' | translate }}</th>
         </tr>
         <tr *ngFor="let week of calendar">
-          <td *ngFor="let day of week" [ngClass]="getDayClasses(day)" (click)="selectDate(day)">
+          <td *ngFor="let day of week" [ngClass]="getDayClasses(day)" (click)="editDate(day)" (mouseover)="hoverDate(day)">
             {{ day.getDate() }}
           </td>
         </tr>

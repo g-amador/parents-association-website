@@ -149,12 +149,29 @@ export class EventsComponent implements OnInit {
   }
 
   /**
-   * Handle the date selection and open appropriate dialog.
-   * If in admin mode, it opens the event edit dialog; otherwise, the view dialog.
+   * Handle the date hover selection and opens the view dialog.
    *
    * @param day - The date selected from the calendar.
    */
-  selectDate(day: Date): void {
+  hoverDate(day: Date): void {
+    const dateStr = format(day, 'yyyy-MM-dd');
+    const eventsForDay = this.events[dateStr] || [];
+
+    if (!this.isAdminRoute && eventsForDay.length > 0) {
+      const event = eventsForDay[0];
+      this.dialog.open(ViewEventDialogComponent, {
+        width: '300px',
+        data: event
+      });
+    }
+  }
+
+  /**
+   * Handle if admin edition of specific date and opens event edit dialog.
+   *
+   * @param day - The date selected from the calendar.
+   */
+  editDate(day: Date): void {
     const dateStr = format(day, 'yyyy-MM-dd');
     const eventsForDay = this.events[dateStr] || [];
 
@@ -176,12 +193,6 @@ export class EventsComponent implements OnInit {
 
           this.generateCalendar();
         }
-      });
-    } else {
-      const event = eventsForDay.length > 0 ? eventsForDay[0] : { title: 'events_page.event.no_events', description: '' };
-      this.dialog.open(ViewEventDialogComponent, {
-        width: '300px',
-        data: event
       });
     }
   }
