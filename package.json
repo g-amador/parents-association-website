@@ -24,7 +24,7 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "date-fns": "^4.1.0",
-    "firebase": "^10.13.2",
+    "firebase": "^11.2.0",
     "flag-icons": "^7.2.3",
     "font-awesome": "^4.7.0",
     "quill": "^2.0.2",
