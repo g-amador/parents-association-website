@@ -88,20 +88,13 @@ export class ContactsComponent implements OnInit {
 
       // Step 2: Define the roles to check against
       const rolesToCheck = [
-        "contacts_page.coordinator",
         "contacts_page.parents_association",
         "contacts_page.president_parents_association",
         "contacts_page.school_general_and_1st_year",
         "contacts_page.school_ji",
         "contacts_page.marrocos_farm",
         "contacts_page.marrocos_farm_secretary",
-        "contacts_page.education_office_jfb",
-        "contacts_page.education_manager",
-        "contacts_page.aec_coordination",
-        "contacts_page.safe_coordination",
-        "contacts_page.aaaf_caf_coordination",
-        "contacts_page.aaaf_caf",
-        "contacts_page.aaaf_caf_contact_monitors"
+        "contacts_page.education_office_jfb"
       ];
 
       // Step 3: Filter contacts that already exist in local storage or Firestore

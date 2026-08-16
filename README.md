@@ -4,7 +4,7 @@ This is a template project for a Parents Home Association.
 - **In development:** uses local storage.  
 - **In production:** uses Firestore.
 
-The project is built with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.5.
+The project is built with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
 
 ## Getting Started
 
